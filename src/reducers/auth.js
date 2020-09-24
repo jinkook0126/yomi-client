@@ -4,6 +4,14 @@ const LOGOUT_SUCCESS = "auth/LOGOUT_SUCCESS";
 
 
 // 액션 생섬함수 정의
+export const loginRequest = () =>{
+    return (dispatch,getState) => {
+        dispatch(loginSuccess());
+        return new Promise((resolve, reject) => {
+            resolve(getState().auth.login.stat)
+        });
+    }
+}
 export const loginSuccess = () => ({ type: LOGIN_SUCCESS });
 export const logoutSuccess = () => ({ type: LOGOUT_SUCCESS });
 
