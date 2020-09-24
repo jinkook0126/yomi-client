@@ -1,11 +1,13 @@
-import * as React from 'react';
-import { View,Text,Button } from 'react-native';
+import React, { useRef } from 'react';
+import { View } from 'react-native';
 import { useSelector } from 'react-redux';
 import TestModalContents from './TestModalContents';
 
 export default ()=>{
-    const height = useSelector(state => state.modal.stat) === true ? "100%" : 0
+    const stat = useSelector(state => state.modal.stat)
     const contents = useSelector(state => state.modal.contents)
+    const zIndex = useRef(0);
+
     const getContents = ()=>{
         switch(contents) {
             case 'test' :
@@ -14,8 +16,24 @@ export default ()=>{
                 return null;
         }
     }
+    const getStyle = ()=>{
+        stat ? zIndex.current = 2 : zIndex.current = 0;
+        return {
+            flex:1,
+            height:"100%",
+            backgroundColor:'rgba(0,0,0,0.8)',
+            justifyContent:"center",
+            alignItems:"center",
+            zIndex:zIndex.current,
+            position:"absolute",
+            top:0,
+            left:0,
+            right:0,
+            bottom:0,
+        }
+    }
     return (
-        <View style={{flex:1,height:height,backgroundColor:'rgba(0,0,0,0.8)',justifyContent:"center",alignItems:"center",zIndex:2,position:"absolute",top:0,left:0,right:0,bottom:0}}>
+        <View style={getStyle()}>
             {
                 getContents()
             }
