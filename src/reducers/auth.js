@@ -8,7 +8,15 @@ export const loginRequest = () =>{
     return (dispatch,getState) => {
         dispatch(loginSuccess());
         return new Promise((resolve, reject) => {
-            resolve(getState().auth.login.stat)
+            resolve({result:true})
+        });
+    }
+}
+export const logoutRequest = () =>{
+    return (dispatch,getState) => {
+        dispatch(logoutSuccess());
+        return new Promise((resolve, reject) => {
+            resolve({result:true})
         });
     }
 }

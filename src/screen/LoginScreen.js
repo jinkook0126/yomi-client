@@ -6,8 +6,13 @@ import {loginRequest} from '../reducers/auth';
 export default ({navigation})=>{
     const dispatch = useDispatch();
     const doLogin = () => {
-        dispatch(loginRequest()).then((params) => {
-            if(params) navigation.navigate("Dock")
+        dispatch(loginRequest()).then(({result}) => {
+            if(result){
+                navigation.reset({
+                    index:0,
+                    routes:[{name:"Dock"}]
+                });
+            }
         })
     }
     return (
