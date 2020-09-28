@@ -5,13 +5,21 @@ import {openModal} from '../reducers/modal';
 
 export default ()=>{
     const dispatch = useDispatch();
-    const openModalText=()=>{
+    const openModalTest=()=>{
         dispatch(openModal('test'));
+    }
+    const openModalBook=()=>{
+        dispatch(openModal('book'));
     }
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center',backgroundColor:'#b9e450' }}>
             <Text>Dock Screen 1 입니다!!!</Text>
-            <Button title="Modal Open!!" onPress={openModalText}></Button>
+            <View style={{paddingVertical:10}}>
+                <Button title="TEST 모달" onPress={openModalTest}></Button>
+            </View>
+            <View style={{paddingVertical:10}}>
+                <Button title="기능 모달1" onPress={openModalBook} color={"pink"}></Button>
+            </View>
         </View>
     )
 }
