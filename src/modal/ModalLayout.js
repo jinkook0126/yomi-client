@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { useSelector } from 'react-redux';
 import TestModalContents from './TestModalContents';
 import BookModalContents from './BookModalContents';
+import CalModalContents from './CalModalContents';
 
 export default ()=>{
     const stat = useSelector(state => state.modal.stat)
@@ -15,6 +16,8 @@ export default ()=>{
                 return <TestModalContents />;
             case 'book' :
                 return <BookModalContents />;
+            case 'cal' :
+                return <CalModalContents />;
             default:
                 return null;
         }
