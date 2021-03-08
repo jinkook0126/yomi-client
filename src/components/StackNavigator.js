@@ -3,6 +3,7 @@ import { CardStyleInterpolators,createStackNavigator } from '@react-navigation/s
 import DockBar from '../components/DockBar';
 import LoginScreen from '../screen/LoginScreen';
 import SignUpScreen from '../screen/SignUpScreen';
+import BookCaseMain from '../screen/BookCase/BookCaseMain';
 import { useSelector } from 'react-redux';
 const Stack = createStackNavigator();
 export default ()=> {
@@ -13,6 +14,7 @@ export default ()=> {
             <Stack.Screen name="Login" component={LoginScreen}/>
             <Stack.Screen name="Dock" component={DockBar}/>
             <Stack.Screen name="SignUp" component={SignUpScreen}/>
+            <Stack.Screen name="BookMain" component={BookCaseMain}/>
         </Stack.Navigator> 
     );
   }

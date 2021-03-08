@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View,Image,ImageBackground,StyleSheet,TouchableWithoutFeedback,Dimensions } from 'react-native';
+import { View,Image,ImageBackground,StyleSheet,TouchableWithoutFeedback,Dimensions } from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
@@ -32,7 +32,7 @@ const yomiHeight = (fullWidth*0.32) * 767 / 489;
 
 const halfPosition = (fullHeight*0.5);
 
-export default ()=>{
+export default ({navigation,route})=>{
     return (
         <ImageBackground source={require("../img/home_bg.png")} style={{width: '100%', height: '100%'}}>
             <TouchableWithoutFeedback onPress={()=>{alert("window!")}}>
@@ -50,7 +50,7 @@ export default ()=>{
                     <Image source={require("../img/calc.png")} style={styles.window}/>
                 </View>
             </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={()=>{alert("bookcase")}}>
+            <TouchableWithoutFeedback onPress={()=>{navigation.navigate("BookMain")}}>
                 <View style={{position:"absolute",right:'48%',top:halfPosition-bookCaseHeight,width:'33%',height:bookCaseHeight}}>
                     <Image source={require("../img/bookcase.png")} style={styles.window}/>
                 </View>
