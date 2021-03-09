@@ -1,21 +1,29 @@
-import React,{useState} from 'react';
+import React,{useState,useRef} from 'react';
 import {Text,View,SafeAreaView,Image,FlatList,StyleSheet,TouchableOpacity,TextInput} from 'react-native'
 import { useDispatch } from 'react-redux';
-import Dash from 'react-native-dash';
 import axios from 'axios';
 const API_KEY = "a5bf620feebcc2c9bf7af09e3eb5d39d";
 
 export default ({navigation})=>{
     const dispatch = useDispatch();
+    const flatListRef = React.useRef()
     const [searchTitle,setSearchTitle] = useState("");
     const [searchList,setSearchList] = useState([]);
     const [totalCnt,setTotalCnt] = useState(0);
+    const [page,setPage] = useState(1);
+    const [isEnd,setisEnd] = useState(false);
+    
 
-    const doSearch = async()=>{
+    const doSearch = async(isSearch)=>{
+        if(isSearch) {
+            flatListRef.current.scrollToOffset({ offset: 0 })
+        }
         let emtpyArr = [];
         const {data} = await axios.get("https://dapi.kakao.com/v3/search/book?target=title",{
             params:{
-                query:searchTitle
+                query:searchTitle,
+                size:15,
+                page:isSearch?1:page
             },
             headers:{
                 Authorization:`KakaoAK ${API_KEY}`
@@ -30,8 +38,16 @@ export default ({navigation})=>{
                 contents:contents
             })
         }
-        setSearchList(emtpyArr)
+        setPage(isSearch?2:page+1)
+        setisEnd(data.meta.is_end)
+        setSearchList(isSearch?emtpyArr:searchList.concat(emtpyArr))
         setTotalCnt(data.meta.total_count)
+    }
+    
+    const handleLoadMore = ()=>{
+        if(isEnd === false) {
+            doSearch()
+        }
     }
     const renderItem = ({item}) =>{
         const imgUrl = item.thumbnail !== "" ? {uri:item.thumbnail} : require('../../img/emptyThumbnail.png')
@@ -61,7 +77,7 @@ export default ({navigation})=>{
             <View style={{flex:1,paddingVertical:20,paddingHorizontal:26}}>
                 <View style={{borderWidth:1,borderColor:"#EEEEEE",borderRadius:2,height:36,flexDirection:"row",alignItems:"center",justifyContent:'space-between',paddingHorizontal:12,overflow:"hidden"}}>
                     <TextInput onChangeText={(value)=>setSearchTitle(value)} style={{flex:1,height:30,alignItems:"stretch",paddingVertical:0}}></TextInput>
-                    <TouchableOpacity onPress={doSearch} style={{width:25,height:25,justifyContent:"center",alignItems:'center'}}>
+                    <TouchableOpacity onPress={()=>doSearch(true)} style={{width:25,height:25,justifyContent:"center",alignItems:'center'}}>
                         <Image source={require("../../img/ico_search.png")}/>
                     </TouchableOpacity>
                 </View>
@@ -69,9 +85,12 @@ export default ({navigation})=>{
                     <Text style={[styles.commonColor,{fontSize:12,fontWeight:'bold'}]}>총 {totalCnt} 건의 검색 결과</Text>
                     <View style={[styles.listContainer,{marginTop:10,border:1,flex:1,overflow:"hidden"}]}>
                         <FlatList 
+                            ref={flatListRef}
                             data={searchList}
                             renderItem={renderItem}
-                            keyExtractor={item=> item.isbn}
+                            keyExtractor={(item, index) => String(index)}
+                            onEndReached={handleLoadMore}
+                            onEndReachedThreshold={1}
                         />
                     </View>
                 </View>
