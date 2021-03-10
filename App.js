@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import rootReducer from './src/reducers';
 import StackNavigator from './src/components/StackNavigator';
+import ModalLayout from './src/modal/ModalLayout'
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 export default function App() {
@@ -13,6 +14,7 @@ export default function App() {
       <NavigationContainer>
         <StackNavigator />
       </NavigationContainer>
+      <ModalLayout/>
     </Provider>
   );
 }

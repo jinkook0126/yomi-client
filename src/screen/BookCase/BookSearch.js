@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 import {Text,View,SafeAreaView,Image,FlatList,StyleSheet,TouchableOpacity,TextInput} from 'react-native'
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
+import {openModal} from '../../reducers/modal';
 const API_KEY = "a5bf620feebcc2c9bf7af09e3eb5d39d";
 
 export default ({navigation})=>{
@@ -50,8 +51,9 @@ export default ({navigation})=>{
     }
     const renderItem = ({item,index}) =>{
         const imgUrl = item.thumbnail !== "" ? {uri:item.thumbnail} : require('../../img/emptyThumbnail.png')
+        // console.log(searchList[index])
         return (
-            <TouchableOpacity onPress={()=>console.log(searchList[index])}>
+            <TouchableOpacity onPress={()=>dispatch(openModal('test'))}>
                 <View style={{padding:4}}>
                     <View style={{flexDirection:'row',borderBottomWidth:1,borderBottomColor:"#EEEEEE"}}>
                         <Image source={imgUrl} style={{width:67,height:84}}/>

@@ -4,14 +4,12 @@ import DockScreen1 from '../screen/DockSreen1';
 import DockScreen2 from '../screen/DockSreen2';
 import TabNavigator from './TabNavigator'
 import DockScreen3 from '../screen/DockSreen3';
-import ModalLayout from '../modal/ModalLayout'
 
 
 const Dock = createBottomTabNavigator();
 export default ()=>{
     return (
         <>
-        <ModalLayout />
         <Dock.Navigator>
             <Dock.Screen name="Dock1" component={DockScreen1} />
             <Dock.Screen name="Dock2" component={DockScreen2} />

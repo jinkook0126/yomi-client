@@ -23,14 +23,13 @@ export default ()=>{
         }
     }
     const getStyle = ()=>{
-        stat ? zIndex.current = 2 : zIndex.current = 0;
         return {
             flex:1,
-            height:"100%",
+            height:stat ? height = "100%" : zIndex.current = 0,
             backgroundColor:'rgba(0,0,0,0.8)',
             justifyContent:"center",
             alignItems:"center",
-            zIndex:zIndex.current,
+            zIndex:100,
             position:"absolute",
             top:0,
             left:0,
