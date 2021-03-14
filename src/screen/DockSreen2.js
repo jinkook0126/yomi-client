@@ -45,7 +45,7 @@ export default ({navigation,route})=>{
                     <Image source={require("../img/desk.png")} style={styles.window}/>
                 </View>
             </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={()=>{alert("calc")}}>
+            <TouchableWithoutFeedback onPress={()=>{navigation.navigate("Diary")}}>
                 <View style={{position:"absolute",right:20,top:(halfPosition-deskHeight)-(calcHeight/2)-10,width:'27%',height:calcHeight}}>
                     <Image source={require("../img/calc.png")} style={styles.window}/>
                 </View>

@@ -53,7 +53,7 @@ export default ({navigation})=>{
         const imgUrl = item.thumbnail !== "" ? {uri:item.thumbnail} : require('../../img/emptyThumbnail.png')
         // console.log(searchList[index])
         return (
-            <TouchableOpacity onPress={()=>dispatch(openModal('test'))}>
+            <TouchableOpacity onPress={()=>dispatch(openModal('book'))}>
                 <View style={{padding:4}}>
                     <View style={{flexDirection:'row',borderBottomWidth:1,borderBottomColor:"#EEEEEE"}}>
                         <Image source={imgUrl} style={{width:67,height:84}}/>

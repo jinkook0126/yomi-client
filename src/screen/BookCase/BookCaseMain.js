@@ -1,11 +1,34 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {Text,View,SafeAreaView,Image,ScrollView,StyleSheet,TouchableOpacity} from 'react-native'
 import { useDispatch } from 'react-redux';
 import Dash from 'react-native-dash';
-
+import Modal from 'react-native-modal';
+import {openModal} from '../../reducers/modal';
 
 export default ({navigation})=>{
     const dispatch = useDispatch();
+    const [visible,setVisible] = useState(false);
+    const [order,setOrder] = useState("latest");
+    const [orderText,setOrderText] = useState("최신순");
+    const handleOrder=(_order)=>{
+        setOrder(_order);
+        switch(_order) {
+            case "latest" :
+                setOrderText("최신순");
+                break;
+            case "high" :
+                setOrderText("별점 높은 순");
+                break;
+            case "low" :
+                setOrderText("별점 낮은 순");
+                break;
+            case "hangeul" :
+                setOrderText("가나다 순");
+                break;
+        }
+        setVisible(false)
+
+    }
     return (
         <SafeAreaView style={{ flex: 1,backgroundColor:'#ffffff' }}>
             <View style={{height:50,flexDirection:"row",alignItems:'center'}}>
@@ -28,8 +51,10 @@ export default ({navigation})=>{
                             </View>
                         </View>
                     </TouchableOpacity>
-                    <View style={{width:90,height:116,marginTop:16,backgroundColor:'black'}}>
-                    </View>
+                    <TouchableOpacity onPress={()=>dispatch(openModal("book"))}>
+                        <View style={{width:90,height:116,marginTop:16,backgroundColor:'black'}}>
+                        </View>
+                    </TouchableOpacity>
                     <View style={{width:90,height:116,marginTop:16,backgroundColor:'yellow'}}>
                     </View>
                     <View style={{width:90,height:116,marginTop:16,backgroundColor:'green'}}>
@@ -38,10 +63,12 @@ export default ({navigation})=>{
                 <View style={{marginTop:28}}>
                     <View style={{flexDirection:'row',justifyContent:"space-between"}}>
                         <Text style={[styles.commonColor,{fontSize:14,fontWeight:'bold'}]}>완독한 책</Text>
-                        <View style={{flexDirection:'row',alignItems:'center'}}>
-                            <Image source={require("../../img/ico_orderby.png")}/>
-                            <Text style={[styles.commonColor,{fontSize:12,fontWeight:'bold',marginLeft:4}]}>최신순</Text>
-                        </View>
+                        <TouchableOpacity onPress={()=>setVisible(true)}>
+                            <View style={{flexDirection:'row',alignItems:'center'}}>
+                                <Image source={require("../../img/ico_orderby.png")}/>
+                                <Text style={[styles.commonColor,{fontSize:12,fontWeight:'bold',marginLeft:4}]}>{orderText}</Text>
+                            </View>
+                        </TouchableOpacity>
                     </View>
                     <View style={{flexWrap:'wrap',flexDirection:"row",justifyContent:'space-between'}}>
                         <View style={{width:90,height:116,marginTop:16,backgroundColor:'black'}}>
@@ -53,6 +80,48 @@ export default ({navigation})=>{
                     </View> 
                 </View>
             </ScrollView>
+            <Modal
+                useNativeDriver
+                isVisible={visible}
+                hideModalContentWhileAnimating={true}
+                style={{margin:0,justifyContent:'flex-end'}}
+                onBackdropPress={()=>{setVisible(false)}}
+            >
+                <View style={styles.modalContents}>
+                    <TouchableOpacity onPress={()=>handleOrder("latest")}>
+                        <View style={styles.modalItemWrap}>
+                            <Text style={[styles.commonColor,{fontSize:14,fontWeight:'bold'}]}>최신순</Text>
+                            {
+                                order === "latest" ? <Image source={require("../../img/ico_check.png")}/> : null
+                            }
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>handleOrder("high")}>
+                        <View style={styles.modalItemWrap}>
+                            <Text style={[styles.commonColor,{fontSize:14,fontWeight:'bold'}]}>별점 높은순</Text>
+                            {
+                                order === "high" ? <Image source={require("../../img/ico_check.png")}/> : null
+                            }
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>handleOrder("low")}>
+                        <View style={styles.modalItemWrap}>
+                            <Text style={[styles.commonColor,{fontSize:14,fontWeight:'bold'}]}>별점 낮은순</Text>
+                            {
+                                order === "low" ? <Image source={require("../../img/ico_check.png")}/> : null
+                            }
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>handleOrder("hangeul")}>
+                        <View style={styles.modalItemWrap}>
+                            <Text style={[styles.commonColor,{fontSize:14,fontWeight:'bold'}]}>가나다순</Text>
+                            {
+                                order === "hangeul" ? <Image source={require("../../img/ico_check.png")}/> : null
+                            }
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            </Modal>
         </SafeAreaView>
     )
 }
@@ -60,4 +129,19 @@ const styles = StyleSheet.create({
     commonColor: {
         color:"#2B2B2B"
     },
+    modalContents:{
+        backgroundColor:'#ffffff',
+        borderTopRightRadius:8,
+        borderTopLeftRadius:8,
+        paddingHorizontal:16,
+        paddingTop:12
+    },
+    modalItemWrap:{
+        flexDirection:"row",
+        borderBottomColor:'#EEEEEE',
+        borderBottomWidth:1,
+        paddingVertical:16,
+        justifyContent:"space-between",
+        alignItems:"center"
+    }
 });

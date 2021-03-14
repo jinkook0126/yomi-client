@@ -18,10 +18,13 @@ export default ()=>{
                 <Button title="TEST 모달" onPress={()=>openModalTest("test")} ></Button>
             </View>
             <View style={{paddingVertical:10}}>
-                <Button title="기능 모달1" onPress={()=>openModalTest("book")} color={"pink"}></Button>
+                <Button title="책 모달" onPress={()=>openModalTest("book")} color={"pink"}></Button>
             </View>
             <View style={{paddingVertical:10}}>
-                <Button title="기능 모달2" onPress={()=>openModalTest("cal")} color={"grey"}></Button>
+                <Button title="공부 모달" onPress={()=>openModalTest("desk")} color={"grey"}></Button>
+            </View>
+            <View style={{paddingVertical:10}}>
+                <Button title="운동 모달" onPress={()=>openModalTest("health")} color={"cyan"}></Button>
             </View>
         </View>
     )
