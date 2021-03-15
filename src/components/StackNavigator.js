@@ -6,6 +6,7 @@ import SignUpScreen from '../screen/SignUpScreen';
 import BookCaseMain from '../screen/BookCase/BookCaseMain';
 import BookSearch from '../screen/BookCase/BookSearch';
 import Diary from '../screen/Diary/Diary';
+import Calorie from '../screen/Calorie/Calorie';
 import { useSelector } from 'react-redux';
 const Stack = createStackNavigator();
 export default ()=> {
@@ -19,6 +20,7 @@ export default ()=> {
             <Stack.Screen name="BookMain" component={BookCaseMain}/>
             <Stack.Screen name="BookSearch" component={BookSearch}/>
             <Stack.Screen name="Diary" component={Diary}/>
+            <Stack.Screen name="Calorie" component={Calorie}/>
         </Stack.Navigator> 
     );
   }

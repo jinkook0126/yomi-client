@@ -55,7 +55,7 @@ export default ({navigation,route})=>{
                     <Image source={require("../img/bookcase.png")} style={styles.window}/>
                 </View>
             </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={()=>{alert("fridge")}}>
+            <TouchableWithoutFeedback onPress={()=>{navigation.navigate("Calorie")}}>
                 <View style={{position:"absolute",left:0,top:halfPosition-(fridgeHeight/2),width:'30%',height:fridgeHeight}}>
                     <Image source={require("../img/fridge.png")} style={styles.window}/>
                 </View>
