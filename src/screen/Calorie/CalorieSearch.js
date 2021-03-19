@@ -1,14 +1,12 @@
 import React,{useState} from 'react';
-import {Text,View,SafeAreaView,Image,Dimensions,StyleSheet,TouchableOpacity,ScrollView} from 'react-native'
+import {Text,View,SafeAreaView,Image,StyleSheet,TouchableOpacity, ImageBackground} from 'react-native'
 import { useDispatch } from 'react-redux';
 import Modal from 'react-native-modal';
 import { TextInput } from 'react-native-gesture-handler';
 
 export default ({navigation,route})=>{
     const dispatch = useDispatch();
-
-    console.log(route.params.header)
-
+    const [isVisible,setIsVisible] = useState(false);
     const [extraView,setExtraView] = useState(false)
 
     return (
@@ -24,14 +22,16 @@ export default ({navigation,route})=>{
                 </View>
                 <View style={{flexDirection:"row",alignItems:'center',justifyContent:"flex-end",paddingRight:26}}>
                     <Text style={[styles.commonColor,{fontSize:'bold',fontSize:14}]}>0</Text>
-                    <TouchableOpacity onPress={()=>alert(213)}>
+                    <TouchableOpacity onPress={()=>{
+                        setIsVisible(true)
+                    }}>
                         <View style={{height:50,width:20,justifyContent:'center',alignItems:"flex-end",marginLeft:6}}>
                             <Image source={require('../../img/ico_food.png')}  />
                         </View>
                     </TouchableOpacity>
                 </View>
             </View>
-            <View style={{flex:1,backgroundColor:"red",paddingHorizontal:26,paddingVertical:16,justifyContent:'space-between'}}>
+            <View style={{flex:1,paddingHorizontal:26,paddingVertical:16,justifyContent:'space-between'}}>
                 <View>
                     <View style={{border:1,borderColor:'#EEEEEE',borderRadius:2,height:36,backgroundColor:"#FFFFFF",flexDirection:"row",justifyContent:"space-between",alignItems:'center',paddingHorizontal:12}}>
                         <TextInput
@@ -41,7 +41,7 @@ export default ({navigation,route})=>{
                             <Image source={require("../../img/ico_search.png")}/>
                         </TouchableOpacity>
                     </View>
-                    <View style={{marginTop:10,backgroundColor:'yellow',border:1,borderColor:'#EEEEEE',borderRadius:2,height:300}}>
+                    <View style={{marginTop:10,border:1,borderColor:'#EEEEEE',borderRadius:2,height:300}}>
 
                     </View>
                     <TouchableOpacity onPress={()=>setExtraView(!extraView)}>
@@ -57,7 +57,7 @@ export default ({navigation,route})=>{
                     </TouchableOpacity>
                     {
                         extraView? 
-                            <View style={{marginTop:10,backgroundColor:'cyan'}}>
+                            <View style={{marginTop:10}}>
                                 <View style={{height:36,borderRadius:2,borderColor:'#EEEEEE',borderWidth:1,paddingHorizontal:10}}>
                                     <TextInput
                                         placeholder={"음식 이름"}
@@ -84,7 +84,7 @@ export default ({navigation,route})=>{
                                                 <Image source={require("../../img/ico_plus.png")}/>
                                             </TouchableOpacity>
                                         </View>
-                                        <View style={{height:36,width:54,backgroundColor:"#8C6C51",justifyContent:'center',alignItems:'center'}}>
+                                        <View style={{height:36,width:54,backgroundColor:"#8C6C51",justifyContent:'center',alignItems:'center',borderRadius:2}}>
                                             <Text style={{color:"#FFFFFF",fontWeight:'bold',fontSize:14}}>추가</Text>            
                                         </View>
                                     </View>
@@ -100,6 +100,68 @@ export default ({navigation,route})=>{
                     </View>
                 </TouchableOpacity>
             </View>
+            <Modal 
+                useNativeDriver
+                animationIn="zoomInDown"
+                animationOut="zoomOutUp"
+                animationInTiming={600}
+                animationOutTiming={600}
+                backdropTransitionInTiming={600}
+                backdropTransitionOutTiming={600}
+                isVisible={isVisible}
+                hideModalContentWhileAnimating={true}
+                onBackdropPress={()=>{setIsVisible(false)}}
+                style={{justifyContent:'flex-start',marginTop:40}}
+            >
+                <ImageBackground source={require('../../img/bg_cal_popup.png')} style={{height:220}}>
+                    <View style={{height:168,marginTop:26,paddingHorizontal:21}}>
+                        <View style={{marginTop:10,flexDirection:"row",justifyContent:'space-between',alignItems:"center"}}>
+                            <View style={{flexDirection:"row",alignItems:'center'}}>
+                                <TouchableOpacity onPress={()=>alert('삭제')}>
+                                    <Image source={require("../../img/ico_close.png")}/>
+                                </TouchableOpacity>
+                                <Text style={{marginLeft:20 }}>김치찌개</Text>
+                            </View>
+                            <View>
+                                <Text style={[styles.commonColor,{fontSize:14,fontWeight:'bold'}]}>500Kcal</Text>
+                            </View>
+                            <View style={{flexDirection:"row",alignItems:'center'}}>
+                                <TouchableOpacity onPress={()=>alert('삭제')}>
+                                    <Image source={require("../../img/ico_minus.png")}/>
+                                </TouchableOpacity>
+                                <View style={{backgroundColor:"#EEEEEE",width:20,height:20,marginHorizontal:6,justifyContent:'center',alignItems:'center'}}>
+                                     <Text style={[styles.commonColor,{fontWeight:'bold',fontSize:15}]}>1</Text>
+                                </View>
+                                <TouchableOpacity onPress={()=>alert('삭제')}>
+                                    <Image source={require("../../img/ico_plus.png")}/>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                        <View style={{marginTop:10,flexDirection:"row",justifyContent:'space-between',alignItems:"center"}}>
+                            <View style={{flexDirection:"row",alignItems:'center'}}>
+                                <TouchableOpacity onPress={()=>alert('삭제')}>
+                                    <Image source={require("../../img/ico_close.png")}/>
+                                </TouchableOpacity>
+                                <Text style={{marginLeft:20 }}>계란</Text>
+                            </View>
+                            <View>
+                                <Text style={[styles.commonColor,{fontSize:14,fontWeight:'bold'}]}>3 0Kcal</Text>
+                            </View>
+                            <View style={{flexDirection:"row",alignItems:'center'}}>
+                                <TouchableOpacity onPress={()=>alert('삭제')}>
+                                    <Image source={require("../../img/ico_minus.png")}/>
+                                </TouchableOpacity>
+                                <View style={{backgroundColor:"#EEEEEE",width:20,height:20,marginHorizontal:6,justifyContent:'center',alignItems:'center'}}>
+                                     <Text style={[styles.commonColor,{fontWeight:'bold',fontSize:15}]}>1</Text>
+                                </View>
+                                <TouchableOpacity onPress={()=>alert('삭제')}>
+                                    <Image source={require("../../img/ico_plus.png")}/>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </ImageBackground>
+            </Modal>
         </SafeAreaView>
     )
 }
@@ -125,8 +187,7 @@ const styles = StyleSheet.create({
         width:36,
         justifyContent:"center",
         paddingRight:12,
-        alignItems:"flex-end",
-        backgroundColor:'red'
+        alignItems:"flex-end"
     },
     foodItemWrap:{
         paddingHorizontal:12,
