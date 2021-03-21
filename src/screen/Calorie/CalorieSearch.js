@@ -3,11 +3,30 @@ import {Text,View,SafeAreaView,Image,StyleSheet,TouchableOpacity, ImageBackgroun
 import { useDispatch } from 'react-redux';
 import Modal from 'react-native-modal';
 import { TextInput } from 'react-native-gesture-handler';
+import axios from 'axios';
 
+const api_url = "https://api.myfitnesspal.com/public/nutrition"
 export default ({navigation,route})=>{
     const dispatch = useDispatch();
     const [isVisible,setIsVisible] = useState(false);
-    const [extraView,setExtraView] = useState(false)
+    const [extraView,setExtraView] = useState(false);
+    const [searchKey,setSearchKey] = useState("");
+    const [page,setPage] = useState(1);
+
+    const searchFood = async()=>{
+        const {data} = await axios.get(api_url,{
+            params:{
+                q:encodeURI(searchKey),
+                page:page,
+                per_page:10,
+                country_code:"KR"
+            },
+            headers:{
+                "Accept-Language": "ko-KR"
+            }
+        });
+        console.log(data.items)
+    }
 
     return (
         <SafeAreaView style={{ flex: 1,backgroundColor:'#ffffff' }}>
@@ -33,15 +52,16 @@ export default ({navigation,route})=>{
             </View>
             <View style={{flex:1,paddingHorizontal:26,paddingVertical:16,justifyContent:'space-between'}}>
                 <View>
-                    <View style={{border:1,borderColor:'#EEEEEE',borderRadius:2,height:36,backgroundColor:"#FFFFFF",flexDirection:"row",justifyContent:"space-between",alignItems:'center',paddingHorizontal:12}}>
+                    <View style={{borderWidth:1,borderColor:'#EEEEEE',borderRadius:2,height:36,backgroundColor:"#FFFFFF",flexDirection:"row",justifyContent:"space-between",alignItems:'center',paddingHorizontal:12}}>
                         <TextInput
+                            onChangeText={(value)=>{setSearchKey(value)}}
                             style={{flex:1,padding:0,height:30}}
                         />
-                        <TouchableOpacity onPress={()=>alert(132)}>
+                        <TouchableOpacity onPress={searchFood}>
                             <Image source={require("../../img/ico_search.png")}/>
                         </TouchableOpacity>
                     </View>
-                    <View style={{marginTop:10,border:1,borderColor:'#EEEEEE',borderRadius:2,height:300}}>
+                    <View style={{marginTop:10,borderWidth:1,borderColor:'#EEEEEE',borderRadius:2,height:300}}>
 
                     </View>
                     <TouchableOpacity onPress={()=>setExtraView(!extraView)}>
