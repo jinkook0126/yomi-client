@@ -1,8 +1,7 @@
 import React,{useState} from 'react';
-import {Text,View,SafeAreaView,Image,StyleSheet,TouchableOpacity, ImageBackground} from 'react-native'
+import {TextInput,Text,View,SafeAreaView,Image,StyleSheet,TouchableOpacity, ImageBackground, FlatList} from 'react-native'
 import { useDispatch } from 'react-redux';
 import Modal from 'react-native-modal';
-import { TextInput } from 'react-native-gesture-handler';
 import axios from 'axios';
 
 const api_url = "https://api.myfitnesspal.com/public/nutrition"
@@ -11,21 +10,76 @@ export default ({navigation,route})=>{
     const [isVisible,setIsVisible] = useState(false);
     const [extraView,setExtraView] = useState(false);
     const [searchKey,setSearchKey] = useState("");
+    const [searchList,setSearchList] = useState([]);
     const [page,setPage] = useState(1);
+    const [loading,setLoading] = useState(true)
 
-    const searchFood = async()=>{
-        const {data} = await axios.get(api_url,{
-            params:{
-                q:encodeURI(searchKey),
-                page:page,
-                per_page:10,
-                country_code:"KR"
-            },
-            headers:{
-                "Accept-Language": "ko-KR"
-            }
+    const searchFood = async(isSearch)=>{
+        if(isSearch) {
+            setSearchList([]);
+        }
+        const foodList = [];
+        const {data} = await axios.get(`https://api.myfitnesspal.com/public/nutrition?q=${encodeURI(searchKey)}&page=${isSearch?1:page}&per_page=15`);
+        const foods = data.items;
+        foods.forEach(food => {
+            foodList.push({
+                id:food.item.id,
+                kcal:food.item.nutritional_contents.energy.value,
+                brand:food.item.brand_name,
+                desc:food.item.description,
+                cnt:0
+            })
         });
-        console.log(data.items)
+        setPage(page+1)
+        setSearchList(isSearch ? foodList : searchList.concat(foodList));
+    }
+
+    const handleCount = (mode,id)=>{
+        const foodList = [];
+        searchList.findIndex(food =>{
+            if(food.id === id) {
+                if(mode === 'plus') {
+                    food.cnt = food.cnt +1;
+                } else {
+                    food.cnt = food.cnt !== 0 ? food.cnt -1 : food.cnt
+                }
+            }
+            foodList.push(food)
+        });
+        setSearchList(foodList)
+    }
+
+    const handleReachEnd = ()=>{
+        if (!loading) {
+            searchFood();
+            setLoading(true);
+        }
+    }
+
+    const renderItem = ({item})=>{
+        return (
+            <View style={{paddingVertical:16,paddingHorizontal:20,flexDirection:"row",alignContent:'center',justifyContent:"space-between",flex:1}}>
+                <View style={{flexDirection:"row",alignItems:"center",flex:1}}>
+                    <Text style={[styles.commonColor,{fontSize:12}]}>{item.desc}</Text>
+                    <Text style={[styles.commonColor,{fontSize:9,marginLeft:10}]}>({item.brand})</Text>
+                </View>
+                <View style={{flexDirection:"row",alignItems:'center',flex:1,justifyContent:"flex-end"}}>
+                    <TouchableOpacity onPress={()=>{handleCount('plus',item.id)}}>
+                        <View style={{width:14,height:14}}>
+                            <Image source={require("../../img/ico_plus.png")}/>
+                        </View>
+                    </TouchableOpacity>
+                    <View style={{marginHorizontal:5,width:32,height:28,backgroundColor:'#EEEEEE',justifyContent:"center",alignItems:"center"}}>
+                        <Text style={[styles.commonColor,{fontSize:15}]}>{item.cnt}</Text>
+                    </View>
+                    <TouchableOpacity onPress={()=>{handleCount('minus',item.id)}}>
+                        <View style={{width:14,height:14}}>
+                            <Image source={require("../../img/ico_minus.png")}/>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        )
     }
 
     return (
@@ -57,12 +111,19 @@ export default ({navigation,route})=>{
                             onChangeText={(value)=>{setSearchKey(value)}}
                             style={{flex:1,padding:0,height:30}}
                         />
-                        <TouchableOpacity onPress={searchFood}>
+                        <TouchableOpacity onPress={()=>searchFood(true)}>
                             <Image source={require("../../img/ico_search.png")}/>
                         </TouchableOpacity>
                     </View>
                     <View style={{marginTop:10,borderWidth:1,borderColor:'#EEEEEE',borderRadius:2,height:300}}>
-
+                        <FlatList
+                            data={searchList}
+                            renderItem={renderItem}
+                            keyExtractor={(item, index) => String(index)}
+                            onEndReached={handleReachEnd}
+                            onEndReachedThreshold={0.5}
+                            onMomentumScrollBegin={() => { setLoading(false); }}
+                        />
                     </View>
                     <TouchableOpacity onPress={()=>setExtraView(!extraView)}>
                         <View style={{marginTop:16,flexDirection:'row',justifyContent:"center",alignItems:'center'}}>
