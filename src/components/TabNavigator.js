@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import MyTabBar from '../components/TabBar';
-import TabScreen1 from "../screen/TabScreen1"
-import TabScreen2 from "../screen/TabScreen2"
-import TabScreen3 from "../screen/TabScreen3"
+import TabScreen1 from "../screen/Tab/TabScreen1"
+import TabScreen2 from "../screen/Tab/TabScreen2"
+import TabScreen3 from "../screen/Tab/TabScreen3"
 
 const Tab = createMaterialTopTabNavigator();
 

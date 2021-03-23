@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import DockScreen1 from '../screen/DockSreen1';
-import DockScreen2 from '../screen/DockSreen2';
+import CollectionSreen from '../screen/Dock/CollectionSreen';
+import MyRoomScreen from '../screen/Dock/MyRoomScreen';
 import TabNavigator from './TabNavigator'
-import DockScreen3 from '../screen/DockSreen3';
+import MenuSreen from '../screen/Dock/MenuSreen';
 
 
 const Dock = createBottomTabNavigator();
@@ -11,10 +11,10 @@ export default ()=>{
     return (
         <>
         <Dock.Navigator>
-            <Dock.Screen name="Dock1" component={DockScreen1} />
-            <Dock.Screen name="Dock2" component={DockScreen2} />
-            <Dock.Screen name="TabScreen" component={TabNavigator} />
-            <Dock.Screen name="Dock3" component={DockScreen3} />
+            <Dock.Screen name="MyRoom" component={MyRoomScreen} options={{title:"내 방"}}/>
+            <Dock.Screen name="Collection" component={CollectionSreen} options={{title:"컬렉션"}}/>
+            <Dock.Screen name="TabScreen" component={TabNavigator} options={{title:"기록"}}/>
+            <Dock.Screen name="Menu" component={MenuSreen} options={{title:"메뉴"}}/>
         </Dock.Navigator>
         </>
         

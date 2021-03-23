@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text,View,Button} from 'react-native'
+import {Text,View,SafeAreaView,TextInput,TouchableOpacity,StyleSheet} from 'react-native'
 import { useDispatch } from 'react-redux';
 import {loginRequest} from '../reducers/auth';
 export default ({navigation})=>{
@@ -15,9 +15,40 @@ export default ({navigation})=>{
         })
     }
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center',backgroundColor:'#babbbb' }}>
-            <Text>회원가입 화면 입니당 ㅎㅎ</Text>
-            <Button title="가입완료" onPress={signUpRequest}/>
-        </View>
+        <SafeAreaView style={{backgroundColor:'#FFFFFF',flex:1}}>
+            <View style={{paddingTop:18,paddingHorizontal:20}}>
+                <View style={{justifyContent:'center',alignItems:"center"}}>
+                    <Text style={{fontWeight:'bold',fontSize:16,color:"#2B2B2B"}}>회원가입</Text>
+                </View>
+                <View style={{marginTop:50}}> 
+                    <View style={[styles.inputWrap,{marginTop:0}]}>
+                        <TextInput placeholder={"이름"} style={styles.input} placeholderTextColor={"#9E9E9E"}></TextInput>
+                    </View>
+                    <View style={styles.inputWrap}>
+                        <TextInput placeholder={"이메일"} style={styles.input} placeholderTextColor={"#9E9E9E"}></TextInput>
+                    </View>
+                    <View style={styles.inputWrap}>
+                        <TextInput placeholder={"비밀번호"} secureTextEntry={true} style={styles.input} placeholderTextColor={"#9E9E9E"}></TextInput>
+                    </View>
+                    <View style={styles.inputWrap}>
+                        <TextInput placeholder={"비밀번호 확인"} secureTextEntry={true} style={styles.input} placeholderTextColor={"#9E9E9E"}></TextInput>
+                    </View>
+                    <TouchableOpacity onPress={signUpRequest}>
+                        <View style={{marginTop:28,backgroundColor:"#8C6C51",height:40,justifyContent:'center',alignItems:"center",borderRadius:6}}>
+                            <Text style={{color:"#FFFFFF",fontSize:15,fontWeight:'bold'}}>회원가입</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        </SafeAreaView>
     )
 }
+
+const styles = StyleSheet.create({
+    inputWrap:{
+        borderBottomWidth:1,borderBottomColor:"#EEEEEE",height:40,marginTop:26
+    },
+    input:{
+        flex:1,height:30,alignItems:"stretch",paddingVertical:0
+    }
+})
