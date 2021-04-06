@@ -1,17 +1,29 @@
+import send from '../modules/send';
 // 액션 타입 정의
 const LOGIN_SUCCESS = "auth/LOGIN_SUCCESS";
 const LOGOUT_SUCCESS = "auth/LOGOUT_SUCCESS";
 
 
 // 액션 생섬함수 정의
-export const loginRequest = () =>{
+export const loginRequest = (id,pw) =>{
     return (dispatch,getState) => {
-        dispatch(loginSuccess());
-        return new Promise((resolve, reject) => {
-            resolve({result:true})
-        });
+        return send({uri:"/v0/users/login",method:"post",params:{id:id,pw:pw}}).then(res=>{
+            dispatch(loginSuccess());
+        })
     }
 }
+// export function logoutRequest() {
+//     return (dispatch,getState) =>{
+//         return Axios.post("/users/logout").then(response=>{
+//             let _response = response.data;
+//             if(_response.result === "success") {
+//                 dispatch(logout())
+//             }
+//         }).catch(error=>{
+//             console.log(error);
+//         }).then(()=> { return getState().authentication.login.status });
+//     }
+// }
 export const logoutRequest = () =>{
     return (dispatch,getState) => {
         dispatch(logoutSuccess());
