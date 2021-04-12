@@ -4,15 +4,8 @@ import { useDispatch } from 'react-redux';
 import {logoutRequest} from '../../reducers/auth';
 export default ({navigation})=>{
     const dispatch = useDispatch();
-    const doLogOut = () => {
-        dispatch(logoutRequest()).then(({result}) => {
-            if(result){
-                navigation.reset({
-                    index:0,
-                    routes:[{name:"Login"}]
-                });
-            }
-        });
+    const doLogOut = async() => {
+        dispatch(logoutRequest());
     }
     return (
         <SafeAreaView style={{flex:1,backgroundColor:'#FFFFFF'}}>

@@ -1,13 +1,18 @@
 import axios from 'axios'
-
+import EncryptedStorage from 'react-native-encrypted-storage';
 const instance = axios.create({
-    baseURL: 'http://118.32.187.82:3000/api/v0',
+    baseURL: 'http://121.161.132.121:3000/api/v0',
     timeout: 1000 * 60,
   });
 
 instance.interceptors.request.use(
-    (config)=>{
-        // config.headers['x-access-token'] = window.sessionStorage.getItem("token");
+    async(config)=>{
+        const storagedToken = await EncryptedStorage.getItem("jwt_token");
+        if(storagedToken !== null) {
+            const {token} = JSON.parse(storagedToken)
+            if(token) config.headers['x-access-token'] = token;
+        }
+        
         return config;
     }
     ,(error)=>{

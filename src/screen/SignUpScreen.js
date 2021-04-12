@@ -34,7 +34,7 @@ export default ({navigation})=>{
                             onPress: () => {
                                 navigation.reset({
                                     index:0,
-                                    routes:[{name:"Login"}]
+                                    routes:[{name:"WelcomeScreen"}]
                                 });
                             },
                           }

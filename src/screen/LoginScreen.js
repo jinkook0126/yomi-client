@@ -1,18 +1,19 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {Text,View,TextInput,SafeAreaView,Image,TouchableOpacity} from 'react-native'
 import { useDispatch } from 'react-redux';
 import {loginRequest} from '../reducers/auth';
 
 export default ({navigation})=>{
     const dispatch = useDispatch();
+    const [mail,setMail] = useState("");
+    const [pw,setPw] = useState("");
     const onLogin = () => {
-        dispatch(loginRequest()).then(({result}) => {
-            if(result){
-                navigation.reset({
-                    index:0,
-                    routes:[{name:"Dock"}]
-                });
+        dispatch(loginRequest(mail,pw)).then(({login}) => {
+            if(!login) {
+                alert("회원정보가 일치하지 않습니다.")
             }
+        }).catch(error=>{
+            alert(error.response.data.message)
         })
     }
     return (
@@ -23,10 +24,15 @@ export default ({navigation})=>{
                 </View>
                 <View style={{paddingHorizontal:20,marginTop:10}}>
                     <View style={{borderBottomWidth:1,borderBottomColor:"#EEEEEE",height:40}}>
-                        <TextInput placeholder={"이메일"} style={{flex:1,height:30,alignItems:"stretch",paddingVertical:0}} placeholderTextColor={"#9E9E9E"}></TextInput>
+                        <TextInput placeholder={"이메일"} style={{flex:1,height:30,alignItems:"stretch",paddingVertical:0}} placeholderTextColor={"#9E9E9E"}
+                            onChangeText={value=>setMail(value)}
+                        ></TextInput>
                     </View>
                     <View style={{borderBottomWidth:1,borderBottomColor:"#EEEEEE",height:40,marginTop:16}}>
-                        <TextInput placeholder={"비밀번호"} style={{flex:1,height:30,alignItems:"stretch",paddingVertical:0}} placeholderTextColor={"#9E9E9E"}></TextInput>
+                        <TextInput placeholder={"비밀번호"} style={{flex:1,height:30,alignItems:"stretch",paddingVertical:0}} placeholderTextColor={"#9E9E9E"}
+                            secureTextEntry={true}
+                            onChangeText={value=>setPw(value)}
+                        ></TextInput>
                     </View>
                     <TouchableOpacity onPress={onLogin}>
                         <View style={{marginTop:16,backgroundColor:'#8C6C51',justifyContent:'center',alignItems:"center",height:40,borderRadius:6}}>
