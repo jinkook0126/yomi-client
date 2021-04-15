@@ -1,9 +1,9 @@
-import React,{useState} from 'react';
-import { TextInput,Text,View,Image,StyleSheet,TouchableOpacity,FlatList } from 'react-native';
+import React,{useState,useEffect} from 'react';
+import { TextInput,Text,View,Image,StyleSheet,TouchableOpacity,FlatList,Alert } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
-
 import { useDispatch } from 'react-redux';
 import {closeModal} from '../reducers/modal';
+import send from '../modules/send';
 
 export default ()=>{
     const dispatch = useDispatch();
@@ -17,13 +17,58 @@ export default ()=>{
     const [selectedValue, setSelectedValue] = useState(0);
     const [edit,setEdit] = useState(false);
     const pickerList = ["걷기","러닝","헬스장","요가","필라테스","홈트레이닝","직접입력"]
+    const [contentsIdx,setContentsIdx] = useState("");
+
+    useEffect(()=>{
+        const initDesk = async()=>{
+            const {success,LISTS : lists,IDX} = await send.get("/contents/workout");
+            if(success && lists.length !== 0) {
+                setContentsIdx(IDX);
+                const fromList = [];
+                let fromHour = 0;
+                let fromMin = 0;
+                lists.forEach(item => {
+                    fromList.push({
+                        expl:item.expl,
+                        hours:item.hours,
+                        min:item.min
+                    });
+                    fromHour += parseInt(item.hours);
+                    fromMin += parseInt(item.min);
+                    if(fromMin>=60) {
+                        fromHour += 1;
+                        fromMin -= 60;
+                    }
+                });
+                setLists(fromList);
+                setTotalHours(fromHour);
+                setTotalMin(fromMin);
+            }
+        }
+        initDesk();
+    },[])
 
     const handleClose=()=>{
         dispatch(closeModal());
     }
-    const handleSave=()=>{
-        alert("save!");
-        dispatch(closeModal());
+    const handleSave=async()=>{
+        let flag = false;
+        const update = contentsIdx !== "";
+        if(!update) { // 신규
+            const {success} = await send.post("/contents/workout",{list:lists});
+            flag = success;
+        } else if(!update && lists.length === 0) { //에러
+            Alert.alert("알림","목록을 입력해주세요.",[{text:'확인'}]);
+        } else if(update && lists.length === 0) { //삭제
+            const {success} = await send.delete("/contents/workout",{params:{idx:contentsIdx}});
+            flag = success;
+        } else if(update && lists.length !== 0) { //수정
+            const {success} = await send.put("/contents/workout",{list:lists,idx:contentsIdx});
+            flag = success;
+        }
+        if(flag) {
+            Alert.alert("알림","저장되었습니다.",[{text:'저장',onPress:()=>dispatch(closeModal())}])
+        }
     }
     const addList = ()=>{
         calcTotalHousrs();
@@ -50,7 +95,16 @@ export default ()=>{
         setTotalMin(calcMin);
     }
     const removeItem = (idx)=>{
-        setLists(lists.filter((item,index)=>index !== idx))
+        let calcMin = totalMin-parseInt(lists[idx].min);
+        let calcHours = totalHours-parseInt(lists[idx].hours);
+
+        if(calcMin < 0) {
+            calcMin +=60;
+            calcHours -= 1;
+        }
+        setTotalHours(calcHours);
+        setTotalMin(calcMin);
+        setLists(lists.filter((item,index)=>index !== idx));
     }
     const renderItem=({item,index})=>{
         return (
@@ -130,12 +184,12 @@ export default ()=>{
                         </View>
                         <View style={{marginTop:10,flexDirection:"row",justifyContent:"flex-end",alignItems:"center"}}>
                             <View style={{backgroundColor:"#EEEEEE",width:24,height:16,marginRight:8}}>
-                                <TextInput value={hours} onChangeText={(value)=>setHours(value)} style={{flex:1,height:16,alignItems:"stretch",paddingVertical:0,fontSize:12}}/>
+                                <TextInput value={hours} keyboardType={"number-pad"} onChangeText={(value)=>setHours(value)} style={{flex:1,height:16,alignItems:"stretch",paddingVertical:0,fontSize:12}}/>
                             </View>
                             <Text style={[styles.commonColor,{fontSize:14,fontWeight:'bold'}]}>시간</Text>
 
                             <View style={{backgroundColor:"#EEEEEE",width:24,height:16,marginRight:8,marginLeft:16}}>
-                                <TextInput value={min} onChangeText={(value)=>setMin(value)} style={{flex:1,height:16,alignItems:"stretch",paddingVertical:0,fontSize:12}}/>
+                                <TextInput value={min} keyboardType={"number-pad"} onChangeText={(value)=>setMin(value)} style={{flex:1,height:16,alignItems:"stretch",paddingVertical:0,fontSize:12}}/>
                             </View>
                             <Text style={[styles.commonColor,{fontSize:14,fontWeight:'bold'}]}>분</Text>
 
