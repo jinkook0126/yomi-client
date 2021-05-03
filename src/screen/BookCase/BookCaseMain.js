@@ -1,14 +1,18 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import {Text,View,SafeAreaView,Image,ScrollView,StyleSheet,TouchableOpacity} from 'react-native'
 import { useDispatch } from 'react-redux';
 import Dash from 'react-native-dash';
 import Modal from 'react-native-modal';
-import {openModal} from '../../reducers/modal';
+import {openModalWithProps} from '../../reducers/modal';
+import { Rating } from 'react-native-ratings';
+import send from '../../modules/send';
 
 export default ({navigation})=>{
     const dispatch = useDispatch();
     const [visible,setVisible] = useState(false);
     const [order,setOrder] = useState("latest");
+    const [ingList,setIngList] = useState([]);
+    const [compList,setCompList] = useState([]);
     const [orderText,setOrderText] = useState("최신순");
     const handleOrder=(_order)=>{
         setOrder(_order);
@@ -26,9 +30,64 @@ export default ({navigation})=>{
                 setOrderText("가나다 순");
                 break;
         }
-        setVisible(false)
-
+        setVisible(false);
     }
+    useEffect(()=>{
+        getList();
+    },[order])
+    const getList = async()=>{
+        const {success,complete,incomplete} = await send.get("/contents/book/list",{params:{order:order}});
+        if(success) {
+            setCompList(complete);
+            setIngList(incomplete);
+        }
+    }
+    useEffect(()=>{
+        const unsubscribe = navigation.addListener('focus', async() => {
+            getList();
+        });
+        return unsubscribe;
+    },[navigation]);
+
+    const asdf = ()=>{
+        console.log("asdf")
+    }
+
+    const handleIngBook = (isbn)=>{
+        ingList.forEach((item,idx)=>{
+            if(item.ISBN === isbn) 
+                dispatch(openModalWithProps('book',{
+                    thumbnail:item.BOOK_URL,
+                    memo:item.U_MEMO,
+                    rating:item.STAR_RATE,
+                    contents:item.BOOK_SUMMARY,
+                    title:item.BOOK_NM,
+                    idx:item.IDX,
+                    authors:item.BOOK_AUTHOR,
+                    comp:false,
+                    refresh:getList
+                }));
+        })
+    }
+
+    const handleCompBook = (isbn)=>{
+        compList.forEach((item,idx)=>{
+            if(item.ISBN === isbn) 
+                dispatch(openModalWithProps('bookRg',{
+                    mode:"update",
+                    thumbnail:item.BOOK_URL,
+                    memo:item.U_MEMO,
+                    rating:item.STAR_RATE,
+                    contents:item.BOOK_SUMMARY,
+                    title:item.BOOK_NM,
+                    idx:item.IDX,
+                    authors:item.BOOK_AUTHOR,
+                    comp:true,
+                    refresh:getList
+                }));
+        })
+    }
+
     return (
         <SafeAreaView style={{ flex: 1,backgroundColor:'#ffffff' }}>
             <View style={{height:50,flexDirection:"row",alignItems:'center'}}>
@@ -51,16 +110,32 @@ export default ({navigation})=>{
                             </View>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>dispatch(openModal("book"))}>
-                        <View style={{width:90,height:116,marginTop:16,backgroundColor:'black'}}>
-                        </View>
-                    </TouchableOpacity>
-                    <View style={{width:90,height:116,marginTop:16,backgroundColor:'yellow'}}>
-                    </View>
-                    <View style={{width:90,height:116,marginTop:16,backgroundColor:'green'}}>
-                    </View>
+                    {
+                        ingList.map((item,index)=>{
+                            return (
+                                <TouchableOpacity style={{marginTop:16}} key={index} onPress={()=>{handleIngBook(item.ISBN)}}>
+                                    <Image source={{uri:item.BOOK_URL}} style={{width:90,height:116,borderRadius:6}} />
+                                    <View style={{width:90}}>
+                                        <Text numberOfLines={1} ellipsizeMode={"tail"} style={{color:'#2B2B2B',fontSize:14,marginTop:6}}>{item.BOOK_NM}</Text>
+                                        <Text numberOfLines={1} ellipsizeMode={"tail"} style={{color:'#757575',fontSize:10,marginTop:2}}>{item.BOOK_NM}</Text>
+                                    </View>
+                                    <View style={{alignItems:"flex-start"}}>
+                                        <Rating
+                                            readonly={true}
+                                            fractions={2}
+                                            ratingCount={5}
+                                            minValue={0.5}
+                                            jumpValue={0.5}
+                                            imageSize={14}
+                                            startingValue={parseFloat(item.STAR_RATE)}
+                                        />
+                                    </View>
+                                </TouchableOpacity>
+                            )
+                        })
+                    }
                 </View>
-                <View style={{marginTop:28}}>
+                <View style={{marginVertical:28}}>
                     <View style={{flexDirection:'row',justifyContent:"space-between"}}>
                         <Text style={[styles.commonColor,{fontSize:14,fontWeight:'bold'}]}>완독한 책</Text>
                         <TouchableOpacity onPress={()=>setVisible(true)}>
@@ -71,12 +146,30 @@ export default ({navigation})=>{
                         </TouchableOpacity>
                     </View>
                     <View style={{flexWrap:'wrap',flexDirection:"row",justifyContent:'space-between'}}>
-                        <View style={{width:90,height:116,marginTop:16,backgroundColor:'black'}}>
-                        </View>
-                        <View style={{width:90,height:116,marginTop:16,backgroundColor:'yellow'}}>
-                        </View>
-                        <View style={{width:90,height:116,marginTop:16,backgroundColor:'green'}}>
-                        </View>
+                    {
+                        compList.map((item,index)=>{
+                            return (
+                                <TouchableOpacity style={{marginTop:16}} key={index} onPress={()=>{handleCompBook(item.ISBN)}}>
+                                    <Image source={{uri:item.BOOK_URL}} style={{width:90,height:116,borderRadius:6}} />
+                                    <View style={{width:90}}>
+                                        <Text numberOfLines={1} ellipsizeMode={"tail"} style={{color:'#2B2B2B',fontSize:14,marginTop:6}}>{item.BOOK_NM}</Text>
+                                        <Text numberOfLines={1} ellipsizeMode={"tail"} style={{color:'#757575',fontSize:10,marginTop:2}}>{item.BOOK_NM}</Text>
+                                    </View>
+                                    <View style={{alignItems:"flex-start"}}>
+                                        <Rating
+                                            readonly={true}
+                                            fractions={2}
+                                            ratingCount={5}
+                                            minValue={0.5}
+                                            jumpValue={0.5}
+                                            imageSize={14}
+                                            startingValue={parseFloat(item.STAR_RATE)}
+                                        />
+                                    </View>
+                                </TouchableOpacity>
+                            )
+                        })
+                    }
                     </View> 
                 </View>
             </ScrollView>

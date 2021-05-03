@@ -9,30 +9,38 @@ export default ()=>{
     const dispatch = useDispatch();
     const [complete, setComplete] = useState(false);
     const [memo,setMemo] = useState("");
-    const [readPage,setReadPage] = useState(0);
     const [rate,setRate] = useState(2.5);
     const params = useSelector(state=> state.modal.params);
-
+    
     useEffect(()=>{
-        setRate(params.rating);
-        setMemo(params.memo);
-        setComplete(params.comp);
+        if(params.mode === "update") {
+            setRate(params.rating);
+            setMemo(params.memo);
+            setComplete(params.comp);
+        }
     },[]);
-
     const handleClose=()=>{
         dispatch(closeModal());
     }
     const handleSave=async()=>{
         try {
-            const {success} = await send.put("/contents/book",{...params,rate:rate,complete:complete,readPage:readPage,memo:memo,daily:true});
-            if(success) {
-                Alert.alert("알림","저장되었습니다.",[{text:'저장',onPress:()=>{
-                    params.refresh();
-                    dispatch(closeModal());
-                }}])
+            if(params.mode === "update") {
+                dispatch(closeModal());
+                const {success} = await send.put("/contents/book",{...params,rate:rate,complete:complete,memo:memo});
+                if(success) {
+                    Alert.alert("알림","저장되었습니다.",[{text:'저장',onPress:()=>{
+                        params.refresh();
+                        dispatch(closeModal());
+                    }}])
+                }
+            } else {
+                const {success} = await send.post("/contents/book/rg",{...params,rate:rate,complete:complete,memo:memo});
+                if(success) {
+                    Alert.alert("알림","저장되었습니다.",[{text:'저장',onPress:()=>dispatch(closeModal())}])
+                }
             }
-        } catch(error){
-            alert(error.response.data.message);
+        } catch(error) {
+            alert(error.response.data.message);   
         }
     }
     return (
@@ -49,12 +57,6 @@ export default ()=>{
                     </View>
                 </View>
                 <View style={{marginTop:25,paddingHorizontal:5,flexDirection:'row',alignItems:'center'}}>
-                    <Text style={{fontSize:12,color:"#424242",fontWeight:'bold'}}>읽은 페이지 수</Text>
-                    <View style={{backgroundColor:"#EEEEEE",width:22,height:16,marginLeft:10}}>
-                        <TextInput keyboardType={"number-pad"} value={String(readPage)} onChangeText={(text)=>setReadPage(text)} style={{flex:1,height:16,alignItems:"stretch",paddingVertical:0,fontSize:12}}/>
-                    </View>
-                </View>
-                <View style={{marginTop:10,paddingHorizontal:5,flexDirection:'row',alignItems:'center'}}>
                     <Text style={{fontSize:12,color:"#424242",fontWeight:'bold'}}>별점</Text>
                     <Rating
                         fractions={2}
@@ -63,7 +65,7 @@ export default ()=>{
                         jumpValue={0.5}
                         imageSize={14}
                         startingValue={parseFloat(rate)}
-                        style={{marginLeft:16,backgroundColor:'red'}}
+                        style={{marginLeft:16}}
                         onFinishRating={value=>setRate(value)}
                     />
                 </View>

@@ -1,9 +1,8 @@
 import React,{useState} from 'react';
 import {Text,View,SafeAreaView,Image,FlatList,StyleSheet,TouchableOpacity,TextInput} from 'react-native'
 import { useDispatch } from 'react-redux';
-import axios from 'axios';
-import {openModal} from '../../reducers/modal';
-const API_KEY = "a5bf620feebcc2c9bf7af09e3eb5d39d";
+import send from '../../modules/send';
+import {openModalWithProps} from '../../reducers/modal';
 
 export default ({navigation})=>{
     const dispatch = useDispatch();
@@ -19,17 +18,9 @@ export default ({navigation})=>{
             setSearchList([])
         }
         let bookList = [];
-        const {data} = await axios.get("https://dapi.kakao.com/v3/search/book?target=title",{
-            params:{
-                query:searchTitle,
-                size:15,
-                page:isSearch?1:page
-            },
-            headers:{
-                Authorization:`KakaoAK ${API_KEY}`
-            }
-        });
-        for (const {authors, title, thumbnail,isbn,contents} of data.documents) {
+        const {documents,meta} = await send.get("/contents/book/search",{params:{page:isSearch?1:page,searchTitle:searchTitle}})
+        
+        for (const {authors, title, thumbnail,isbn,contents} of documents) {
             bookList.push({
                 authors:authors.join(', '),
                 title:title,
@@ -39,9 +30,9 @@ export default ({navigation})=>{
             })
         }
         setPage(isSearch?2:page+1)
-        setisEnd(data.meta.is_end)
+        setisEnd(meta.is_end)
         setSearchList(isSearch?bookList:searchList.concat(bookList))
-        setTotalCnt(data.meta.total_count)
+        setTotalCnt(meta.total_count)
     }
     
     const handleLoadMore = ()=>{
@@ -51,9 +42,8 @@ export default ({navigation})=>{
     }
     const renderItem = ({item,index}) =>{
         const imgUrl = item.thumbnail !== "" ? {uri:item.thumbnail} : require('../../img/emptyThumbnail.png')
-        // console.log(searchList[index])
         return (
-            <TouchableOpacity onPress={()=>dispatch(openModal('book'))}>
+            <TouchableOpacity onPress={()=>dispatch(openModalWithProps('bookRg',{...searchList[index],mode:"new"}))}>
                 <View style={{padding:4}}>
                     <View style={{flexDirection:'row',borderBottomWidth:1,borderBottomColor:"#EEEEEE"}}>
                         <Image source={imgUrl} style={{width:67,height:84}}/>

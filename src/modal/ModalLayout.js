@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { useSelector } from 'react-redux';
 import TestModalContents from './TestModalContents';
 import BookModalContents from './BookModalContents';
+import BookRgModalContents from './BookRgModalContents';
 import DeskodalContents from './DeskModalContents';
 import HealthModalContents from './HealthModalContents';
 import CalModalContents from './CalModalContents';
@@ -18,6 +19,8 @@ export default ()=>{
                 return <TestModalContents />;
             case 'book' :
                 return <BookModalContents />;
+            case 'bookRg' :
+                return <BookRgModalContents />;
             case 'desk' :
                 return <DeskodalContents />;
             case 'cal' :
