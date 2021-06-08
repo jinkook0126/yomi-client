@@ -1,58 +1,103 @@
 import React,{useState} from 'react';
 import {TextInput,Text,View,SafeAreaView,Image,StyleSheet,TouchableOpacity, ImageBackground, FlatList} from 'react-native'
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import Modal from 'react-native-modal';
-import axios from 'axios';
+import send from '../../modules/send';
 
 const api_url = "https://api.myfitnesspal.com/public/nutrition"
 export default ({navigation,route})=>{
     const dispatch = useDispatch();
+    const userNo = useSelector(state => state.auth.userInfo.userNo);
     const [isVisible,setIsVisible] = useState(false);
     const [extraView,setExtraView] = useState(false);
     const [searchKey,setSearchKey] = useState("");
     const [searchList,setSearchList] = useState([]);
     const [page,setPage] = useState(1);
-    const [loading,setLoading] = useState(true)
+    const [loading,setLoading] = useState(true);
+
+    const [selectList,setSelectList] = useState([]);
+    const [selectCnt,setSelectCnt] = useState(0);
+
+    const [customFoodCnt,setCustomFoodCnt] = useState(0);
+    const [customFoodName,setCustomFoodName] = useState('');
+    const [customFoodKcal,setCustomFoodKcal] = useState(0);
 
     const searchFood = async(isSearch)=>{
-        if(isSearch) {
-            setSearchList([]);
+        try {
+            if(isSearch) {
+                setSearchList([]);
+            }
+            const foodList = [];
+            const {foods} = await send.get("/contents/food/search",{params:{page:isSearch?1:page,searchKey:searchKey}});
+            foods.forEach(food => {
+                foodList.push({
+                    id:food.item.id,
+                    kcal:food.item.nutritional_contents.energy.value,
+                    brand:food.item.brand_name,
+                    desc:food.item.description,
+                    cnt:0
+                })
+            });
+            setPage(page+1)
+            setSearchList(isSearch ? foodList : searchList.concat(foodList));
+        } catch(error) {
+            alert(error.response.data.message);
         }
-        const foodList = [];
-        const {data} = await axios.get(`https://api.myfitnesspal.com/public/nutrition?q=${encodeURI(searchKey)}&page=${isSearch?1:page}&per_page=15`);
-        const foods = data.items;
-        foods.forEach(food => {
-            foodList.push({
-                id:food.item.id,
-                kcal:food.item.nutritional_contents.energy.value,
-                brand:food.item.brand_name,
-                desc:food.item.description,
-                cnt:0
-            })
-        });
-        setPage(page+1)
-        setSearchList(isSearch ? foodList : searchList.concat(foodList));
     }
 
     const handleCount = (mode,id)=>{
         const foodList = [];
+        let selectFood = {};
         searchList.findIndex(food =>{
             if(food.id === id) {
+                selectFood = food;
                 if(mode === 'plus') {
+                    if(food.cnt === 0) setSelectCnt(selectCnt+1);
                     food.cnt = food.cnt +1;
                 } else {
+                    if(food.cnt === 1) setSelectCnt(selectCnt-1);
                     food.cnt = food.cnt !== 0 ? food.cnt -1 : food.cnt
                 }
             }
             foodList.push(food)
         });
-        setSearchList(foodList)
+        setSearchList(foodList);
+        handleSelectList(selectFood,mode);
+    }
+
+    const handleSelectList = (_food,_mode) => {
+        const selectfoodList = [];
+        let flag = true;
+        selectList.map((food,idx) => {
+            if(food.id === _food.id) {
+                flag = !flag;
+                if(_mode === 'plus') {
+                    food.cnt = food.cnt +1;
+                } else {
+                    food.cnt = food.cnt !== 0 ? food.cnt -1 : food.cnt;
+                }
+            }
+            selectfoodList.push(food);
+        })
+        if(flag) {
+            selectfoodList.push({..._food,...{cnt:1}})
+        }
+        console.log(selectfoodList)
+        setSelectList(selectfoodList);
     }
 
     const handleReachEnd = ()=>{
         if (!loading) {
             searchFood();
             setLoading(true);
+        }
+    }
+
+    const customFoodCntHandler = mode =>{
+        if( mode === 'plus') {
+            setCustomFoodCnt(customFoodCnt + 1);
+        } else {
+            if (customFoodCnt !== 0) setCustomFoodCnt(customFoodCnt - 1);
         }
     }
 
@@ -94,7 +139,7 @@ export default ({navigation,route})=>{
                     <Text style={[styles.commonColor,{paddingLeft:20,fontSize:16,fontWeight:'bold'}]}>{route.params.header}</Text>
                 </View>
                 <View style={{flexDirection:"row",alignItems:'center',justifyContent:"flex-end",paddingRight:26}}>
-                    <Text style={[styles.commonColor,{fontSize:'bold',fontSize:14}]}>0</Text>
+                    <Text style={[styles.commonColor,{fontSize:'bold',fontSize:14}]}>{selectCnt}</Text>
                     <TouchableOpacity onPress={()=>{
                         setIsVisible(true)
                     }}>
@@ -143,6 +188,8 @@ export default ({navigation,route})=>{
                                     <TextInput
                                         placeholder={"음식 이름"}
                                         style={{padding:0,height:36,flex:1}}
+                                        onChangeText={text=>setCustomFoodName(text)}
+                                        value={customFoodName}
                                     />
                                 </View>
                                 <View style={{marginTop:10,flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
@@ -150,24 +197,35 @@ export default ({navigation,route})=>{
                                         <TextInput
                                             placeholder={"열량"}
                                             style={{padding:0,height:36,flex:1}}
+                                            keyboardType={"numeric"}
+                                            onChangeText={(kcal)=>setCustomFoodKcal(kcal)}
+                                            value={String(customFoodKcal)}
                                         />
                                         <Text style={[styles.commonColor,{fontSize:"bold",fontSize:14,marginLeft:5}]}>Kcal</Text>
                                     </View>
                                     <View style={{flexDirection:'row',alignItems:"center"}}>
                                         <View style={{marginRight:10,justifyContent:"space-between",alignItems:'center',flexDirection:"row"}}>
-                                            <TouchableOpacity>
+                                            <TouchableOpacity onPress={()=>customFoodCntHandler('minus')}>
                                                 <Image source={require("../../img/ico_minus.png")}/>
                                             </TouchableOpacity>
                                             <View style={{backgroundColor:'#EEEEEE',height:29,width:34,marginHorizontal:6,justifyContent:"center",alignItems:'center'}}>
-                                                <Text style={[styles.commonColor,{fontSize:15,fontWeight:'bold'}]}>0</Text>
+                                                <Text style={[styles.commonColor,{fontSize:15,fontWeight:'bold'}]}>{customFoodCnt}</Text>
                                             </View>
-                                            <TouchableOpacity>
+                                            <TouchableOpacity onPress={()=>customFoodCntHandler('plus')}>
                                                 <Image source={require("../../img/ico_plus.png")}/>
                                             </TouchableOpacity>
                                         </View>
-                                        <View style={{height:36,width:54,backgroundColor:"#8C6C51",justifyContent:'center',alignItems:'center',borderRadius:2}}>
-                                            <Text style={{color:"#FFFFFF",fontWeight:'bold',fontSize:14}}>추가</Text>            
-                                        </View>
+                                        <TouchableOpacity onPress={()=>{
+                                            setSelectList(selectList.concat({"cnt": customFoodCnt, "desc": customFoodName, "id": `${userNo}_${new Date().getTime()}`, "kcal": customFoodKcal}))
+                                            setSelectCnt(selectCnt+1);
+                                            setCustomFoodCnt(0);
+                                            setCustomFoodKcal(0);
+                                            setCustomFoodName("");
+                                        }}>
+                                            <View style={{height:36,width:54,backgroundColor:"#8C6C51",justifyContent:'center',alignItems:'center',borderRadius:2}}>
+                                                <Text style={{color:"#FFFFFF",fontWeight:'bold',fontSize:14}}>추가</Text>            
+                                            </View>
+                                        </TouchableOpacity>
                                     </View>
                                 </View>
                             </View>
@@ -175,7 +233,7 @@ export default ({navigation,route})=>{
                             null
                     }
                 </View>
-                <TouchableOpacity onPress={()=>alert("wjwjw")}>
+                <TouchableOpacity onPress={()=>console.log(selectList)}>
                     <View style={{backgroundColor:"#8C6C51",height:40,justifyContent:'center',alignItems:'center'}}>
                         <Text style={{color:"#FFFFFF",fontWeight:'bold',fontSize:14}}>저장</Text>
                     </View>
@@ -192,54 +250,39 @@ export default ({navigation,route})=>{
                 isVisible={isVisible}
                 hideModalContentWhileAnimating={true}
                 onBackdropPress={()=>{setIsVisible(false)}}
-                style={{justifyContent:'flex-start',marginTop:40}}
+                style={{justifyContent:'flex-start',marginTop:30}}
             >
-                <ImageBackground source={require('../../img/bg_cal_popup.png')} style={{height:220}}>
+                <ImageBackground resizeMode={"stretch"} source={require('../../img/bg_cal_popup.png')} style={{height:240}}>
                     <View style={{height:168,marginTop:26,paddingHorizontal:21}}>
-                        <View style={{marginTop:10,flexDirection:"row",justifyContent:'space-between',alignItems:"center"}}>
-                            <View style={{flexDirection:"row",alignItems:'center'}}>
-                                <TouchableOpacity onPress={()=>alert('삭제')}>
-                                    <Image source={require("../../img/ico_close.png")}/>
-                                </TouchableOpacity>
-                                <Text style={{marginLeft:20 }}>김치찌개</Text>
-                            </View>
-                            <View>
-                                <Text style={[styles.commonColor,{fontSize:14,fontWeight:'bold'}]}>500Kcal</Text>
-                            </View>
-                            <View style={{flexDirection:"row",alignItems:'center'}}>
-                                <TouchableOpacity onPress={()=>alert('삭제')}>
-                                    <Image source={require("../../img/ico_minus.png")}/>
-                                </TouchableOpacity>
-                                <View style={{backgroundColor:"#EEEEEE",width:20,height:20,marginHorizontal:6,justifyContent:'center',alignItems:'center'}}>
-                                     <Text style={[styles.commonColor,{fontWeight:'bold',fontSize:15}]}>1</Text>
-                                </View>
-                                <TouchableOpacity onPress={()=>alert('삭제')}>
-                                    <Image source={require("../../img/ico_plus.png")}/>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                        <View style={{marginTop:10,flexDirection:"row",justifyContent:'space-between',alignItems:"center"}}>
-                            <View style={{flexDirection:"row",alignItems:'center'}}>
-                                <TouchableOpacity onPress={()=>alert('삭제')}>
-                                    <Image source={require("../../img/ico_close.png")}/>
-                                </TouchableOpacity>
-                                <Text style={{marginLeft:20 }}>계란</Text>
-                            </View>
-                            <View>
-                                <Text style={[styles.commonColor,{fontSize:14,fontWeight:'bold'}]}>3 0Kcal</Text>
-                            </View>
-                            <View style={{flexDirection:"row",alignItems:'center'}}>
-                                <TouchableOpacity onPress={()=>alert('삭제')}>
-                                    <Image source={require("../../img/ico_minus.png")}/>
-                                </TouchableOpacity>
-                                <View style={{backgroundColor:"#EEEEEE",width:20,height:20,marginHorizontal:6,justifyContent:'center',alignItems:'center'}}>
-                                     <Text style={[styles.commonColor,{fontWeight:'bold',fontSize:15}]}>1</Text>
-                                </View>
-                                <TouchableOpacity onPress={()=>alert('삭제')}>
-                                    <Image source={require("../../img/ico_plus.png")}/>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
+                        {
+                            selectList.map((item,index)=>{
+                                // console.log(item)
+                                return (
+                                    <View key={index} style={{marginTop:10,flexDirection:"row",justifyContent:'space-between',alignItems:"center"}}>
+                                        <View style={{flexDirection:"row",alignItems:'center',flex:1}}>
+                                            <TouchableOpacity onPress={()=>alert('삭제')}>
+                                                <Image source={require("../../img/ico_close.png")}/>
+                                            </TouchableOpacity>
+                                            <Text style={{marginLeft:20 }}>{item.desc}</Text>
+                                        </View>
+                                        <View style={{flex:1,alignItems:"center"}}>
+                                            <Text style={[styles.commonColor,{fontSize:14,fontWeight:'bold'}]}>{`${item.kcal}Kcal`}</Text>
+                                        </View>
+                                        <View style={{flexDirection:"row",alignItems:'center',flex:1,justifyContent:"flex-end"}}>
+                                            <TouchableOpacity onPress={()=>alert('삭제')}>
+                                                <Image source={require("../../img/ico_minus.png")}/>
+                                            </TouchableOpacity>
+                                            <View style={{backgroundColor:"#EEEEEE",width:20,height:20,marginHorizontal:6,justifyContent:'center',alignItems:'center'}}>
+                                                <Text style={[styles.commonColor,{fontWeight:'bold',fontSize:15}]}>{item.cnt}</Text>
+                                            </View>
+                                            <TouchableOpacity onPress={()=>alert('삭제')}>
+                                                <Image source={require("../../img/ico_plus.png")}/>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                )
+                            })
+                        }
                     </View>
                 </ImageBackground>
             </Modal>

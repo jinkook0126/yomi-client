@@ -40,9 +40,8 @@ export const logoutRequest = (mail,pw) =>{
     }
 }
 
-export const loginSuccess = () => ({ type: LOGIN_SUCCESS });
+export const loginSuccess = (name,userNo) => ({ type: LOGIN_SUCCESS,name,userNo });
 export const logoutSuccess = () => ({ type: LOGOUT_SUCCESS });
-
 
 
 // **** 초기상태 정의
@@ -57,7 +56,8 @@ const initState = {
 // **** 리듀서 작성
 export default function reducer(state=initState, action){
     switch (action.type) {
-        case LOGIN_SUCCESS: 
+        case LOGIN_SUCCESS:
+            console.log(action) 
             return {
                 ...state,
                 login:{stat:true},
@@ -76,6 +76,6 @@ export default function reducer(state=initState, action){
                 }
             }
         default:
-             return state;
+            return state;
     }
 }
