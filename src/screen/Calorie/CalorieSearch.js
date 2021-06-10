@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import {TextInput,Text,View,SafeAreaView,Image,StyleSheet,TouchableOpacity, ImageBackground, FlatList} from 'react-native'
+import {TextInput,Text,View,SafeAreaView,Image,StyleSheet,TouchableOpacity, ImageBackground, FlatList,Alert} from 'react-native'
 import { useDispatch,useSelector } from 'react-redux';
 import Modal from 'react-native-modal';
 import send from '../../modules/send';
@@ -82,7 +82,6 @@ export default ({navigation,route})=>{
         if(flag) {
             selectfoodList.push({..._food,...{cnt:1}})
         }
-        console.log(selectfoodList)
         setSelectList(selectfoodList);
     }
 
@@ -98,6 +97,36 @@ export default ({navigation,route})=>{
             setCustomFoodCnt(customFoodCnt + 1);
         } else {
             if (customFoodCnt !== 0) setCustomFoodCnt(customFoodCnt - 1);
+        }
+    }
+
+    const renderTitle = (type) =>{
+        switch (type) {
+            case "M01":
+                return "아침식사";
+            case "M02":
+                return "점심식사";
+            case "M03":
+                return "저녁식사";
+            case "M04":
+                return "야식";
+            case "M05":
+              return "간식";
+        }
+    }
+
+    const handleSave = async() => {
+        try {
+            const {success} = await send.post("/contents/food",
+                {...selectList,...{}});
+            if(success) {
+                Alert.alert("알림","저장되었습니다.",[{text:'저장',onPress:()=>{
+                    params.refresh();
+                    dispatch(closeModal());
+                }}])
+            }
+        } catch(error){
+            alert(error.response.data.message);
         }
     }
 
@@ -136,7 +165,7 @@ export default ({navigation,route})=>{
                             <Image source={require('../../img/ico_back.png')}  />
                         </View>
                     </TouchableOpacity>
-                    <Text style={[styles.commonColor,{paddingLeft:20,fontSize:16,fontWeight:'bold'}]}>{route.params.header}</Text>
+                    <Text style={[styles.commonColor,{paddingLeft:20,fontSize:16,fontWeight:'bold'}]}>{renderTitle(route.params.type)}</Text>
                 </View>
                 <View style={{flexDirection:"row",alignItems:'center',justifyContent:"flex-end",paddingRight:26}}>
                     <Text style={[styles.commonColor,{fontSize:'bold',fontSize:14}]}>{selectCnt}</Text>
@@ -199,7 +228,7 @@ export default ({navigation,route})=>{
                                             style={{padding:0,height:36,flex:1}}
                                             keyboardType={"numeric"}
                                             onChangeText={(kcal)=>setCustomFoodKcal(kcal)}
-                                            value={String(customFoodKcal)}
+                                            value={String(Number(customFoodKcal))}
                                         />
                                         <Text style={[styles.commonColor,{fontSize:"bold",fontSize:14,marginLeft:5}]}>Kcal</Text>
                                     </View>
@@ -233,7 +262,7 @@ export default ({navigation,route})=>{
                             null
                     }
                 </View>
-                <TouchableOpacity onPress={()=>console.log(selectList)}>
+                <TouchableOpacity onPress={handleSave}>
                     <View style={{backgroundColor:"#8C6C51",height:40,justifyContent:'center',alignItems:'center'}}>
                         <Text style={{color:"#FFFFFF",fontWeight:'bold',fontSize:14}}>저장</Text>
                     </View>
@@ -256,11 +285,14 @@ export default ({navigation,route})=>{
                     <View style={{height:168,marginTop:26,paddingHorizontal:21}}>
                         {
                             selectList.map((item,index)=>{
-                                // console.log(item)
                                 return (
                                     <View key={index} style={{marginTop:10,flexDirection:"row",justifyContent:'space-between',alignItems:"center"}}>
                                         <View style={{flexDirection:"row",alignItems:'center',flex:1}}>
-                                            <TouchableOpacity onPress={()=>alert('삭제')}>
+                                            <TouchableOpacity onPress={()=>{
+                                                setSelectList(selectList.filter(food => food.id !== item.id));
+                                                setSearchList(searchList.map(food=> food.id === item.id ? ({...item,...{cnt:0}}) : food));
+                                                setSelectCnt(selectCnt-1)
+                                            }}>
                                                 <Image source={require("../../img/ico_close.png")}/>
                                             </TouchableOpacity>
                                             <Text style={{marginLeft:20 }}>{item.desc}</Text>
@@ -269,13 +301,25 @@ export default ({navigation,route})=>{
                                             <Text style={[styles.commonColor,{fontSize:14,fontWeight:'bold'}]}>{`${item.kcal}Kcal`}</Text>
                                         </View>
                                         <View style={{flexDirection:"row",alignItems:'center',flex:1,justifyContent:"flex-end"}}>
-                                            <TouchableOpacity onPress={()=>alert('삭제')}>
+                                            <TouchableOpacity onPress={()=>{
+                                                setSearchList(searchList.map(food=> food.id === item.id ? ({...food,...{cnt:parseInt(food.cnt)-1}}) : food));
+                                                if(item.cnt === 1) {
+                                                    setSelectList(selectList.filter(food => food.id !== item.id));
+                                                    setSelectCnt(cnt -1);
+                                                } else {
+                                                    setSelectList(selectList.map(food => food.id === item.id ? ({...food,...{cnt:parseInt(food.cnt)-1}}) : food ));
+
+                                                }
+                                            }}>
                                                 <Image source={require("../../img/ico_minus.png")}/>
                                             </TouchableOpacity>
                                             <View style={{backgroundColor:"#EEEEEE",width:20,height:20,marginHorizontal:6,justifyContent:'center',alignItems:'center'}}>
                                                 <Text style={[styles.commonColor,{fontWeight:'bold',fontSize:15}]}>{item.cnt}</Text>
                                             </View>
-                                            <TouchableOpacity onPress={()=>alert('삭제')}>
+                                            <TouchableOpacity onPress={()=>{
+                                                setSelectList(selectList.map(food => food.id === item.id ? ({...food,...{cnt:parseInt(food.cnt)+1}}) : food ));
+                                                setSearchList(searchList.map(food=> food.id === item.id ? ({...food,...{cnt:parseInt(food.cnt)+1}}) : food));
+                                            }}>
                                                 <Image source={require("../../img/ico_plus.png")}/>
                                             </TouchableOpacity>
                                         </View>

@@ -7,7 +7,7 @@ export default ({navigation})=>{
     const dispatch = useDispatch();
     const navigateInfo = (type)=>{
         navigation.navigate('CalorieSearch',{
-            header:type
+            type:type
         })
     }
 
@@ -37,7 +37,7 @@ export default ({navigation})=>{
                         <View style={styles.foodHeaderWrap}>
                             <View style={styles.foodHeader}>
                                 <Text style={[styles.commonColor,{fontWeight:'bold',fontSize:14,paddingLeft:12}]}>아침</Text>
-                                <TouchableOpacity onPress={()=>navigateInfo("아침식사")} >
+                                <TouchableOpacity onPress={()=>navigateInfo("M01")} >
                                     <View style={styles.foodNext}>
                                         <Image source={require("../../img/ico_next_arrow.png")}/>
                                     </View>
@@ -56,7 +56,7 @@ export default ({navigation})=>{
                         <View style={styles.foodHeaderWrap}>
                             <View style={styles.foodHeader}>
                                 <Text style={[styles.commonColor,{fontWeight:'bold',fontSize:14,paddingLeft:12}]}>점심</Text>
-                                <TouchableOpacity onPress={()=>navigateInfo("점심식사")} >
+                                <TouchableOpacity onPress={()=>navigateInfo("M02")} >
                                     <View style={styles.foodNext}>
                                         <Image source={require("../../img/ico_next_arrow.png")}/>
                                     </View>
@@ -82,7 +82,7 @@ export default ({navigation})=>{
                         <View style={styles.foodHeaderWrap}>
                             <View style={styles.foodHeader}>
                                 <Text style={[styles.commonColor,{fontWeight:'bold',fontSize:14,paddingLeft:12}]}>저녁</Text>
-                                <TouchableOpacity onPress={()=>navigateInfo("저녁식사")} >
+                                <TouchableOpacity onPress={()=>navigateInfo("M03")} >
                                     <View style={styles.foodNext}>
                                         <Image source={require("../../img/ico_next_arrow.png")}/>
                                     </View>
@@ -94,7 +94,7 @@ export default ({navigation})=>{
                         <View style={styles.foodHeaderWrap}>
                             <View style={styles.foodHeader}>
                                 <Text style={[styles.commonColor,{fontWeight:'bold',fontSize:14,paddingLeft:12}]}>야식</Text>
-                                <TouchableOpacity onPress={()=>navigateInfo("야식")} >
+                                <TouchableOpacity onPress={()=>navigateInfo("M04")} >
                                     <View style={styles.foodNext}>
                                         <Image source={require("../../img/ico_next_arrow.png")}/>
                                     </View>
@@ -106,7 +106,7 @@ export default ({navigation})=>{
                         <View style={styles.foodHeaderWrap}>
                             <View style={styles.foodHeader}>
                                 <Text style={[styles.commonColor,{fontWeight:'bold',fontSize:14,paddingLeft:12}]}>간식</Text>
-                                <TouchableOpacity onPress={()=>navigateInfo("간식")} >
+                                <TouchableOpacity onPress={()=>navigateInfo("M05")} >
                                     <View style={styles.foodNext}>
                                         <Image source={require("../../img/ico_next_arrow.png")}/>
                                     </View>
