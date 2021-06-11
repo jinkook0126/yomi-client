@@ -114,15 +114,12 @@ export default ({navigation,route})=>{
               return "간식";
         }
     }
-
     const handleSave = async() => {
         try {
-            const {success} = await send.post("/contents/food",
-                {...selectList,...{}});
+            const {success} = await send.post("/contents/food",{foods:selectList,m_type:route.params.type});
             if(success) {
                 Alert.alert("알림","저장되었습니다.",[{text:'저장',onPress:()=>{
-                    params.refresh();
-                    dispatch(closeModal());
+                    console.log('뒤로 돌아가라아아')
                 }}])
             }
         } catch(error){
