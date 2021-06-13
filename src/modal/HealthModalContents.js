@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import { TextInput,Text,View,Image,StyleSheet,TouchableOpacity,FlatList,Alert } from 'react-native';
+import { TextInput,Text,View,Image,StyleSheet,TouchableOpacity,FlatList,Alert,ImageBackground } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { useDispatch } from 'react-redux';
 import {closeModal} from '../reducers/modal';
@@ -18,6 +18,7 @@ export default ()=>{
     const [edit,setEdit] = useState(false);
     const pickerList = ["걷기","러닝","헬스장","요가","필라테스","홈트레이닝","직접입력"]
     const [contentsIdx,setContentsIdx] = useState("");
+    const [bgHeight,setBgHeight] = useState(360);
 
     useEffect(()=>{
         const initDesk = async()=>{
@@ -126,7 +127,7 @@ export default ()=>{
     }
 
     return (
-        <View style={{width:320,padding:16,backgroundColor:'white',borderRadius:8}}>
+        <ImageBackground resizeMode={'stretch'} source={require('../img/modal_bg.png')} style={{width:320,height:bgHeight,padding:16}}>
             <View style={{justifyContent:'center',alignItems:'center'}}>
                 <Text style={[styles.commonColor,{fontSize:16,fontWeight:'bold'}]}>운동기구</Text>
             </View>
@@ -143,7 +144,10 @@ export default ()=>{
                 />
                 <View style={{marginTop:16,flexDirection:"row",alignItems:"center"}}>
                     <Text style={[styles.commonColor,{fontSize:14,fontWeight:'bold'}]}>운동 추가하기</Text>
-                    <TouchableOpacity onPress={()=>setExtraView(!extraView)}>
+                    <TouchableOpacity onPress={()=>{
+                        extraView ? setBgHeight(418) : setBgHeight(360)
+                        setExtraView(!extraView)
+                    }}>
                         {
                             extraView ? 
                                 <Image source={require("../img/ico_minus.png")} style={{marginLeft:8}}/>
@@ -194,9 +198,12 @@ export default ()=>{
                             <Text style={[styles.commonColor,{fontSize:14,fontWeight:'bold'}]}>분</Text>
 
                             <TouchableOpacity onPress={addList}>
-                                <View style={{height:30,width:60,backgroundColor:"#8C6C51",borderRadius:6,justifyContent:'center',alignItems:"center",marginLeft:20}}>
+                                {/* <View style={{height:30,width:60,backgroundColor:"#8C6C51",borderRadius:6,justifyContent:'center',alignItems:"center",marginLeft:20}}>
                                     <Text style={{color:"#ffffff",fontWeight:'bold'}}>추가</Text>
-                                </View>
+                                </View> */}
+                                <ImageBackground source={require('../img/btn_add.png')} style={{justifyContent:'center',alignItems:"center",marginLeft:20,height:30,width:60}}>
+                                    <Text style={{color:"#ffffff",fontWeight:'bold'}}>추가</Text>
+                                </ImageBackground>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -205,18 +212,24 @@ export default ()=>{
                 }
                 <View style={{marginTop:90,flexDirection:"row",justifyContent:"space-between",alignItems:'center'}}>
                     <TouchableOpacity onPress={handleClose}>
-                        <View style={{width:134,height:40,backgroundColor:'#C7B6A0',borderRadius:6,justifyContent:'center',alignItems:"center"}}>
+                        {/* <View style={{width:134,height:40,backgroundColor:'#C7B6A0',borderRadius:6,justifyContent:'center',alignItems:"center"}}>
                             <Text style={{fontSize:14,color:"#ffffff",fontWeight:'bold'}}>취소</Text>
-                        </View>
+                        </View> */}
+                        <ImageBackground source={require('../img/btn_cancel.png')} style={{justifyContent:'center',alignItems:"center",width:134,height:40}}>
+                            <Text style={{fontSize:14,color:"#ffffff",fontFamily:'Cafe24Dongdong'}}>취소</Text>
+                        </ImageBackground>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handleSave}>
-                        <View style={{width:134,height:40,backgroundColor:'#8C6C51',borderRadius:6,justifyContent:'center',alignItems:"center"}}>
+                        {/* <View style={{width:134,height:40,backgroundColor:'#8C6C51',borderRadius:6,justifyContent:'center',alignItems:"center"}}>
                             <Text style={{fontSize:14,color:"#ffffff",fontWeight:'bold'}}>저장</Text>
-                        </View>
+                        </View> */}
+                        <ImageBackground source={require('../img/btn_confirm.png')} style={{justifyContent:'center',alignItems:"center",width:134,height:40}}>
+                            <Text style={{fontSize:14,color:"#ffffff",fontFamily:"Cafe24Oneprettynight"}}>저장</Text>
+                        </ImageBackground>
                     </TouchableOpacity>
                 </View>
             </View>
-        </View>
+        </ImageBackground>
     )
 }
 const styles = StyleSheet.create({
