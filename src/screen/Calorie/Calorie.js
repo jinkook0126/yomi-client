@@ -1,5 +1,5 @@
-import React,{useState} from 'react';
-import {Text,View,SafeAreaView,Image,Dimensions,StyleSheet,TouchableOpacity,ScrollView} from 'react-native'
+import React,{useState,useEffect} from 'react';
+import {Text,View,SafeAreaView,Image,StyleSheet,TouchableOpacity,ScrollView} from 'react-native'
 import { useDispatch } from 'react-redux';
 import Modal from 'react-native-modal';
 
@@ -11,6 +11,13 @@ export default ({navigation})=>{
         })
     }
 
+    useEffect(()=>{
+        const setFoods = async () => {
+            // const {lists} = await send.get("/contents/food");
+
+        }
+        setFoods();
+    },[])
     return (
         <SafeAreaView style={{ flex: 1,backgroundColor:'#ffffff' }}>
             <View style={{height:50,flexDirection:"row",alignItems:'center'}}>

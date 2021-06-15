@@ -115,15 +115,19 @@ export default ({navigation,route})=>{
         }
     }
     const handleSave = async() => {
-        try {
-            const {success} = await send.post("/contents/food",{foods:selectList,m_type:route.params.type});
-            if(success) {
-                Alert.alert("알림","저장되었습니다.",[{text:'저장',onPress:()=>{
-                    console.log('뒤로 돌아가라아아')
-                }}])
+        if(selectList.length !== 0) {
+            try {
+                const {success} = await send.post("/contents/food",{foods:{[route.params.type]:selectList}});
+                if(success) {
+                    Alert.alert("알림","저장되었습니다.",[{text:'저장',onPress:()=>{
+                        navigation.goBack();
+                    }}])
+                }
+            } catch(error){
+                alert(error.response.data.message);
             }
-        } catch(error){
-            alert(error.response.data.message);
+        } else {
+            alert("음식을 선택해주세요.")
         }
     }
 
