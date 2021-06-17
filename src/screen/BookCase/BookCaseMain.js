@@ -49,10 +49,6 @@ export default ({navigation})=>{
         return unsubscribe;
     },[navigation]);
 
-    const asdf = ()=>{
-        console.log("asdf")
-    }
-
     const handleIngBook = (isbn)=>{
         ingList.forEach((item,idx)=>{
             if(item.ISBN === isbn) 
