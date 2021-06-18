@@ -20,7 +20,7 @@ export default ({navigation})=>{
     },[])
     const getList = async()=>{
         const {success,rows,today} = await send.get('/contents/diary');
-        if(success && rows.length !== 0) {
+        if(success) {
             if(today) {
                 setToday(today)
             } else{
