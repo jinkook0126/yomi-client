@@ -1,49 +1,43 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import { Text, View,FlatList,SafeAreaView,Image,TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { useEffect } from 'react/cjs/react.development';
 import {openModal} from '../../reducers/modal';
+import send from '../../modules/send';
 
 const img_prefix = "https://yomi-image.s3.ap-northeast-2.amazonaws.com";
 export default ()=>{
     const dispatch = useDispatch();
-    const [itemList,setItemList] = useState([
-        {
-            url:'/desk/desk01.png',
-            have:false,
-            price:1
-        },
-        {
-            url:'/desk/desk02.png',
-            have:false,
-            price:2
-        },
-        {
-            url:'/desk/desk03.jpg',
-            have:false,
-            price:3
-        },
-        {
-            url:'/desk/desk04.jpg',
-            have:true,
-            price:4
-        },
-        {
-            url:'/desk/desk05.png',
-            have:false,
-            price:5
-        },
-    ])
+    const [itemList,setItemList] = useState([]);
+    const [selectCt,setSelectCt] = useState('FT02')
+
+    useEffect(()=>{
+        renderCategory('FT02');
+    },[]);
+
+    const renderCategory = async (code)=> {
+        const {success,lists} = await send.get("/collection",{params:{category:code}});
+        setItemList(lists)
+    }
+
     const openModalTest=(target)=>{
         dispatch(openModal(target));
     }
+
+    const handleCategory = (ct) =>{
+        renderCategory(ct);
+        setSelectCt(ct);
+    }
+    
+    const selectHeader = (ct) => (
+        selectCt === ct ? "#000000" : '#616161'
+    )
 
 
     const renderItem = ({item,index})=>{
         return (
             <View style={{alignItems:"center"}}>
-                <Image source={{ uri: img_prefix+item.url}} style={{width:57,height:47,resizeMode:'stretch',justifyContent:"space-around"}}/>
-                <Text style={{fontSize:12,color:"#000000",fontWeight:'bold',marginTop:14}}>{item.price} coin</Text>
+                <Image source={{ uri: img_prefix+item.FT_URL}} style={{width:57,height:47,resizeMode:'stretch',justifyContent:"space-around"}}/>
+                <Text style={{fontSize:12,color:"#000000",fontWeight:'bold',marginTop:14}}>{item.FT_PRICE} coin</Text>
                 {
                     item.have ? 
                     (
@@ -72,20 +66,20 @@ export default ()=>{
             </View>
             <View style={{padding:20}}>
                 <View style={{flexDirection:'row',alignItems:'center',justifyContent:"space-between"}}>
-                    <TouchableOpacity>
-                        <Text style={{fontWeight:'bold',color:'#616161',fontSize:15}}>냉장고</Text>
+                    <TouchableOpacity onPress={()=>handleCategory('FT01')}>
+                        <Text style={{fontWeight:'bold',color:selectHeader('FT01'),fontSize:15}}>냉장고</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Text style={{fontWeight:'bold',color:'#000000',fontSize:15}}>책상</Text>
+                    <TouchableOpacity onPress={()=>handleCategory('FT02')}>
+                        <Text style={{fontWeight:'bold',color:selectHeader('FT02'),fontSize:15}}>책상</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Text style={{fontWeight:'bold',color:'#616161',fontSize:15}}>운동기구</Text>
+                    <TouchableOpacity onPress={()=>handleCategory('FT03')}>
+                        <Text style={{fontWeight:'bold',color:selectHeader('FT03'),fontSize:15}}>운동기구</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Text style={{fontWeight:'bold',color:'#616161',fontSize:15}}>일기장</Text>
+                    <TouchableOpacity onPress={()=>handleCategory('FT04')}>
+                        <Text style={{fontWeight:'bold',color:selectHeader('FT04'),fontSize:15}}>일기장</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Text style={{fontWeight:'bold',color:'#616161',fontSize:15}}>책장</Text>
+                    <TouchableOpacity onPress={()=>handleCategory('FT05')}>
+                        <Text style={{fontWeight:'bold',color:selectHeader('FT05'),fontSize:15}}>책장</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{paddingVertical:16,marginTop:30,elevation:2,backgroundColor:"#FFFFFF",alignItems:"center"}}>
@@ -93,7 +87,7 @@ export default ()=>{
                     <Image source = {{ uri: img_prefix+'/desk/desk01.png'}}  style={{width:112,height:80,resizeMode:'stretch',marginTop:25}}/>
                 </View>
                 <View style={{marginTop:20,elevation:2,backgroundColor:"#FFFFFF",paddingVertical:20,alignItems:'center'}}>
-                    <Text style={{fontSize:14,fontWeight:'bold',color:"#000000"}}>미리보기</Text>
+                    <Text style={{fontSize:14,fontWeight:'bold',color:"#000000"}}>구매</Text>
                     <FlatList
                         data={itemList}
                         renderItem={renderItem}
