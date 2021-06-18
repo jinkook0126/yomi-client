@@ -1,17 +1,18 @@
 import React,{useState,useEffect} from 'react';
-import {Text,View,SafeAreaView,Image,StyleSheet,TouchableOpacity,ScrollView} from 'react-native'
-import { useDispatch } from 'react-redux';
+import {Text,View,SafeAreaView,Image,StyleSheet,TouchableOpacity,ScrollView,TextInput} from 'react-native'
 import send from '../../modules/send';
 import Modal from 'react-native-modal';
 
 export default ({navigation})=>{
-    const dispatch = useDispatch();
+    const [visible,setVisible] = useState(false);
     const [foods,setFoods] = useState({});
     const [goalKcal,setGoalKcal] = useState(0);
     const [intakeKcal,setIntakeKcal] = useState(0);
-    const navigateInfo = (type)=>{
+    const [changeKcal,setChangeKcal] = useState('');
+    const navigateInfo = (type,lists)=>{
         navigation.navigate('CalorieSearch',{
-            type:type
+            type:type,
+            lists:lists
         })
     }
 
@@ -36,7 +37,17 @@ export default ({navigation})=>{
                 <Text style={[styles.commonColor,{fontWeight:'bold',fontSize:14}]}>{`${Number(food.kcal)*Number(food.cnt)} kcal`}</Text>
             </View>
         )
+    };
+
+    const onSaveKcal = async() => {
+        const {success} = await send.put("/info/kcal",{goal:changeKcal});
+        if(success) {
+            alert("저장되었습니다.");
+            setVisible(false);
+            setGoalKcal(changeKcal);
+        }
     }
+
     return (
         <SafeAreaView style={{ flex: 1,backgroundColor:'#ffffff' }}>
             <View style={{height:50,flexDirection:"row",alignItems:'center'}}>
@@ -52,7 +63,7 @@ export default ({navigation})=>{
                     <Text style={[styles.commonColor,{fontWeight:'bold',fontSize:15}]}>목표 칼로리</Text>
                     <View style={{flexDirection:'row',alignItems:"center"}}>
                         <Text style={[styles.commonColor,{fontWeight:'bold',fontSize:15}]}>{`${intakeKcal?intakeKcal:0}/${goalKcal} kcal`}</Text>
-                        <TouchableOpacity onPress={()=>console.log(foods["M09"])}>
+                        <TouchableOpacity onPress={()=>setVisible(true)}>
                             <Image source={require("../../img/ico_edit.png")} style={{marginLeft:6}}/>
                         </TouchableOpacity>
                     </View>
@@ -63,7 +74,7 @@ export default ({navigation})=>{
                         <View style={styles.foodHeaderWrap}>
                             <View style={styles.foodHeader}>
                                 <Text style={[styles.commonColor,{fontWeight:'bold',fontSize:14,paddingLeft:12}]}>아침</Text>
-                                <TouchableOpacity onPress={()=>navigateInfo("M01")} >
+                                <TouchableOpacity onPress={()=>navigateInfo("M01",foods["M01"])} >
                                     <View style={styles.foodNext}>
                                         <Image source={require("../../img/ico_next_arrow.png")}/>
                                     </View>
@@ -78,7 +89,7 @@ export default ({navigation})=>{
                         <View style={styles.foodHeaderWrap}>
                             <View style={styles.foodHeader}>
                                 <Text style={[styles.commonColor,{fontWeight:'bold',fontSize:14,paddingLeft:12}]}>점심</Text>
-                                <TouchableOpacity onPress={()=>navigateInfo("M02")} >
+                                <TouchableOpacity onPress={()=>navigateInfo("M02",foods["M02"])} >
                                     <View style={styles.foodNext}>
                                         <Image source={require("../../img/ico_next_arrow.png")}/>
                                     </View>
@@ -93,7 +104,7 @@ export default ({navigation})=>{
                         <View style={styles.foodHeaderWrap}>
                             <View style={styles.foodHeader}>
                                 <Text style={[styles.commonColor,{fontWeight:'bold',fontSize:14,paddingLeft:12}]}>저녁</Text>
-                                <TouchableOpacity onPress={()=>navigateInfo("M03")} >
+                                <TouchableOpacity onPress={()=>navigateInfo("M03",foods["M03"])} >
                                     <View style={styles.foodNext}>
                                         <Image source={require("../../img/ico_next_arrow.png")}/>
                                     </View>
@@ -108,7 +119,7 @@ export default ({navigation})=>{
                         <View style={styles.foodHeaderWrap}>
                             <View style={styles.foodHeader}>
                                 <Text style={[styles.commonColor,{fontWeight:'bold',fontSize:14,paddingLeft:12}]}>야식</Text>
-                                <TouchableOpacity onPress={()=>navigateInfo("M04")} >
+                                <TouchableOpacity onPress={()=>navigateInfo("M04",foods["M04"])} >
                                     <View style={styles.foodNext}>
                                         <Image source={require("../../img/ico_next_arrow.png")}/>
                                     </View>
@@ -123,7 +134,7 @@ export default ({navigation})=>{
                         <View style={styles.foodHeaderWrap}>
                             <View style={styles.foodHeader}>
                                 <Text style={[styles.commonColor,{fontWeight:'bold',fontSize:14,paddingLeft:12}]}>간식</Text>
-                                <TouchableOpacity onPress={()=>navigateInfo("M05")} >
+                                <TouchableOpacity onPress={()=>navigateInfo("M05",foods["M05"])} >
                                     <View style={styles.foodNext}>
                                         <Image source={require("../../img/ico_next_arrow.png")}/>
                                     </View>
@@ -136,6 +147,23 @@ export default ({navigation})=>{
                     </View>
                 </ScrollView>
             </View>
+            <Modal useNativeDriver isVisible={visible} onBackButtonPress={()=>setVisible(false)}>
+                <View style={{backgroundColor:"white",padding:16}}>
+                    <TextInput placeholder={"목표 칼로리를 입력해주세요."} keyboardType={"numeric"} onChangeText={(text)=>setChangeKcal(text)}/>
+                    <View style={{marginTop:20,flexDirection:'row',alignItems:'center',justifyContent:'space-around'}}>
+                        <TouchableOpacity onPress={()=>setVisible(false)}>
+                            <View style={{width:134,height:40,backgroundColor:'#C7B6A0',borderRadius:6,justifyContent:'center',alignItems:"center"}}>
+                                <Text style={{fontSize:14,color:"#ffffff",fontWeight:'bold'}}>취소</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={onSaveKcal}>
+                            <View style={{width:134,height:40,backgroundColor:'#8C6C51',borderRadius:6,justifyContent:'center',alignItems:"center"}}>
+                                <Text style={{fontSize:14,color:"#ffffff",fontWeight:'bold'}}>저장</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
         </SafeAreaView>
     )
 }

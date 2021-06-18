@@ -1,10 +1,9 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import {TextInput,Text,View,SafeAreaView,Image,StyleSheet,TouchableOpacity, ImageBackground, FlatList,Alert} from 'react-native'
 import { useDispatch,useSelector } from 'react-redux';
 import Modal from 'react-native-modal';
 import send from '../../modules/send';
 
-const api_url = "https://api.myfitnesspal.com/public/nutrition"
 export default ({navigation,route})=>{
     const dispatch = useDispatch();
     const userNo = useSelector(state => state.auth.userInfo.userNo);
@@ -22,6 +21,14 @@ export default ({navigation,route})=>{
     const [customFoodName,setCustomFoodName] = useState('');
     const [customFoodKcal,setCustomFoodKcal] = useState(0);
 
+    useEffect(()=>{
+        if(route.params.lists) {
+            console.log(route.params.lists)
+            setSelectList(route.params.lists);
+            setSelectCnt(route.params.lists.length);
+        }
+    },[])
+
     const searchFood = async(isSearch)=>{
         try {
             if(isSearch) {
@@ -30,13 +37,19 @@ export default ({navigation,route})=>{
             const foodList = [];
             const {foods} = await send.get("/contents/food/search",{params:{page:isSearch?1:page,searchKey:searchKey}});
             foods.forEach(food => {
-                foodList.push({
+                let filter = {
                     id:food.item.id,
                     kcal:food.item.nutritional_contents.energy.value,
                     brand:food.item.brand_name,
                     desc:food.item.description,
                     cnt:0
-                })
+                };
+                selectList.forEach(select => {
+                    if(select.id === food.item.id) {
+                        filter.cnt = select.cnt;
+                    }
+                });
+                foodList.push(filter)
             });
             setPage(page+1)
             setSearchList(isSearch ? foodList : searchList.concat(foodList));
