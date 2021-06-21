@@ -145,8 +145,8 @@ export default ()=>{
                 <View style={{marginTop:16,flexDirection:"row",alignItems:"center"}}>
                     <Text style={[styles.commonColor,{fontSize:14,fontWeight:'bold'}]}>운동 추가하기</Text>
                     <TouchableOpacity onPress={()=>{
-                        extraView ? setBgHeight(418) : setBgHeight(360)
-                        setExtraView(!extraView)
+                        setExtraView(!extraView);
+                        !extraView ? setBgHeight(460) : setBgHeight(360);
                     }}>
                         {
                             extraView ? 

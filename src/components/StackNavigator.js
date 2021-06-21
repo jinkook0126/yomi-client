@@ -10,7 +10,7 @@ import Diary from '../screen/Diary/Diary';
 import Calorie from '../screen/Calorie/Calorie';
 import CalorieSearch from '../screen/Calorie/CalorieSearch';
 
-import { useSelector,useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {verifyRequest} from '../reducers/auth';
 const Stack = createStackNavigator();
 export default ()=> {

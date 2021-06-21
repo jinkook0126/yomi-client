@@ -1,8 +1,8 @@
 import React,{useState,useEffect} from 'react';
-import { Text, View,FlatList,SafeAreaView,Image,TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
-import {openModal} from '../../reducers/modal';
+import { Text, View,FlatList,SafeAreaView,Image,TouchableOpacity } from 'react-native';
 import send from '../../modules/send';
+import { updateFurniture } from '../../reducers/furniture'
 
 const img_prefix = "https://yomi-image.s3.ap-northeast-2.amazonaws.com";
 export default ()=>{
@@ -52,9 +52,10 @@ export default ()=>{
     }
 
     const activeItem = async(code) => {
-        const {success,msg} = await send.put("/collection/active",{id:code});
+        const {success,ftInfo,msg} = await send.put("/collection/active",{id:code});
         if(success) {
             alert("적용하였습니다.");
+            dispatch(updateFurniture(ftInfo))
         } else {
             alert(msg);
         }

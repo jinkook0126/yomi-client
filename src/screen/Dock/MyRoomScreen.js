@@ -1,8 +1,11 @@
-import * as React from 'react';
-import { useDispatch } from 'react-redux';
+import React,{useEffect, useState} from 'react';
+import { useDispatch,useSelector } from 'react-redux';
 import {openModal} from '../../reducers/modal';
+import send from '../../modules/send'
+import {initFurnitureRequest} from '../../reducers/furniture'
 import { View,Image,ImageBackground,StyleSheet,TouchableWithoutFeedback,Dimensions } from 'react-native';
 
+const img_prefix = "https://yomi-image.s3.ap-northeast-2.amazonaws.com";
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -36,6 +39,12 @@ const halfPosition = (fullHeight*0.5);
 
 export default ({navigation,route})=>{
     const dispatch = useDispatch();
+    const furniture = useSelector(state => state.furniture.furnitures);
+
+    useEffect(()=>{
+        dispatch(initFurnitureRequest());
+    },[])
+
     const openModalTest=(target)=>{
         dispatch(openModal(target));
     }
@@ -43,27 +52,29 @@ export default ({navigation,route})=>{
         <ImageBackground source={require("../../img/home_bg.png")} style={{width: '100%', height: '100%'}}>
             <TouchableWithoutFeedback onPress={()=>openModalTest("health")}>
                 <View style={{position:"absolute",right:20,top:20,width:'30%',height:windowHeight}}>
-                    <Image source={require("../../img/window.png")} style={styles.window}/>
+                    {furniture.FT03 !== '' ? 
+                    <Image source={{uri:img_prefix+furniture.FT03}} style={styles.window}/>:null}
                 </View>
             </TouchableWithoutFeedback>
             <TouchableWithoutFeedback onPress={()=>openModalTest("desk")}>
                 <View style={{position:"absolute",right:0,top: halfPosition-deskHeight,width:'48%',height:deskHeight}}>
-                    <Image source={require("../../img/desk.png")} style={styles.window}/>
+                    
+                    {furniture.FT02 !== '' ? <Image source={{uri:img_prefix+furniture.FT02}} style={styles.window}/> : null}
                 </View>
             </TouchableWithoutFeedback>
             <TouchableWithoutFeedback onPress={()=>{navigation.navigate("Diary")}}>
                 <View style={{position:"absolute",right:20,top:(halfPosition-deskHeight)-(calcHeight/2)-10,width:'27%',height:calcHeight}}>
-                    <Image source={require("../../img/calc.png")} style={styles.window}/>
+                    {furniture.FT04 !== '' ? <Image source={{uri:img_prefix+furniture.FT04}} style={styles.window}/> : null}
                 </View>
             </TouchableWithoutFeedback>
             <TouchableWithoutFeedback onPress={()=>{navigation.navigate("BookMain")}}>
                 <View style={{position:"absolute",right:'48%',top:halfPosition-bookCaseHeight,width:'33%',height:bookCaseHeight}}>
-                    <Image source={require("../../img/bookcase.png")} style={styles.window}/>
+                    {furniture.FT05 !== '' ? <Image source={{uri:img_prefix+furniture.FT05}} style={styles.window}/> : null}
                 </View>
             </TouchableWithoutFeedback>
             <TouchableWithoutFeedback onPress={()=>{navigation.navigate("Calorie")}}>
                 <View style={{position:"absolute",left:0,top:halfPosition-(fridgeHeight/2),width:'30%',height:fridgeHeight}}>
-                    <Image source={require("../../img/fridge.png")} style={styles.window}/>
+                    {furniture.FT01 !== '' ? <Image source={{uri:img_prefix+furniture.FT01}} style={styles.window}/> : null}
                 </View>
             </TouchableWithoutFeedback>
             <TouchableWithoutFeedback onPress={()=>{alert("yomi")}}>
