@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">yomi</string>
+    <string name="kakao_app_key">29245ec2a8f6956f4bb3665ece7b6873</string>
 </resources>
