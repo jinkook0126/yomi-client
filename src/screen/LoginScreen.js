@@ -3,6 +3,8 @@ import {Text,View,TextInput,SafeAreaView,Image,TouchableOpacity} from 'react-nat
 import { useDispatch } from 'react-redux';
 import {loginRequest} from '../reducers/auth';
 
+import {login,getProfile} from '@react-native-seoul/kakao-login'
+
 export default ({navigation})=>{
     const dispatch = useDispatch();
     const [mail,setMail] = useState("");
@@ -16,6 +18,15 @@ export default ({navigation})=>{
             alert(error.response.data.message)
         })
     }
+
+    const kakaoLogin = async()=>{
+        const token = await login();
+        console.log(token);
+        const profile = await getProfile();
+        console.log(profile)
+
+    }
+
     return (
         <SafeAreaView style={{backgroundColor:"#FFFFFF",flex:1,justifyContent:"space-between"}}>
             <View>
@@ -51,7 +62,9 @@ export default ({navigation})=>{
                     </View>
                     <View style={{flexDirection:"row",justifyContent:"center",alignItems:"center",marginTop:14}}>
                         <Image source={require('../img/ico_google.png')}/>
-                        <Image source={require('../img/ico_kakao.png')} style={{marginLeft:4}}/>
+                        <TouchableOpacity onPress={kakaoLogin}>
+                            <Image source={require('../img/ico_kakao.png')} style={{marginLeft:4}}/>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>
