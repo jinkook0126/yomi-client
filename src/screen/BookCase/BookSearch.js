@@ -1,8 +1,9 @@
 import React,{useState} from 'react';
-import {Text,View,SafeAreaView,Image,FlatList,StyleSheet,TouchableOpacity,TextInput} from 'react-native'
+import { View,SafeAreaView,Image,FlatList,StyleSheet,TouchableOpacity,TextInput } from 'react-native'
 import { useDispatch } from 'react-redux';
 import send from '../../modules/send';
 import {openModalWithProps} from '../../reducers/modal';
+import StyleText from '../../components/UI/StyleText';
 
 export default ({navigation})=>{
     const dispatch = useDispatch();
@@ -48,9 +49,9 @@ export default ({navigation})=>{
                     <View style={{flexDirection:'row',borderBottomWidth:1,borderBottomColor:"#EEEEEE"}}>
                         <Image source={imgUrl} style={{width:67,height:84}}/>
                         <View style={{paddingLeft:4,flex:1,height:84,overflow:"hidden"}}>
-                            <Text style={[styles.commonColor,{fontSize:14,fontWeight:'bold'}]}>{item.title}</Text>
-                            <Text style={{fontSize:10,color:"#757575"}}>{item.authors}</Text>
-                            <Text numberOfLines={4} ellipsizeMode={"tail"} style={{fontSize:8,color:'#757575',lineHeight:11}}>{item.contents}</Text>
+                            <StyleText>{item.title}</StyleText>
+                            <StyleText style={{fontSize:10,color:"#757575"}}>{item.authors}</StyleText>
+                            <StyleText numberOfLines={4} ellipsizeMode={"tail"} style={{fontSize:8,color:'#757575',lineHeight:11}}>{item.contents}</StyleText>
                         </View>
                     </View>
                 </View>
@@ -65,7 +66,7 @@ export default ({navigation})=>{
                         <Image source={require('../../img/ico_back.png')}  />
                     </View>
                 </TouchableOpacity>
-                <Text style={[styles.commonColor,{paddingLeft:20,fontSize:16,fontWeight:'bold'}]}>책 검색</Text>
+                <StyleText style={{paddingLeft:20,fontSize:16}}>책 검색</StyleText>
             </View>
             <View style={{flex:1,paddingVertical:20,paddingHorizontal:26}}>
                 <View style={{borderWidth:1,borderColor:"#EEEEEE",borderRadius:2,height:36,flexDirection:"row",alignItems:"center",justifyContent:'space-between',paddingHorizontal:12,overflow:"hidden"}}>
@@ -75,7 +76,7 @@ export default ({navigation})=>{
                     </TouchableOpacity>
                 </View>
                 <View style={{marginTop:26,flex:1}}>
-                    <Text style={[styles.commonColor,{fontSize:12,fontWeight:'bold'}]}>총 {totalCnt} 건의 검색 결과</Text>
+                    <StyleText style={{fontSize:12}}>총 {totalCnt} 건의 검색 결과</StyleText>
                     <View style={[styles.listContainer,{marginTop:10,border:1,flex:1,overflow:"hidden"}]}>
                         <FlatList
                             data={searchList}
@@ -91,9 +92,6 @@ export default ({navigation})=>{
     )
 }
 const styles = StyleSheet.create({
-    commonColor: {
-        color:"#2B2B2B"
-    },
     listContainer:{
         elevation:1
     }

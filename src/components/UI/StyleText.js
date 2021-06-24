@@ -3,7 +3,11 @@ import { Text,StyleSheet } from 'react-native';
 
 export default (props)=>{
     return (
-        <Text style={[styles.default,props.style]}>{props.children}</Text>
+        <Text 
+            style={[styles.default,props.style]}
+            numberOfLines={props.numberOfLines}
+            ellipsizeMode={props.ellipsizeMode}
+        >{props.children}</Text>
     )
 }
 

@@ -1,7 +1,8 @@
 import React,{useState,useEffect} from 'react';
-import {Text,View,SafeAreaView,Image,StyleSheet,TouchableOpacity,ScrollView,TextInput} from 'react-native'
+import { View,SafeAreaView,Image,StyleSheet,TouchableOpacity,ScrollView,TextInput } from 'react-native'
 import send from '../../modules/send';
 import Modal from 'react-native-modal';
+import StyleText from '../../components/UI/StyleText';
 
 export default ({navigation})=>{
     const [visible,setVisible] = useState(false);
@@ -31,10 +32,10 @@ export default ({navigation})=>{
         return (
             <View style={styles.foodItemWrap} key={food.id}>
                 <View style={{flexDirection:"row",alignItems:'center'}}>
-                    <Text style={[styles.commonColor,{fontSize:12}]}>{food.desc}</Text>
-                    <Text style={{fontSize:12,marginLeft:12,color:"#757575"}}>{food.cnt}</Text>
+                    <StyleText style={{fontSize:12}}>{food.desc}</StyleText>
+                    <StyleText style={{fontSize:12,marginLeft:12,color:"#757575"}}>{food.cnt}</StyleText>
                 </View>
-                <Text style={[styles.commonColor,{fontWeight:'bold',fontSize:14}]}>{`${Number(food.kcal)*Number(food.cnt)} kcal`}</Text>
+                <StyleText style={{fontSize:14}}>{`${Number(food.kcal)*Number(food.cnt)} kcal`}</StyleText>
             </View>
         )
     };
@@ -56,24 +57,24 @@ export default ({navigation})=>{
                         <Image source={require('../../img/ico_back.png')}  />
                     </View>
                 </TouchableOpacity>
-                <Text style={[styles.commonColor,{paddingLeft:20,fontSize:16,fontWeight:'bold'}]}>냉장고</Text>
+                <StyleText style={{paddingLeft:20,fontSize:16}}>냉장고</StyleText>
             </View>
             <View style={{paddingVertical:16,paddingHorizontal:26,flex:1}}>
                 <View style={{flexDirection:"row",justifyContent:"space-between",alignContent:"center",paddingBottom:17,borderBottomColor:"#EEEEEE",borderBottomWidth:1}}>
-                    <Text style={[styles.commonColor,{fontWeight:'bold',fontSize:15}]}>목표 칼로리</Text>
+                    <StyleText style={{fontSize:15}}>목표 칼로리</StyleText>
                     <View style={{flexDirection:'row',alignItems:"center"}}>
-                        <Text style={[styles.commonColor,{fontWeight:'bold',fontSize:15}]}>{`${intakeKcal?intakeKcal:0}/${goalKcal} kcal`}</Text>
+                        <StyleText style={{fontSize:15}}>{`${intakeKcal?intakeKcal:0}/${goalKcal} kcal`}</StyleText>
                         <TouchableOpacity onPress={()=>setVisible(true)}>
                             <Image source={require("../../img/ico_edit.png")} style={{marginLeft:6}}/>
                         </TouchableOpacity>
                     </View>
                 </View>
                 <ScrollView style={{marginTop:22,flex:1}}>
-                    <Text style={[styles.commonColor,{fontWeight:'bold',fontSize:15}]}>오늘 먹은 음식</Text>
+                    <StyleText style={{fontSize:15}}>오늘 먹은 음식</StyleText>
                     <View style={{marginTop:15}}>
                         <View style={styles.foodHeaderWrap}>
                             <View style={styles.foodHeader}>
-                                <Text style={[styles.commonColor,{fontWeight:'bold',fontSize:14,paddingLeft:12}]}>아침</Text>
+                                <StyleText style={styles.foodHeaderText}>아침</StyleText>
                                 <TouchableOpacity onPress={()=>navigateInfo("M01",foods["M01"])} >
                                     <View style={styles.foodNext}>
                                         <Image source={require("../../img/ico_next_arrow.png")}/>
@@ -88,7 +89,7 @@ export default ({navigation})=>{
                     <View style={{marginTop:10}}>
                         <View style={styles.foodHeaderWrap}>
                             <View style={styles.foodHeader}>
-                                <Text style={[styles.commonColor,{fontWeight:'bold',fontSize:14,paddingLeft:12}]}>점심</Text>
+                                <StyleText style={styles.foodHeaderText}>점심</StyleText>
                                 <TouchableOpacity onPress={()=>navigateInfo("M02",foods["M02"])} >
                                     <View style={styles.foodNext}>
                                         <Image source={require("../../img/ico_next_arrow.png")}/>
@@ -103,7 +104,7 @@ export default ({navigation})=>{
                     <View style={{marginTop:10}}>
                         <View style={styles.foodHeaderWrap}>
                             <View style={styles.foodHeader}>
-                                <Text style={[styles.commonColor,{fontWeight:'bold',fontSize:14,paddingLeft:12}]}>저녁</Text>
+                                <StyleText style={styles.foodHeaderText}>저녁</StyleText>
                                 <TouchableOpacity onPress={()=>navigateInfo("M03",foods["M03"])} >
                                     <View style={styles.foodNext}>
                                         <Image source={require("../../img/ico_next_arrow.png")}/>
@@ -118,7 +119,7 @@ export default ({navigation})=>{
                     <View style={{marginTop:10}}>
                         <View style={styles.foodHeaderWrap}>
                             <View style={styles.foodHeader}>
-                                <Text style={[styles.commonColor,{fontWeight:'bold',fontSize:14,paddingLeft:12}]}>야식</Text>
+                                <StyleText style={styles.foodHeaderText}>야식</StyleText>
                                 <TouchableOpacity onPress={()=>navigateInfo("M04",foods["M04"])} >
                                     <View style={styles.foodNext}>
                                         <Image source={require("../../img/ico_next_arrow.png")}/>
@@ -133,7 +134,7 @@ export default ({navigation})=>{
                     <View style={{marginTop:10}}>
                         <View style={styles.foodHeaderWrap}>
                             <View style={styles.foodHeader}>
-                                <Text style={[styles.commonColor,{fontWeight:'bold',fontSize:14,paddingLeft:12}]}>간식</Text>
+                                <StyleText style={styles.foodHeaderText}>간식</StyleText>
                                 <TouchableOpacity onPress={()=>navigateInfo("M05",foods["M05"])} >
                                     <View style={styles.foodNext}>
                                         <Image source={require("../../img/ico_next_arrow.png")}/>
@@ -153,12 +154,12 @@ export default ({navigation})=>{
                     <View style={{marginTop:20,flexDirection:'row',alignItems:'center',justifyContent:'space-around'}}>
                         <TouchableOpacity onPress={()=>setVisible(false)}>
                             <View style={{width:134,height:40,backgroundColor:'#C7B6A0',borderRadius:6,justifyContent:'center',alignItems:"center"}}>
-                                <Text style={{fontSize:14,color:"#ffffff",fontWeight:'bold'}}>취소</Text>
+                                <StyleText style={styles.btnText}>취소</StyleText>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={onSaveKcal}>
                             <View style={{width:134,height:40,backgroundColor:'#8C6C51',borderRadius:6,justifyContent:'center',alignItems:"center"}}>
-                                <Text style={{fontSize:14,color:"#ffffff",fontWeight:'bold'}}>저장</Text>
+                                <StyleText style={styles.btnText}>저장</StyleText>
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -168,8 +169,11 @@ export default ({navigation})=>{
     )
 }
 const styles = StyleSheet.create({
-    commonColor: {
-        color:"#2B2B2B"
+    foodHeaderText: {
+        fontSize:14,paddingLeft:12
+    },
+    btnText:{
+        fontSize:14,color:"#ffffff"
     },
     foodHeaderWrap:{
         borderRadius:2,
