@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { Text,View,StyleSheet,SafeAreaView,TouchableOpacity } from 'react-native';
+import { View,StyleSheet,SafeAreaView,TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
 import {logoutRequest} from '../../reducers/auth';
+import StyleText from '../../components/UI/StyleText';
+
 export default ({navigation})=>{
     const dispatch = useDispatch();
     const doLogOut = async() => {
@@ -16,27 +18,27 @@ export default ({navigation})=>{
             <View style={{marginTop:58,paddingHorizontal:16}}>
                 <TouchableOpacity>
                     <View style={styles.menuWrap}>
-                        <Text style={styles.menuText}>내 정보</Text>
+                        <StyleText>내 정보</StyleText>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity>
                     <View style={styles.menuWrap}>
-                        <Text style={styles.menuText}>공지사항</Text>
+                        <StyleText>내 공지사항</StyleText>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity>
                     <View style={styles.menuWrap}>
-                        <Text style={styles.menuText}>문의하기</Text>
+                        <StyleText>문의하기</StyleText>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity>
                     <View style={styles.menuWrap}>
-                        <Text style={styles.menuText}>FAQ</Text>
+                        <StyleText>FAQ</StyleText>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={doLogOut}>
                     <View style={styles.menuWrap}>
-                        <Text style={styles.menuText}>로그아웃</Text>
+                        <StyleText>로그아웃</StyleText>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -44,9 +46,6 @@ export default ({navigation})=>{
     )
 }
 const styles = StyleSheet.create({
-    menuText:{
-        fontWeight:"bold",fontSize:12,color:"#2B2B2B"
-    },
     menuWrap:{
         borderBottomColor:'#ECECEC',
         borderBottomWidth:1,

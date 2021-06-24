@@ -198,9 +198,6 @@ export default ()=>{
                             <Text style={[styles.commonColor,{fontSize:14,fontWeight:'bold'}]}>분</Text>
 
                             <TouchableOpacity onPress={addList}>
-                                {/* <View style={{height:30,width:60,backgroundColor:"#8C6C51",borderRadius:6,justifyContent:'center',alignItems:"center",marginLeft:20}}>
-                                    <Text style={{color:"#ffffff",fontWeight:'bold'}}>추가</Text>
-                                </View> */}
                                 <ImageBackground source={require('../img/btn_add.png')} style={{justifyContent:'center',alignItems:"center",marginLeft:20,height:30,width:60}}>
                                     <Text style={{color:"#ffffff",fontWeight:'bold'}}>추가</Text>
                                 </ImageBackground>
@@ -212,17 +209,11 @@ export default ()=>{
                 }
                 <View style={{marginTop:90,flexDirection:"row",justifyContent:"space-between",alignItems:'center'}}>
                     <TouchableOpacity onPress={handleClose}>
-                        {/* <View style={{width:134,height:40,backgroundColor:'#C7B6A0',borderRadius:6,justifyContent:'center',alignItems:"center"}}>
-                            <Text style={{fontSize:14,color:"#ffffff",fontWeight:'bold'}}>취소</Text>
-                        </View> */}
                         <ImageBackground source={require('../img/btn_cancel.png')} style={{justifyContent:'center',alignItems:"center",width:134,height:40}}>
                             <Text style={{fontSize:14,color:"#ffffff",fontFamily:'Cafe24Dongdong'}}>취소</Text>
                         </ImageBackground>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handleSave}>
-                        {/* <View style={{width:134,height:40,backgroundColor:'#8C6C51',borderRadius:6,justifyContent:'center',alignItems:"center"}}>
-                            <Text style={{fontSize:14,color:"#ffffff",fontWeight:'bold'}}>저장</Text>
-                        </View> */}
                         <ImageBackground source={require('../img/btn_confirm.png')} style={{justifyContent:'center',alignItems:"center",width:134,height:40}}>
                             <Text style={{fontSize:14,color:"#ffffff",fontFamily:"Cafe24Oneprettynight"}}>저장</Text>
                         </ImageBackground>

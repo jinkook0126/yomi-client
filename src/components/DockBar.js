@@ -11,7 +11,7 @@ const Dock = createBottomTabNavigator();
 export default ()=>{
     return (
         <>
-        <Dock.Navigator>
+        <Dock.Navigator tabBarOptions={{labelStyle: {fontFamily:"Cafe24Oneprettynight"}}}>
             <Dock.Screen name="MyRoom" component={MyRoomScreen} options={{title:"내 방"}}/>
             <Dock.Screen name="Collection" component={CollectionSreen} options={{title:"컬렉션"}}/>
             {/* <Dock.Screen name="TabScreen" component={TabNavigator} options={{title:"기록"}}/> */}
