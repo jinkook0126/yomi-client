@@ -32,7 +32,7 @@ export default ({navigation})=>{
             <View style={styles.foodItemWrap} key={food.id}>
                 <View style={{flexDirection:"row",alignItems:'center'}}>
                     <Text style={[styles.commonColor,{fontSize:12}]}>{food.desc}</Text>
-                    <Text style={{fontSize:12,marginLeft:12,color:"#757575"}}>2</Text>
+                    <Text style={{fontSize:12,marginLeft:12,color:"#757575"}}>{food.cnt}</Text>
                 </View>
                 <Text style={[styles.commonColor,{fontWeight:'bold',fontSize:14}]}>{`${Number(food.kcal)*Number(food.cnt)} kcal`}</Text>
             </View>
