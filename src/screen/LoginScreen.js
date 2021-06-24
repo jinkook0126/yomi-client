@@ -5,6 +5,8 @@ import {loginRequest, loginSuccess} from '../reducers/auth';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import {login,getProfile} from '@react-native-seoul/kakao-login'
 import send from '../modules/send';
+import { GoogleSignin } from "@react-native-community/google-signin";
+
 
 export default ({navigation})=>{
     const dispatch = useDispatch();
@@ -20,24 +22,48 @@ export default ({navigation})=>{
         })
     }
 
-    const kakaoLogin = async()=>{
-        const token = await login();
-        const {nickname,thumbnailImageUrl,id,email} = await getProfile();
-        if(token && id) {
-            const {success,token,message} = await send.post("/users/sign-up/kakao",{name:nickname,id:id,thumb:thumbnailImageUrl,mail:email});
-            if(success) {
-                EncryptedStorage.setItem(
-                    "jwt_token",
-                    JSON.stringify({token : token})
-                );
-                dispatch(loginSuccess(nickname,id));
-                navigation.reset({
-                    index:0,
-                    routes:[{name:"WelcomeScreen"}]
-                });
-            } else {
-                alert(message)
-            }
+    const requestKakao = async()=>{
+        try {
+            const token = await login();
+            const userInfo = await getProfile();
+            if(token && userInfo) requstSocial({...userInfo,...{social:"KAKAO"}})
+        } catch(e) {
+            alert('카카오 로그인 에러');
+            console.log(e)
+        }
+    }
+
+    const requestGoogle = async()=>{
+        try {
+            await GoogleSignin.hasPlayServices();
+            const {user} = await GoogleSignin.signIn();
+            if(user) requstSocial({...user,...{social:"GOOGLE"}})
+        } catch(e) {
+            alert('구글 로그인 에러');
+            console.log(e);
+        }
+    }
+
+    const requstSocial = async ({email,id,nickname,name,thumbnailImageUrl,photo,social}) => {
+        const {success,token,message} = await send.post("/users/sign-up/social",{
+            name: name||nickname,
+            id:id,
+            thumb:thumbnailImageUrl || photo,
+            mail:email,
+            social:social
+        });
+        if(success) {
+            EncryptedStorage.setItem(
+                "jwt_token",
+                JSON.stringify({token : token})
+            );
+            dispatch(loginSuccess(name||nickname,id));
+            navigation.reset({
+                index:0,
+                routes:[{name:"WelcomeScreen"}]
+            });
+        } else {
+            alert(message)
         }
     }
 
@@ -75,8 +101,10 @@ export default ({navigation})=>{
                         <View style={{borderBottomWidth:1,borderBottomColor:"#ECECEC",height:1,flex:1}} />
                     </View>
                     <View style={{flexDirection:"row",justifyContent:"center",alignItems:"center",marginTop:14}}>
-                        <Image source={require('../img/ico_google.png')}/>
-                        <TouchableOpacity onPress={kakaoLogin}>
+                        <TouchableOpacity onPress={requestGoogle}>
+                            <Image source={require('../img/ico_google.png')}/>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={requestKakao}>
                             <Image source={require('../img/ico_kakao.png')} style={{marginLeft:4}}/>
                         </TouchableOpacity>
                     </View>

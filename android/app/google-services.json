@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "883543506489",
+    "project_id": "yomis-day",
+    "storage_bucket": "yomis-day.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:883543506489:android:0727cc2608be0413fa57e8",
+        "android_client_info": {
+          "package_name": "com.yomi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "883543506489-22qh8e94f729u4d4p3u5kvdgceomcm56.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yomi",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "883543506489-vjg7aiquk0l23b1d04fra3n75unhu0ml.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAak_AKBLseJ4vejAi9Q-HNfbXc5ol0gf4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "883543506489-vjg7aiquk0l23b1d04fra3n75unhu0ml.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
