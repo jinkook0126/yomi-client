@@ -1,9 +1,10 @@
 import React,{useState} from 'react';
 import {Text,View,TextInput,SafeAreaView,Image,TouchableOpacity} from 'react-native'
 import { useDispatch } from 'react-redux';
-import {loginRequest} from '../reducers/auth';
-
+import {loginRequest, loginSuccess} from '../reducers/auth';
+import EncryptedStorage from 'react-native-encrypted-storage';
 import {login,getProfile} from '@react-native-seoul/kakao-login'
+import send from '../modules/send';
 
 export default ({navigation})=>{
     const dispatch = useDispatch();
@@ -21,10 +22,23 @@ export default ({navigation})=>{
 
     const kakaoLogin = async()=>{
         const token = await login();
-        console.log(token);
-        const profile = await getProfile();
-        console.log(profile)
-
+        const {nickname,thumbnailImageUrl,id,email} = await getProfile();
+        if(token && id) {
+            const {success,token,message} = await send.post("/users/sign-up/kakao",{name:nickname,id:id,thumb:thumbnailImageUrl,mail:email});
+            if(success) {
+                EncryptedStorage.setItem(
+                    "jwt_token",
+                    JSON.stringify({token : token})
+                );
+                dispatch(loginSuccess(nickname,id));
+                navigation.reset({
+                    index:0,
+                    routes:[{name:"WelcomeScreen"}]
+                });
+            } else {
+                alert(message)
+            }
+        }
     }
 
     return (
