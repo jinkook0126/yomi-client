@@ -12,6 +12,6 @@ export default ({children,style,...rest})=>{
 
 const styles=StyleSheet.create({
     default:{
-        fontSize:14,color:"#2B2B2B",fontFamily:"Cafe24Oneprettynight"
+        fontSize:14,color:"#2B2B2B",fontFamily:"Namu_Regular"
     }
 })
