@@ -1,8 +1,9 @@
 import React,{useState,useEffect} from 'react';
-import {TextInput,Text,View,SafeAreaView,Image,StyleSheet,TouchableOpacity, ImageBackground, FlatList,Alert} from 'react-native'
+import { TextInput,View,SafeAreaView,Image,TouchableOpacity, ImageBackground, FlatList,Alert } from 'react-native'
 import { useDispatch,useSelector } from 'react-redux';
 import Modal from 'react-native-modal';
 import send from '../../modules/send';
+import StyleText from '../../components/UI/StyleText';
 
 export default ({navigation,route})=>{
     const dispatch = useDispatch();
@@ -23,7 +24,6 @@ export default ({navigation,route})=>{
 
     useEffect(()=>{
         if(route.params.lists) {
-            console.log(route.params.lists)
             setSelectList(route.params.lists);
             setSelectCnt(route.params.lists.length);
         }
@@ -148,8 +148,8 @@ export default ({navigation,route})=>{
         return (
             <View style={{paddingVertical:16,paddingHorizontal:20,flexDirection:"row",alignContent:'center',justifyContent:"space-between",flex:1}}>
                 <View style={{flexDirection:"row",alignItems:"center",flex:1}}>
-                    <Text style={[styles.commonColor,{fontSize:12}]}>{item.desc}</Text>
-                    <Text style={[styles.commonColor,{fontSize:9,marginLeft:10}]}>({item.brand})</Text>
+                    <StyleText style={{fontSize:12}}>{item.desc}</StyleText>
+                    <StyleText style={{fontSize:9,marginLeft:10}}>({item.brand})</StyleText>
                 </View>
                 <View style={{flexDirection:"row",alignItems:'center',flex:1,justifyContent:"flex-end"}}>
                     <TouchableOpacity onPress={()=>{handleCount('plus',item.id)}}>
@@ -158,7 +158,7 @@ export default ({navigation,route})=>{
                         </View>
                     </TouchableOpacity>
                     <View style={{marginHorizontal:5,width:32,height:28,backgroundColor:'#EEEEEE',justifyContent:"center",alignItems:"center"}}>
-                        <Text style={[styles.commonColor,{fontSize:15}]}>{item.cnt}</Text>
+                        <StyleText style={{fontSize:15}}>{item.cnt}</StyleText>
                     </View>
                     <TouchableOpacity onPress={()=>{handleCount('minus',item.id)}}>
                         <View style={{width:14,height:14}}>
@@ -179,10 +179,10 @@ export default ({navigation,route})=>{
                             <Image source={require('../../img/ico_back.png')}  />
                         </View>
                     </TouchableOpacity>
-                    <Text style={[styles.commonColor,{paddingLeft:20,fontSize:16,fontWeight:'bold'}]}>{renderTitle(route.params.type)}</Text>
+                    <StyleText style={{paddingLeft:20,fontSize:16}}>{renderTitle(route.params.type)}</StyleText>
                 </View>
                 <View style={{flexDirection:"row",alignItems:'center',justifyContent:"flex-end",paddingRight:26}}>
-                    <Text style={[styles.commonColor,{fontSize:'bold',fontSize:14}]}>{selectCnt}</Text>
+                    <StyleText>{selectCnt}</StyleText>
                     <TouchableOpacity onPress={()=>{
                         setIsVisible(true)
                     }}>
@@ -215,7 +215,7 @@ export default ({navigation,route})=>{
                     </View>
                     <TouchableOpacity onPress={()=>setExtraView(!extraView)}>
                         <View style={{marginTop:16,flexDirection:'row',justifyContent:"center",alignItems:'center'}}>
-                            <Text>직접입력</Text>
+                            <StyleText>직접입력</StyleText>
                             {
                                 extraView? 
                                     <Image source={require("../../img/ico_minus.png")} style={{marginLeft:10}}/>
@@ -244,7 +244,7 @@ export default ({navigation,route})=>{
                                             onChangeText={(kcal)=>setCustomFoodKcal(kcal)}
                                             value={String(Number(customFoodKcal))}
                                         />
-                                        <Text style={[styles.commonColor,{fontSize:"bold",fontSize:14,marginLeft:5}]}>Kcal</Text>
+                                        <StyleText style={{marginLeft:5}}>Kcal</StyleText>
                                     </View>
                                     <View style={{flexDirection:'row',alignItems:"center"}}>
                                         <View style={{marginRight:10,justifyContent:"space-between",alignItems:'center',flexDirection:"row"}}>
@@ -252,7 +252,7 @@ export default ({navigation,route})=>{
                                                 <Image source={require("../../img/ico_minus.png")}/>
                                             </TouchableOpacity>
                                             <View style={{backgroundColor:'#EEEEEE',height:29,width:34,marginHorizontal:6,justifyContent:"center",alignItems:'center'}}>
-                                                <Text style={[styles.commonColor,{fontSize:15,fontWeight:'bold'}]}>{customFoodCnt}</Text>
+                                                <StyleText style={{fontSize:15}}>{customFoodCnt}</StyleText>
                                             </View>
                                             <TouchableOpacity onPress={()=>customFoodCntHandler('plus')}>
                                                 <Image source={require("../../img/ico_plus.png")}/>
@@ -266,7 +266,7 @@ export default ({navigation,route})=>{
                                             setCustomFoodName("");
                                         }}>
                                             <View style={{height:36,width:54,backgroundColor:"#8C6C51",justifyContent:'center',alignItems:'center',borderRadius:2}}>
-                                                <Text style={{color:"#FFFFFF",fontWeight:'bold',fontSize:14}}>추가</Text>            
+                                                <StyleText style={{color:"#FFFFFF"}}>추가</StyleText>            
                                             </View>
                                         </TouchableOpacity>
                                     </View>
@@ -278,7 +278,7 @@ export default ({navigation,route})=>{
                 </View>
                 <TouchableOpacity onPress={handleSave}>
                     <View style={{backgroundColor:"#8C6C51",height:40,justifyContent:'center',alignItems:'center'}}>
-                        <Text style={{color:"#FFFFFF",fontWeight:'bold',fontSize:14}}>저장</Text>
+                        <StyleText style={{color:"#FFFFFF"}}>저장</StyleText>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -309,10 +309,10 @@ export default ({navigation,route})=>{
                                             }}>
                                                 <Image source={require("../../img/ico_close.png")}/>
                                             </TouchableOpacity>
-                                            <Text style={{marginLeft:20 }}>{item.desc}</Text>
+                                            <StyleText style={{marginLeft:20 }}>{item.desc}</StyleText>
                                         </View>
                                         <View style={{flex:1,alignItems:"center"}}>
-                                            <Text style={[styles.commonColor,{fontSize:14,fontWeight:'bold'}]}>{`${item.kcal}Kcal`}</Text>
+                                            <StyleText>{`${item.kcal}Kcal`}</StyleText>
                                         </View>
                                         <View style={{flexDirection:"row",alignItems:'center',flex:1,justifyContent:"flex-end"}}>
                                             <TouchableOpacity onPress={()=>{
@@ -328,7 +328,7 @@ export default ({navigation,route})=>{
                                                 <Image source={require("../../img/ico_minus.png")}/>
                                             </TouchableOpacity>
                                             <View style={{backgroundColor:"#EEEEEE",width:20,height:20,marginHorizontal:6,justifyContent:'center',alignItems:'center'}}>
-                                                <Text style={[styles.commonColor,{fontWeight:'bold',fontSize:15}]}>{item.cnt}</Text>
+                                                <StyleText style={{fontSize:15}}>{item.cnt}</StyleText>
                                             </View>
                                             <TouchableOpacity onPress={()=>{
                                                 setSelectList(selectList.map(food => food.id === item.id ? ({...food,...{cnt:parseInt(food.cnt)+1}}) : food ));
@@ -347,41 +347,3 @@ export default ({navigation,route})=>{
         </SafeAreaView>
     )
 }
-const styles = StyleSheet.create({
-    commonColor: {
-        color:"#2B2B2B"
-    },
-    foodHeaderWrap:{
-        borderRadius:2,
-        borderColor:"#EEEEEE",
-        overflow:"hidden",
-        borderWidth:1
-    },
-    foodHeader:{
-        height:36,
-        backgroundColor:"#C7B6A0",
-        flexDirection:"row",
-        alignItems:'center',
-        justifyContent:"space-between",
-    },
-    foodNext:{
-        height:36,
-        width:36,
-        justifyContent:"center",
-        paddingRight:12,
-        alignItems:"flex-end"
-    },
-    foodItemWrap:{
-        paddingHorizontal:12,
-        paddingVertical:10,
-        flexDirection:"row",
-        justifyContent:"space-between",
-        backgroundColor:'#FFFFFF'
-    },
-    modalContents:{
-        backgroundColor:'#FFFBE9',
-        borderRadius:8,
-        paddingHorizontal:16,
-        paddingVertical:26
-    }
-});

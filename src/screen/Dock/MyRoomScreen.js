@@ -1,7 +1,6 @@
 import React,{useEffect, useState} from 'react';
 import { useDispatch,useSelector } from 'react-redux';
 import {openModal} from '../../reducers/modal';
-import send from '../../modules/send'
 import {initFurnitureRequest} from '../../reducers/furniture'
 import { View,Image,ImageBackground,StyleSheet,TouchableWithoutFeedback,Dimensions } from 'react-native';
 

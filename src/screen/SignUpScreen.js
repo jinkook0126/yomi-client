@@ -1,7 +1,8 @@
 import React,{useState} from 'react';
-import {Text,View,SafeAreaView,TextInput,TouchableOpacity,StyleSheet,Alert} from 'react-native'
+import { View,SafeAreaView,TextInput,TouchableOpacity,StyleSheet,Alert } from 'react-native'
 import { useDispatch } from 'react-redux';
 import send from '../modules/send';
+import StyleText from '../components/UI/StyleText'
 export default ({navigation})=>{
     const dispatch = useDispatch();
     const [name,setName] = useState("");
@@ -52,7 +53,7 @@ export default ({navigation})=>{
         <SafeAreaView style={{backgroundColor:'#FFFFFF',flex:1}}>
             <View style={{paddingTop:18,paddingHorizontal:20}}>
                 <View style={{justifyContent:'center',alignItems:"center"}}>
-                    <Text style={{fontWeight:'bold',fontSize:16,color:"#2B2B2B"}}>회원가입</Text>
+                    <StyleText style={{fontSize:16}}>회원가입</StyleText>
                 </View>
                 <View style={{marginTop:50}}> 
                     <View style={[styles.inputWrap,{marginTop:0}]}>
@@ -73,7 +74,7 @@ export default ({navigation})=>{
                     </View>
                     <TouchableOpacity onPress={signUpRequest}>
                         <View style={{marginTop:28,backgroundColor:"#8C6C51",height:40,justifyContent:'center',alignItems:"center",borderRadius:6}}>
-                            <Text style={{color:"#FFFFFF",fontSize:15,fontWeight:'bold'}}>회원가입</Text>
+                            <StyleText style={{color:"#FFFFFF",fontSize:15}}>회원가입</StyleText>
                         </View>
                     </TouchableOpacity>
                 </View>

@@ -1,10 +1,12 @@
 import React,{useState,useEffect} from 'react';
-import { TextInput,Text,View,Image,StyleSheet,ImageBackground,TouchableOpacity,Alert } from 'react-native';
+import { TextInput,View,Image,ImageBackground,TouchableOpacity,Alert } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import { Rating } from 'react-native-ratings';
 import { useDispatch, useSelector } from 'react-redux';
 import {closeModal} from '../reducers/modal';
 import send from '../modules/send';
+import StyleText from '../components/UI/StyleText';
+
 export default ()=>{
     const dispatch = useDispatch();
     const [complete, setComplete] = useState(false);
@@ -43,19 +45,19 @@ export default ()=>{
                         params.thumbnail !== "" ? {uri:params.thumbnail} : require('../img/emptyThumbnail.png')
                     } style={{width:67,height:84}}/>
                     <View style={{paddingLeft:4,flex:1,height:84,overflow:"hidden"}}>
-                        <Text style={[styles.commonColor,{fontSize:14,fontWeight:'bold'}]}>{params.title}</Text>
-                        <Text style={{fontSize:10,color:"#757575"}}>{params.authors}</Text>
-                        <Text numberOfLines={4} ellipsizeMode={"tail"} style={{fontSize:8,color:'#757575',lineHeight:11}}>{params.contents}</Text>
+                        <StyleText>{params.title}</StyleText>
+                        <StyleText style={{fontSize:10,color:"#757575"}}>{params.authors}</StyleText>
+                        <StyleText numberOfLines={4} ellipsizeMode={"tail"} style={{fontSize:8,color:'#757575',lineHeight:11}}>{params.contents}</StyleText>
                     </View>
                 </View>
                 <View style={{marginTop:25,paddingHorizontal:5,flexDirection:'row',alignItems:'center'}}>
-                    <Text style={{fontSize:12,color:"#424242",fontWeight:'bold'}}>읽은 페이지 수</Text>
+                    <StyleText style={{fontSize:12,color:"#424242"}}>읽은 페이지 수</StyleText>
                     <View style={{backgroundColor:"#EEEEEE",width:22,height:16,marginLeft:10}}>
                         <TextInput keyboardType={"number-pad"} value={String(readPage)} onChangeText={(text)=>setReadPage(text)} style={{flex:1,height:16,alignItems:"stretch",paddingVertical:0,fontSize:12}}/>
                     </View>
                 </View>
                 <View style={{marginTop:10,paddingHorizontal:5,flexDirection:'row',alignItems:'center'}}>
-                    <Text style={{fontSize:12,color:"#424242",fontWeight:'bold'}}>별점</Text>
+                    <StyleText style={{fontSize:12,color:"#424242"}}>별점</StyleText>
                     <Rating
                         fractions={2}
                         ratingCount={5}
@@ -69,10 +71,10 @@ export default ()=>{
                 </View>
                 <View style={{marginTop:10,paddingHorizontal:5,flexDirection:'row',alignItems:'center',justifyContent:"space-between"}}>
                     <View>
-                        <Text style={{fontSize:12,color:"#424242",fontWeight:'bold'}}>메모</Text>
+                        <StyleText style={{fontSize:12,color:"#424242"}}>메모</StyleText>
                     </View>
                     <View style={{flexDirection:"row",alignItems:"center",justifyContent:"flex-end"}}>
-                        <Text style={{fontSize:12,color:"#424242",fontWeight:'bold'}}>완독</Text>
+                        <StyleText style={{fontSize:12,color:"#424242"}}>완독</StyleText>
                         <CheckBox
                             style={{marginLeft:10}}
                             disabled={false}
@@ -91,12 +93,12 @@ export default ()=>{
                 <View style={{marginTop:40,flexDirection:'row',alignItems:"center",justifyContent:"space-between"}}>
                     <TouchableOpacity onPress={handleClose}>
                         <View style={{width:134,height:40,backgroundColor:'#C7B6A0',borderRadius:6,justifyContent:'center',alignItems:"center"}}>
-                            <Text style={{fontSize:14,color:"#ffffff",fontWeight:'bold'}}>취소</Text>
+                            <StyleText style={{color:"#ffffff"}}>취소</StyleText>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handleSave}>
                         <View style={{width:134,height:40,backgroundColor:'#8C6C51',borderRadius:6,justifyContent:'center',alignItems:"center"}}>
-                            <Text style={{fontSize:14,color:"#ffffff",fontWeight:'bold'}}>저장</Text>
+                            <StyleText style={{color:"#ffffff"}}>저장</StyleText>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -104,12 +106,3 @@ export default ()=>{
         </View>
     )
 }
-const styles = StyleSheet.create({
-    commonColor: {
-        color:"#2B2B2B"
-    },
-
-    listContainer:{
-        elevation:1
-    }
-});

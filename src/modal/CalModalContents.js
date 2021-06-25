@@ -1,8 +1,9 @@
 import React,{useState} from 'react';
-import { TextInput,Text,View,Button,FlatList,Image } from 'react-native';
+import { TextInput,View,Button,FlatList,Image } from 'react-native';
 import { useDispatch } from 'react-redux';
 import {closeModal} from '../reducers/modal';
 import axios from 'axios';
+import StyleText from '../components/UI/StyleText';
 export default ()=>{
     const dispatch = useDispatch();
     const API_KEY = "a5bf620feebcc2c9bf7af09e3eb5d39d";
@@ -33,14 +34,13 @@ export default ()=>{
         return (
             <View style={{borderBottomWidth:1,padding:3}}>
                 <Image source={imgUrl} style={{width:40,height:40,resizeMode:"contain"}}/>
-                <Text>{item.title}</Text>
-                <Text>{item.authors}</Text>
+                <StyleText>{item.title}</StyleText>
+                <StyleText>{item.authors}</StyleText>
             </View>
         )
     }
     return (
         <View style={{width:300,paddingHorizontal:12, paddingVertical:8,backgroundColor:'white',height:400}}>
-
             <View style={{paddingVertical:8}}>
                 <TextInput placeholder="음식 검색" onChangeText={text=>setBookTitle(text)} value={bookTitle} style={{borderWidth:1,borderColor:'grey'}} />
             </View>

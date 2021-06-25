@@ -1,12 +1,12 @@
 import React,{useState} from 'react';
-import {Text,View,TextInput,SafeAreaView,Image,TouchableOpacity} from 'react-native'
+import { View,TextInput,SafeAreaView,Image,TouchableOpacity } from 'react-native'
 import { useDispatch } from 'react-redux';
 import {loginRequest, loginSuccess} from '../reducers/auth';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import {login,getProfile} from '@react-native-seoul/kakao-login'
 import send from '../modules/send';
 import { GoogleSignin } from "@react-native-community/google-signin";
-
+import StyleText from '../components/UI/StyleText';
 
 export default ({navigation})=>{
     const dispatch = useDispatch();
@@ -87,16 +87,16 @@ export default ({navigation})=>{
                     </View>
                     <TouchableOpacity onPress={onLogin}>
                         <View style={{marginTop:16,backgroundColor:'#8C6C51',justifyContent:'center',alignItems:"center",height:40,borderRadius:6}}>
-                            <Text style={{color:"#FFFFFF",fontSize:15,fontWeight:"bold"}}>로그인</Text>
+                            <StyleText style={{color:"#FFFFFF",fontSize:15}}>로그인</StyleText>
                         </View>
                     </TouchableOpacity>
                     <View style={{marginTop:10}}>
-                        <Text style={{fontSize:13,fontWeight:"bold",paddingBottom:2,color:"#2B2B2B",borderBottomWidth:1,alignSelf:"flex-start",borderBottomColor:"#2B2B2B"}}>비밀번호를 잊어버리셨나요?</Text>
+                        <StyleText style={{fontSize:13,paddingBottom:2,borderBottomWidth:1,alignSelf:"flex-start",borderBottomColor:"#2B2B2B"}}>비밀번호를 잊어버리셨나요?</StyleText>
                     </View>
                     <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center",marginTop:20}}>
                         <View style={{borderBottomWidth:1,borderBottomColor:"#ECECEC",height:1,flex:1}} />
                         <View style={{marginHorizontal:14}}>
-                            <Text style={{fontSize:14,fontWeight:"bold",color:"#2B2B2B"}}>계정으로 로그인</Text>
+                            <StyleText>계정으로 로그인</StyleText>
                         </View>
                         <View style={{borderBottomWidth:1,borderBottomColor:"#ECECEC",height:1,flex:1}} />
                     </View>
@@ -112,7 +112,7 @@ export default ({navigation})=>{
             </View>
             <View style={{marginBottom:26,justifyContent:'center',alignItems:"center"}}>
                 <TouchableOpacity onPress={()=>navigation.navigate("SignUp")}>
-                    <Text style={{fontSize:14,fontWeight:"bold",color:"#2B2B2B",borderBottomWidth:1,borderBottomColor:'#2B2B2B',paddingBottom:2}}>회원가입</Text>
+                    <StyleText style={{borderBottomWidth:1,borderBottomColor:'#2B2B2B',paddingBottom:2}}>회원가입</StyleText>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>

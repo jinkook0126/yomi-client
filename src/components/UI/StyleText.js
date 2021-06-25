@@ -1,13 +1,12 @@
 import React from 'react';
 import { Text,StyleSheet } from 'react-native';
 
-export default (props)=>{
+export default ({children,style,...rest})=>{
     return (
         <Text 
-            style={[styles.default,props.style]}
-            numberOfLines={props.numberOfLines}
-            ellipsizeMode={props.ellipsizeMode}
-        >{props.children}</Text>
+            style={[styles.default,style]}
+            {...rest}
+        >{children}</Text>
     )
 }
 

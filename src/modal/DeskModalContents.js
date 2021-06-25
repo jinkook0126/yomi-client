@@ -1,8 +1,9 @@
 import React,{useState,useEffect} from 'react';
-import { TextInput,Text,View,Image,StyleSheet,TouchableOpacity,FlatList,Alert } from 'react-native';
+import { TextInput,View,Image,StyleSheet,TouchableOpacity,FlatList,Alert } from 'react-native';
 import { useDispatch } from 'react-redux';
 import {closeModal} from '../reducers/modal';
 import send from '../modules/send';
+import StyleText from '../components/UI/StyleText';
 
 export default (props)=>{
     const dispatch = useDispatch();
@@ -106,9 +107,9 @@ export default (props)=>{
     const renderItem=({item,index})=>{
         return (
             <View style={{padding:4,flexDirection:'row',justifyContent:"space-between",alignItems:"center"}}>
-                <Text style={[styles.commonColor,{fontWeight:'bold'}]}>{item.expl}</Text>
+                <StyleText>{item.expl}</StyleText>
                 <View style={{flexDirection:"row",alignItems:'center',justifyContent:"flex-end"}}>
-                    <Text style={[styles.commonColor,{fontWeight:'bold'}]}>{`${item.hours} 시간 ${item.min} 분`}</Text>
+                    <StyleText>{`${item.hours} 시간 ${item.min} 분`}</StyleText>
                     <TouchableOpacity onPress={()=>removeItem(index)}>
                         <Image source={require('../img/ico_close.png')} style={{marginLeft:10}}/>
                     </TouchableOpacity>
@@ -120,12 +121,12 @@ export default (props)=>{
     return (
         <View style={{width:320,padding:16,backgroundColor:'white',borderRadius:8}}>
             <View style={{justifyContent:'center',alignItems:'center'}}>
-                <Text style={[styles.commonColor,{fontSize:16,fontWeight:'bold'}]}>책상</Text>
+                <StyleText style={{fontSize:16}}>책상</StyleText>
             </View>
             <View style={{marginTop:26}}>
                 <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:'center'}}>
-                    <Text style={[styles.commonColor,{fontSize:14,fontWeight:'bold'}]}>오늘 나의 공부</Text>
-                    <Text style={[styles.commonColor,{fontSize:11,fontWeight:'bold'}]}>{`Total ${totalHours}시간 ${totalMin}분`}</Text>
+                    <StyleText>오늘 나의 공부</StyleText>
+                    <StyleText style={{fontSize:11}}>{`Total ${totalHours}시간 ${totalMin}분`}</StyleText>
                 </View>
                 <FlatList
                     data={lists}
@@ -134,7 +135,7 @@ export default (props)=>{
                     style={{marginTop:26,height:70,borderBottomWidth:1,borderBottomColor:"#EEEEEE"}}
                 />
                 <View style={{marginTop:16,flexDirection:"row",alignItems:"center"}}>
-                    <Text style={[styles.commonColor,{fontSize:14,fontWeight:'bold'}]}>공부 추가하기</Text>
+                    <StyleText>공부 추가하기</StyleText>
                     <TouchableOpacity onPress={()=>setExtraView(!extraView)}>
                         {
                             extraView ? 
@@ -158,16 +159,16 @@ export default (props)=>{
                             <View style={{backgroundColor:"#EEEEEE",width:24,height:16,marginRight:8}}>
                                 <TextInput value={hours} keyboardType={"number-pad"} onChangeText={(value)=>setHours(value)} style={{flex:1,height:16,alignItems:"stretch",paddingVertical:0,fontSize:12}}/>
                             </View>
-                            <Text style={[styles.commonColor,{fontSize:14,fontWeight:'bold'}]}>시간</Text>
+                            <StyleText>시간</StyleText>
 
                             <View style={{backgroundColor:"#EEEEEE",width:24,height:16,marginRight:8,marginLeft:16}}>
                                 <TextInput value={min} keyboardType={"number-pad"} onChangeText={(value)=>setMin(value)} style={{flex:1,height:16,alignItems:"stretch",paddingVertical:0,fontSize:12}}/>
                             </View>
-                            <Text style={[styles.commonColor,{fontSize:14,fontWeight:'bold'}]}>분</Text>
+                            <StyleText>분</StyleText>
 
                             <TouchableOpacity onPress={addList}>
                                 <View style={{height:30,width:60,backgroundColor:"#8C6C51",borderRadius:6,justifyContent:'center',alignItems:"center",marginLeft:20}}>
-                                    <Text style={{color:"#ffffff",fontWeight:'bold'}}>추가</Text>
+                                    <StyleText style={{color:"#ffffff"}}>추가</StyleText>
                                 </View>
                             </TouchableOpacity>
                         </View>
@@ -178,12 +179,12 @@ export default (props)=>{
                 <View style={{marginTop:90,flexDirection:"row",justifyContent:"space-between",alignItems:'center'}}>
                     <TouchableOpacity onPress={handleClose}>
                         <View style={{width:134,height:40,backgroundColor:'#C7B6A0',borderRadius:6,justifyContent:'center',alignItems:"center"}}>
-                            <Text style={{fontSize:14,color:"#ffffff",fontWeight:'bold'}}>취소</Text>
+                            <StyleText style={{color:"#ffffff"}}>취소</StyleText>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handleSave}>
                         <View style={{width:134,height:40,backgroundColor:'#8C6C51',borderRadius:6,justifyContent:'center',alignItems:"center"}}>
-                            <Text style={{fontSize:14,color:"#ffffff",fontWeight:'bold'}}>저장</Text>
+                            <StyleText style={{color:"#ffffff"}}>저장</StyleText>
                         </View>
                     </TouchableOpacity>
                 </View>

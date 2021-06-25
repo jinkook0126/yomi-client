@@ -1,10 +1,11 @@
 import React,{useState,useEffect} from 'react';
-import {Text,View,SafeAreaView,Image,Dimensions,StyleSheet,TouchableOpacity,TextInput,Alert} from 'react-native'
+import { View,SafeAreaView,Image,Dimensions,StyleSheet,TouchableOpacity,TextInput,Alert } from 'react-native'
 import { useDispatch } from 'react-redux';
 import Modal from 'react-native-modal';
 import { FlatList } from 'react-native-gesture-handler';
 import send from '../../modules/send';;
 import {formatDate} from '../../modules/common'
+import StyleText from '../../components/UI/StyleText';
 
 export default ({navigation})=>{
     const dispatch = useDispatch();
@@ -84,10 +85,10 @@ export default ({navigation})=>{
                             <Image source={require('../../img/emoji_02.png')}/>
                         </View>
                         <View style={{marginTop:5}}>
-                            <Text numberOfLines={7} ellipsizeMode={"tail"} style={{color:"#2B2B2B",fontSize:8}}>{item.CONTENTS}</Text>
+                            <StyleText numberOfLines={7} ellipsizeMode={"tail"} style={{fontSize:8}}>{item.CONTENTS}</StyleText>
                         </View>
                     </View>
-                    <Text style={{marginTop:10}}>{dashedDate(item.DATE_DT)}</Text>
+                    <StyleText style={{marginTop:10}}>{dashedDate(item.DATE_DT)}</StyleText>
                 </View>
             </TouchableOpacity>
         )
@@ -100,22 +101,22 @@ export default ({navigation})=>{
                         <Image source={require('../../img/ico_back.png')}  />
                     </View>
                 </TouchableOpacity>
-                <Text style={[styles.commonColor,{paddingLeft:20,fontSize:16,fontWeight:'bold'}]}>일기장</Text>
+                <StyleText style={{paddingLeft:20,fontSize:16,}}>일기장</StyleText>
             </View>
             <View style={{marginTop:16,paddingHorizontal:26,paddingBottom:26,flex:1}}>
-                <Text style={[styles.commonColor,{fontSize:14,fontWeight:'bold'}]}>오늘의 일기</Text>
+                <StyleText style={{fontSize:14}}>오늘의 일기</StyleText>
                 <TouchableOpacity onPress={openTodayDiaryModal}>
                     <View style={{height:153,backgroundColor:"#FFFBE9",marginTop:16,paddingHorizontal:16,borderRadius:6}}>
                         <View style={{marginTop:10,alignItems:"flex-end"}}>
                             <Image source={require('../../img/emoji_01.png')}  />
                         </View>
                         <View style={{marginTop:10,paddingBottom:16}}>
-                            <Text numberOfLines={6} ellipsizeMode={"tail"} style={[styles.commonColor,{fontSize:12}]}>{today.CONTENTS}</Text>
+                            <StyleText numberOfLines={6} ellipsizeMode={"tail"} style={{fontSize:12}}>{today.CONTENTS}</StyleText>
                         </View>
                     </View>
                 </TouchableOpacity>
                 <View style={{marginTop:26,flex:1}}>
-                    <Text style={[styles.commonColor,{fontSize:14,fontWeight:'bold'}]}>지난 일기</Text>
+                    <StyleText>지난 일기</StyleText>
                     <FlatList 
                         numColumns={3}
                         data={diaryList}
@@ -140,7 +141,7 @@ export default ({navigation})=>{
             >
                 <View style={styles.modalContents}>
                     <View style={{justifyContent:'center',alignItems:"center"}}>
-                        <Text style={[styles.commonColor,{fontSize:16}]}>{diaryDate}</Text>
+                        <StyleText style={{fontSize:16}}>{diaryDate}</StyleText>
                     </View>
                     <View style={{marginTop:12,alignItems:'center',justifyContent:'center'}}>
                         <Image source={require('../../img/emoji_01.png')} />
@@ -154,10 +155,10 @@ export default ({navigation})=>{
                     </View>
                     <View style={{marginTop:40,flexDirection:"row", justifyContent:"flex-end",}}>
                         <TouchableOpacity onPress={()=>setVisible(false)}>
-                            <Text style={{color:"#8C6C51",fontSize:14}}>취소</Text>
+                            <StyleText style={{color:"#8C6C51"}}>취소</StyleText>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={handleModalSave}>
-                            <Text style={{color:"#8C6C51",fontSize:14,marginLeft:30}}>저장</Text>
+                            <StyleText style={{color:"#8C6C51",marginLeft:30}}>저장</StyleText>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -166,9 +167,6 @@ export default ({navigation})=>{
     )
 }
 const styles = StyleSheet.create({
-    commonColor: {
-        color:"#2B2B2B"
-    },
     modalContents:{
         backgroundColor:'#FFFBE9',
         borderRadius:8,
