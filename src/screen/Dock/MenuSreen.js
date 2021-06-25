@@ -1,19 +1,25 @@
-import * as React from 'react';
-import { View,StyleSheet,SafeAreaView,TouchableOpacity } from 'react-native';
-import { useDispatch } from 'react-redux';
+import React from 'react';
+import { View,StyleSheet,SafeAreaView,TouchableOpacity,Image } from 'react-native';
+import { useDispatch,useSelector } from 'react-redux';
 import {logoutRequest} from '../../reducers/auth';
 import StyleText from '../../components/UI/StyleText';
 
 export default ({navigation})=>{
     const dispatch = useDispatch();
+    const thumb = useSelector(state=> state.auth.userInfo.thumb);
     const doLogOut = async() => {
         dispatch(logoutRequest());
     }
     return (
         <SafeAreaView style={{flex:1,backgroundColor:'#FFFFFF'}}>
             <View style={{justifyContent:'center',alignItems:"center",marginTop:40}}>
-                <View style={{width:104,height:104,borderRadius:104,borderWidth:1,borderColor:'#9E9E9E'}}>
-                </View>
+                {
+                    thumb === null ?
+                        <View style={{width:104,height:104,borderRadius:100,borderWidth:1,borderColor:'#9E9E9E'}} />
+                    :
+                        <Image source={{uri:thumb}} resizeMode="stretch" style={{width:104,height:104,borderRadius:100}}/>
+                }
+                
             </View>
             <View style={{marginTop:58,paddingHorizontal:16}}>
                 <TouchableOpacity>

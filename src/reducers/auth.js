@@ -9,9 +9,9 @@ const LOGOUT_SUCCESS = "auth/LOGOUT_SUCCESS";
 // 액션 생섬함수 정의
 export const loginRequest = (mail,pw) =>{
     return (dispatch,getState) => {
-        return send.post("/users/login",{mail:mail,pw:pw}).then(({login,name,token,userNo})=>{
+        return send.post("/users/login",{mail:mail,pw:pw}).then(({login,name,token,userNo,thumb})=>{
             if(login) {
-                dispatch(loginSuccess(name,userNo));
+                dispatch(loginSuccess(name,userNo,thumb));
                 EncryptedStorage.setItem(
                     "jwt_token",
                     JSON.stringify({token : token})
@@ -24,9 +24,9 @@ export const loginRequest = (mail,pw) =>{
 
 export const verifyRequest = ()=>{
     return (dispatch,getState)=>{
-        return send.post("/users/verify").then(({login,name,userNo})=>{
+        return send.post("/users/verify").then(({login,name,userNo,thumb})=>{
            if(login) {
-               dispatch(loginSuccess(name,userNo));
+               dispatch(loginSuccess(name,userNo,thumb));
            }
         })
     }
@@ -40,7 +40,7 @@ export const logoutRequest = (mail,pw) =>{
     }
 }
 
-export const loginSuccess = (name,userNo) => ({ type: LOGIN_SUCCESS,name,userNo });
+export const loginSuccess = (name,userNo,thumb) => ({ type: LOGIN_SUCCESS,name,userNo,thumb });
 export const logoutSuccess = () => ({ type: LOGOUT_SUCCESS });
 
 
@@ -49,7 +49,8 @@ const initState = {
     login:{stat:false},
     userInfo:{
         name:"",
-        userNo:""
+        userNo:"",
+        thumb:"",
     }
 }
 
@@ -62,7 +63,8 @@ export default function reducer(state=initState, action){
                 login:{stat:true},
                 userInfo:{
                     name:action.name,
-                    userNo:action.userNo
+                    userNo:action.userNo,
+                    thumb:action.thumb,
                 }
             }
         case LOGOUT_SUCCESS:
@@ -71,7 +73,8 @@ export default function reducer(state=initState, action){
                 login:{stat:false},
                 userInfo:{
                     name:"",
-                    userNo:""
+                    userNo:"",
+                    thumb:"",
                 }
             }
         default:

@@ -57,7 +57,7 @@ export default ({navigation})=>{
                 "jwt_token",
                 JSON.stringify({token : token})
             );
-            dispatch(loginSuccess(name||nickname,id));
+            dispatch(loginSuccess(name||nickname,id,thumbnailImageUrl || photo));
             navigation.reset({
                 index:0,
                 routes:[{name:"WelcomeScreen"}]
