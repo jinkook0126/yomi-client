@@ -1,8 +1,10 @@
 import React,{useState} from 'react';
-import { View,SafeAreaView,TextInput,TouchableOpacity,StyleSheet,Alert } from 'react-native'
+import { View,SafeAreaView,TouchableOpacity,StyleSheet,Alert } from 'react-native'
 import { useDispatch } from 'react-redux';
 import send from '../modules/send';
 import StyleText from '../components/UI/StyleText'
+import StyleInput from '../components/UI/StyleInput';
+
 export default ({navigation})=>{
     const dispatch = useDispatch();
     const [name,setName] = useState("");
@@ -57,20 +59,20 @@ export default ({navigation})=>{
                 </View>
                 <View style={{marginTop:50}}> 
                     <View style={[styles.inputWrap,{marginTop:0}]}>
-                        <TextInput placeholder={"이름"} style={styles.input} placeholderTextColor={"#9E9E9E"}
-                            onChangeText={(value)=>setName(value)}></TextInput>
+                        <StyleInput placeholder={"이름"} style={styles.input} placeholderTextColor={"#9E9E9E"}
+                            onChangeText={(value)=>setName(value)}></StyleInput>
                     </View>
                     <View style={styles.inputWrap}>
-                        <TextInput placeholder={"이메일"} style={styles.input} placeholderTextColor={"#9E9E9E"}
-                            onChangeText={(value)=>setMail(value)}></TextInput>
+                        <StyleInput placeholder={"이메일"} style={styles.input} placeholderTextColor={"#9E9E9E"}
+                            onChangeText={(value)=>setMail(value)}></StyleInput>
                     </View>
                     <View style={styles.inputWrap}>
-                        <TextInput placeholder={"비밀번호"} secureTextEntry={true} style={styles.input} placeholderTextColor={"#9E9E9E"}
-                            onChangeText={(value)=>setPw(value)}></TextInput>
+                        <StyleInput placeholder={"비밀번호"} secureTextEntry={true} style={styles.input} placeholderTextColor={"#9E9E9E"}
+                            onChangeText={(value)=>setPw(value)}></StyleInput>
                     </View>
                     <View style={styles.inputWrap}>
-                        <TextInput placeholder={"비밀번호 확인"} secureTextEntry={true} style={styles.input} placeholderTextColor={"#9E9E9E"}
-                            onChangeText={(value)=>setPw2(value)}></TextInput>
+                        <StyleInput placeholder={"비밀번호 확인"} secureTextEntry={true} style={styles.input} placeholderTextColor={"#9E9E9E"}
+                            onChangeText={(value)=>setPw2(value)}></StyleInput>
                     </View>
                     <TouchableOpacity onPress={signUpRequest}>
                         <View style={{marginTop:28,backgroundColor:"#8C6C51",height:40,justifyContent:'center',alignItems:"center",borderRadius:6}}>

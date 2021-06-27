@@ -1,8 +1,9 @@
 import React,{useState,useEffect} from 'react';
-import { View,SafeAreaView,Image,StyleSheet,TouchableOpacity,ScrollView,TextInput } from 'react-native'
+import { View,SafeAreaView,Image,StyleSheet,TouchableOpacity,ScrollView } from 'react-native'
 import send from '../../modules/send';
 import Modal from 'react-native-modal';
 import StyleText from '../../components/UI/StyleText';
+import StyleInput from '../../components/UI/StyleInput';
 
 export default ({navigation})=>{
     const [visible,setVisible] = useState(false);
@@ -150,7 +151,7 @@ export default ({navigation})=>{
             </View>
             <Modal useNativeDriver isVisible={visible} onBackButtonPress={()=>setVisible(false)}>
                 <View style={{backgroundColor:"white",padding:16}}>
-                    <TextInput placeholder={"목표 칼로리를 입력해주세요."} keyboardType={"numeric"} onChangeText={(text)=>setChangeKcal(text)}/>
+                    <StyleInput placeholder={"목표 칼로리를 입력해주세요."} keyboardType={"numeric"} onChangeText={(text)=>setChangeKcal(text)}/>
                     <View style={{marginTop:20,flexDirection:'row',alignItems:'center',justifyContent:'space-around'}}>
                         <TouchableOpacity onPress={()=>setVisible(false)}>
                             <View style={{width:134,height:40,backgroundColor:'#C7B6A0',borderRadius:6,justifyContent:'center',alignItems:"center"}}>

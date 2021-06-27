@@ -1,11 +1,12 @@
 import React,{useState,useEffect} from 'react';
-import { TextInput,View,Image,ImageBackground,TouchableOpacity,Alert } from 'react-native';
+import { View,Image,ImageBackground,TouchableOpacity,Alert } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import { Rating } from 'react-native-ratings';
 import { useDispatch, useSelector } from 'react-redux';
 import {closeModal} from '../reducers/modal';
 import send from '../modules/send';
 import StyleText from '../components/UI/StyleText';
+import StyleInput from '../components/UI/StyleInput';
 
 export default ()=>{
     const dispatch = useDispatch();
@@ -53,7 +54,7 @@ export default ()=>{
                 <View style={{marginTop:25,paddingHorizontal:5,flexDirection:'row',alignItems:'center'}}>
                     <StyleText style={{fontSize:12,color:"#424242"}}>읽은 페이지 수</StyleText>
                     <View style={{backgroundColor:"#EEEEEE",width:22,height:16,marginLeft:10}}>
-                        <TextInput keyboardType={"number-pad"} value={String(readPage)} onChangeText={(text)=>setReadPage(text)} style={{flex:1,height:16,alignItems:"stretch",paddingVertical:0,fontSize:12}}/>
+                        <StyleInput keyboardType={"number-pad"} value={String(readPage)} onChangeText={(text)=>setReadPage(text)} style={{flex:1,height:16,alignItems:"stretch",paddingVertical:0,fontSize:12}}/>
                     </View>
                 </View>
                 <View style={{marginTop:10,paddingHorizontal:5,flexDirection:'row',alignItems:'center'}}>
@@ -84,7 +85,7 @@ export default ()=>{
                     </View>
                 </View>
                 <ImageBackground resizeMode={"contain"} source={require("../img/bg_memo.png")} style={{marginTop:10,height:100,borderRadius:2,overflow:"hidden",elevation:2}}>
-                    <TextInput
+                    <StyleInput
                         multiline={true}
                         value={memo}
                         onChangeText={(value)=>setMemo(value)}

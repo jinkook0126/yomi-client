@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import { View,TextInput,SafeAreaView,Image,TouchableOpacity } from 'react-native'
+import { View,SafeAreaView,Image,TouchableOpacity } from 'react-native'
 import { useDispatch } from 'react-redux';
 import {loginRequest, loginSuccess} from '../reducers/auth';
 import EncryptedStorage from 'react-native-encrypted-storage';
@@ -7,6 +7,7 @@ import {login,getProfile} from '@react-native-seoul/kakao-login'
 import send from '../modules/send';
 import { GoogleSignin } from "@react-native-community/google-signin";
 import StyleText from '../components/UI/StyleText';
+import StyleInput from '../components/UI/StyleInput';
 
 export default ({navigation})=>{
     const dispatch = useDispatch();
@@ -75,15 +76,15 @@ export default ({navigation})=>{
                 </View>
                 <View style={{paddingHorizontal:20,marginTop:10}}>
                     <View style={{borderBottomWidth:1,borderBottomColor:"#EEEEEE",height:40}}>
-                        <TextInput placeholder={"이메일"} style={{flex:1,height:30,alignItems:"stretch",paddingVertical:0}} placeholderTextColor={"#9E9E9E"}
+                        <StyleInput placeholder={"이메일"} style={{flex:1,height:30,alignItems:"stretch",paddingVertical:0}} placeholderTextColor={"#9E9E9E"}
                             onChangeText={value=>setMail(value)}
-                        ></TextInput>
+                        ></StyleInput>
                     </View>
                     <View style={{borderBottomWidth:1,borderBottomColor:"#EEEEEE",height:40,marginTop:16}}>
-                        <TextInput placeholder={"비밀번호"} style={{flex:1,height:30,alignItems:"stretch",paddingVertical:0}} placeholderTextColor={"#9E9E9E"}
+                        <StyleInput placeholder={"비밀번호"} style={{flex:1,height:30,alignItems:"stretch",paddingVertical:0}} placeholderTextColor={"#9E9E9E"}
                             secureTextEntry={true}
                             onChangeText={value=>setPw(value)}
-                        ></TextInput>
+                        ></StyleInput>
                     </View>
                     <TouchableOpacity onPress={onLogin}>
                         <View style={{marginTop:16,backgroundColor:'#8C6C51',justifyContent:'center',alignItems:"center",height:40,borderRadius:6}}>

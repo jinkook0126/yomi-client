@@ -1,11 +1,12 @@
 import React,{useState,useEffect} from 'react';
-import { View,SafeAreaView,Image,Dimensions,StyleSheet,TouchableOpacity,TextInput,Alert } from 'react-native'
+import { View,SafeAreaView,Image,Dimensions,StyleSheet,TouchableOpacity,Alert } from 'react-native'
 import { useDispatch } from 'react-redux';
 import Modal from 'react-native-modal';
 import { FlatList } from 'react-native-gesture-handler';
 import send from '../../modules/send';;
 import {formatDate} from '../../modules/common'
 import StyleText from '../../components/UI/StyleText';
+import StyleInput from '../../components/UI/StyleInput';
 
 export default ({navigation})=>{
     const dispatch = useDispatch();
@@ -147,7 +148,7 @@ export default ({navigation})=>{
                         <Image source={require('../../img/emoji_01.png')} />
                     </View>
                     <View style={{marginTop:22,height:286}}>
-                        <TextInput
+                        <StyleInput
                             value={inputDiary}
                             onChangeText={(value)=>setInputDiary(value)}
                             multiline={true}

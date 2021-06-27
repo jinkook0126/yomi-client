@@ -1,11 +1,13 @@
 import React,{useState,useEffect} from 'react';
-import { TextInput,Text,View,Image,StyleSheet,ImageBackground,TouchableOpacity,Alert } from 'react-native';
+import { View,Image,ImageBackground,TouchableOpacity,Alert } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import { Rating } from 'react-native-ratings';
 import { useDispatch, useSelector } from 'react-redux';
 import {closeModal} from '../reducers/modal';
 import send from '../modules/send';
 import StyleText  from '../components/UI/StyleText';
+import StyleInput from '../components/UI/StyleInput';
+
 export default ()=>{
     const dispatch = useDispatch();
     const [complete, setComplete] = useState(false);
@@ -85,7 +87,7 @@ export default ()=>{
                     </View>
                 </View>
                 <ImageBackground resizeMode={"contain"} source={require("../img/bg_memo.png")} style={{marginTop:10,height:100,borderRadius:2,overflow:"hidden",elevation:2}}>
-                    <TextInput
+                    <StyleInput
                         multiline={true}
                         value={memo}
                         onChangeText={(value)=>setMemo(value)}

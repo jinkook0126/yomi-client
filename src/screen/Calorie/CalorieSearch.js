@@ -1,9 +1,10 @@
 import React,{useState,useEffect} from 'react';
-import { TextInput,View,SafeAreaView,Image,TouchableOpacity, ImageBackground, FlatList,Alert } from 'react-native'
+import { View,SafeAreaView,Image,TouchableOpacity, ImageBackground, FlatList,Alert } from 'react-native'
 import { useDispatch,useSelector } from 'react-redux';
 import Modal from 'react-native-modal';
 import send from '../../modules/send';
 import StyleText from '../../components/UI/StyleText';
+import StyleInput from '../../components/UI/StyleInput';
 
 export default ({navigation,route})=>{
     const dispatch = useDispatch();
@@ -195,7 +196,7 @@ export default ({navigation,route})=>{
             <View style={{flex:1,paddingHorizontal:26,paddingVertical:16,justifyContent:'space-between'}}>
                 <View>
                     <View style={{borderWidth:1,borderColor:'#EEEEEE',borderRadius:2,height:36,backgroundColor:"#FFFFFF",flexDirection:"row",justifyContent:"space-between",alignItems:'center',paddingHorizontal:12}}>
-                        <TextInput
+                        <StyleInput
                             onChangeText={(value)=>{setSearchKey(value)}}
                             style={{flex:1,padding:0,height:30}}
                         />
@@ -228,7 +229,7 @@ export default ({navigation,route})=>{
                         extraView? 
                             <View style={{marginTop:10}}>
                                 <View style={{height:36,borderRadius:2,borderColor:'#EEEEEE',borderWidth:1,paddingHorizontal:10}}>
-                                    <TextInput
+                                    <StyleInput
                                         placeholder={"음식 이름"}
                                         style={{padding:0,height:36,flex:1}}
                                         onChangeText={text=>setCustomFoodName(text)}
@@ -237,7 +238,7 @@ export default ({navigation,route})=>{
                                 </View>
                                 <View style={{marginTop:10,flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
                                     <View style={{height:36,width:160,borderRadius:2,borderColor:'#EEEEEE',borderWidth:1,paddingHorizontal:10,flexDirection:'row',justifyContent:'space-between',alignItems:"center"}}>
-                                        <TextInput
+                                        <StyleInput
                                             placeholder={"열량"}
                                             style={{padding:0,height:36,flex:1}}
                                             keyboardType={"numeric"}

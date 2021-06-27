@@ -1,9 +1,10 @@
 import React,{useState} from 'react';
-import { View,SafeAreaView,Image,FlatList,StyleSheet,TouchableOpacity,TextInput } from 'react-native'
+import { View,SafeAreaView,Image,FlatList,StyleSheet,TouchableOpacity } from 'react-native'
 import { useDispatch } from 'react-redux';
 import send from '../../modules/send';
 import {openModalWithProps} from '../../reducers/modal';
 import StyleText from '../../components/UI/StyleText';
+import StyleInput from '../../components/UI/StyleInput';
 
 export default ({navigation})=>{
     const dispatch = useDispatch();
@@ -70,7 +71,7 @@ export default ({navigation})=>{
             </View>
             <View style={{flex:1,paddingVertical:20,paddingHorizontal:26}}>
                 <View style={{borderWidth:1,borderColor:"#EEEEEE",borderRadius:2,height:36,flexDirection:"row",alignItems:"center",justifyContent:'space-between',paddingHorizontal:12,overflow:"hidden"}}>
-                    <TextInput onChangeText={(value)=>setSearchTitle(value)} style={{flex:1,height:30,alignItems:"stretch",paddingVertical:0}}></TextInput>
+                    <StyleInput onChangeText={(value)=>setSearchTitle(value)} style={{flex:1,height:30,alignItems:"stretch",paddingVertical:0}}></StyleInput>
                     <TouchableOpacity onPress={()=>doSearch(true)} style={{width:25,height:25,justifyContent:"center",alignItems:'center'}}>
                         <Image source={require("../../img/ico_search.png")}/>
                     </TouchableOpacity>

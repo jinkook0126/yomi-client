@@ -1,10 +1,11 @@
 import React,{useState,useEffect} from 'react';
-import { TextInput,View,Image,TouchableOpacity,FlatList,Alert,ImageBackground } from 'react-native';
+import { View,Image,TouchableOpacity,FlatList,Alert,ImageBackground } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { useDispatch } from 'react-redux';
 import {closeModal} from '../reducers/modal';
 import send from '../modules/send';
 import StyleText from '../components/UI/StyleText';
+import StyleInput from '../components/UI/StyleInput';
 
 export default ()=>{
     const dispatch = useDispatch();
@@ -78,8 +79,8 @@ export default ()=>{
         setLists(lists.concat([
             {
                 expl:edit?expl:pickerList[selectedValue],
-                hours:hours,
-                min:min
+                hours:parseInt(hours) + parseInt(min/60),
+                min:parseInt(min%60)
             }
         ]))
         setExpl("")
@@ -179,7 +180,7 @@ export default ()=>{
                             </View>
                             <View style={{width:4}}/>
                             <View style={{borderWidth:1,borderColor:'#EEEEEE',borderRadius:2,height:36,flex:1}}>
-                                <TextInput
+                                <StyleInput
                                     editable={edit}
                                     value={expl}
                                     onChangeText={(value)=>setExpl(value)}
@@ -189,12 +190,12 @@ export default ()=>{
                         </View>
                         <View style={{marginTop:10,flexDirection:"row",justifyContent:"flex-end",alignItems:"center"}}>
                             <View style={{backgroundColor:"#EEEEEE",width:24,height:16,marginRight:8}}>
-                                <TextInput value={hours} keyboardType={"number-pad"} onChangeText={(value)=>setHours(value)} style={{flex:1,height:16,alignItems:"stretch",paddingVertical:0,fontSize:12}}/>
+                                <StyleInput value={hours} keyboardType={"number-pad"} onChangeText={(value)=>setHours(value)} style={{flex:1,height:16,alignItems:"stretch",paddingVertical:0,fontSize:12}}/>
                             </View>
                             <StyleText>시간</StyleText>
 
                             <View style={{backgroundColor:"#EEEEEE",width:24,height:16,marginRight:8,marginLeft:16}}>
-                                <TextInput value={min} keyboardType={"number-pad"} onChangeText={(value)=>setMin(value)} style={{flex:1,height:16,alignItems:"stretch",paddingVertical:0,fontSize:12}}/>
+                                <StyleInput value={min} keyboardType={"number-pad"} onChangeText={(value)=>setMin(value)} style={{flex:1,height:16,alignItems:"stretch",paddingVertical:0,fontSize:12}}/>
                             </View>
                             <StyleText>분</StyleText>
 
