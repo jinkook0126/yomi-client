@@ -1,5 +1,6 @@
 import React,{useState,useEffect} from 'react';
-import { Text, View,FlatList,SafeAreaView, TouchableOpacity, Image, Button } from 'react-native';
+import { View,FlatList,SafeAreaView, TouchableOpacity, Image, Button } from 'react-native';
+import StyleText from '../../components/UI/StyleText';
 import moment from 'moment';
 
 const dayName = ['일','월','화','수','목','금','토']
@@ -99,7 +100,7 @@ export default ()=>{
             <TouchableOpacity onPress={()=>setSelectDate(item)}>
                 <View style={[{width:46,height:itemHeight},borderStyle]}>
                     <View style={{paddingLeft:10,paddingTop:10}}>
-                        <Text style={[{fontSize:12,fontWeight:'bold'},textStyle]}>{new Date(item).getDate()}</Text>
+                        <StyleText style={[{fontSize:12},textStyle]}>{new Date(item).getDate()}</StyleText>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -113,7 +114,7 @@ export default ()=>{
                         <Image source={require("../../img/ico_left_arrow.png")}/>
                     </View>
                 </TouchableOpacity>
-                <Text style={{fontSize:12,fontWeight:'bold',color:"#000000",marginHorizontal:16}}>{monthName}</Text>
+                <StyleText style={{fontSize:12,color:"#000000",marginHorizontal:16}}>{monthName}</StyleText>
                 <TouchableOpacity onPress={()=>handleMonth(true)}>
                     <View style={{width:9,height:9}}>
                         <Image source={require("../../img/ico_right_arrow.png")}/>
@@ -126,7 +127,7 @@ export default ()=>{
                         dayName.map((item,idx)=>{
                             return (
                                 <View key={idx} style={{width:46,height:36,justifyContent:'center',alignItems:'center',borderBottomWidth:1,borderRightWidth:1,borderColor:"#EEEEEE"}}>
-                                    <Text style={{fontSize:12,fontWeight:'bold',color:"#000000"}}>{item}</Text>
+                                    <StyleText style={{fontSize:12,color:"#000000"}}>{item}</StyleText>
                                 </View>
                             )
                         })
