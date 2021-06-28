@@ -1,5 +1,5 @@
-import React,{useState,useEffect} from 'react';
-import { View,FlatList,SafeAreaView, TouchableOpacity, Image, Button } from 'react-native';
+import React,{useState,useEffect,useRef} from 'react';
+import { View,FlatList,SafeAreaView, TouchableOpacity, Image,Animated,StyleSheet } from 'react-native';
 import StyleText from '../../components/UI/StyleText';
 import moment from 'moment';
 
@@ -10,6 +10,21 @@ export default ()=>{
     const [dayList,setDayList] = useState([]);
     const [selectDate,setSelectDate] = useState(null);
     const [itemHeight,setItemHeight] = useState(66);
+    const [toggle,setToggle] = useState(false);
+    const animatedHeight = useRef(new Animated.Value(30)).current;
+
+    const handleBottomSheet = ()=>{
+        setToggle(!toggle)
+    }
+    useEffect(()=>{
+        const height = toggle ? 258 : 30
+        Animated.timing(animatedHeight,{
+            toValue:height,
+            duration:100,
+            useNativeDriver:false
+        }).start();
+    },[toggle])
+
 
     useEffect(()=>{
         handleDateList(getMoment)
@@ -39,6 +54,7 @@ export default ()=>{
         }
         setDayList([...prevDates,...dates,...nextDates])
     }
+
     const handleMonth = async(nextMonth)=>{
         const nextMoment = nextMonth ? getMoment.add(1, 'month') : getMoment.subtract(1, 'month');
         setMoment(nextMoment);
@@ -107,7 +123,7 @@ export default ()=>{
         )
     }
     return (
-        <SafeAreaView style={{flex:1,backgroundColor:"#FFFFFF"}}>
+        <SafeAreaView style={{flex:1,backgroundColor:"#FFFFFF",paddingHorizontal:20}}>
             <View style={{marginTop:27,flexDirection:"row",justifyContent:"center",alignItems:"center"}}>
                 <TouchableOpacity onPress={()=>handleMonth(false)}>
                     <View style={{width:9,height:9}}>
@@ -144,9 +160,24 @@ export default ()=>{
                     />
                 </View>
             </View>
-            <View style={{backgroundColor:"red",height:30}}>
-                <Button title={'asdf'} onPress={()=>setItemHeight(33)}></Button>
-            </View>
+            <Animated.View use
+                style={{backgroundColor:"#8C6C51",height:animatedHeight,width:320,position:'absolute',bottom:0,left:50,borderTopLeftRadius:12,borderTopRightRadius:12,justifyContent:'center',alignItems:"center"}}>
+                    {/* <Button title={'asdf'} onPress={()=>setItemHeight(33)}></Button> */}
+                    <View style={{flex:1}}>
+                        <TouchableOpacity onPress={handleBottomSheet}>
+                            <View style={{width:34,backgroundColor:'#FFFFFF',height:6,marginTop:6,borderRadius:4}} />
+                        </TouchableOpacity>
+                        <View style={{marginTop:30,paddingHorizontal:20}}>
+                            <View style={{flexDirection:'row',justifyContent:"space-between",alignItems:'center'}}>
+                                <StyleText style={styles.bottomSheetText}>일기</StyleText>
+                                <StyleText style={styles.bottomSheetText}>O</StyleText>
+                            </View>
+                        </View>
+                    </View>
+                </Animated.View>
         </SafeAreaView>
     );
 }
+const styles = StyleSheet.create({
+    bottomSheetText:{fontSize:16,color:"#FFFFFF"}
+})
