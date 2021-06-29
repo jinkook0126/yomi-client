@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import { View,Image,TouchableOpacity,FlatList,Alert,ImageBackground } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import {closeModal} from '../reducers/modal';
 import send from '../modules/send';
 import StyleText from '../components/UI/StyleText';
@@ -9,6 +9,7 @@ import StyleInput from '../components/UI/StyleInput';
 
 export default ()=>{
     const dispatch = useDispatch();
+    const params = useSelector(state=> state.modal.params);
     const [extraView,setExtraView] = useState(false);
     const [lists,setLists] = useState([]);
     const [expl,setExpl] = useState("");
@@ -24,7 +25,7 @@ export default ()=>{
 
     useEffect(()=>{
         const initDesk = async()=>{
-            const {success,LISTS : lists,IDX} = await send.get("/contents/workout");
+            const {success,LISTS : lists,IDX} = await send.get("/contents/workout",{params:{date:params.date || null}});
             if(success && lists.length !== 0) {
                 setContentsIdx(IDX);
                 const fromList = [];
@@ -58,7 +59,7 @@ export default ()=>{
         let flag = false;
         const update = contentsIdx !== "";
         if(!update) { // 신규
-            const {success} = await send.post("/contents/workout",{list:lists});
+            const {success} = await send.post("/contents/workout",{list:lists,date:params.date || null});
             flag = success;
         } else if(!update && lists.length === 0) { //에러
             Alert.alert("알림","목록을 입력해주세요.",[{text:'확인'}]);

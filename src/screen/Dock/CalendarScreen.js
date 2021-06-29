@@ -1,18 +1,24 @@
 import React,{useState,useEffect,useRef} from 'react';
+import { useDispatch } from 'react-redux';
 import { View,FlatList,SafeAreaView, TouchableOpacity, Image,Animated,StyleSheet } from 'react-native';
 import StyleText from '../../components/UI/StyleText';
 import moment from 'moment';
 import send from '../../modules/send';
 import {formatDate} from '../../modules/common';
+import {openModalWithProps,openModal} from '../../reducers/modal';
 
 const dayName = ['일','월','화','수','목','금','토']
 export default ()=>{
+    const dispatch = useDispatch();
     const [getMoment, setMoment]=useState(moment());     
     const [monthName,setMonthName] = useState(getMoment.format('MMMM'));
     const [dayList,setDayList] = useState([]);
     const [selectDate,setSelectDate] = useState(null);
     const [itemHeight,setItemHeight] = useState(66);
     const [toggle,setToggle] = useState(false);
+    const [history,setHistory] = useState({
+        diary:"X",book:0,workout:0,study:0,food:{goal:0,intake:0}
+    });
     const animatedHeight = useRef(new Animated.Value(30)).current;
 
     const handleBottomSheet = ()=>{
@@ -33,11 +39,22 @@ export default ()=>{
         getHistory();
     },[])
 
+    const updateHistory=(target)=>{
+        dispatch(openModalWithProps(target));
+    }
+
     const getHistory = async(_date) => {
-        if(_date) setSelectDate(_date)
-        console.log(formatDate(_date))
-        const {success} = await send.get("/history/",{params:{date:formatDate(_date)}});
-        console.log(success)
+        if(_date){
+            if( selectDate === null || (toggle === true && selectDate===_date) || toggle===false ) handleBottomSheet();
+            setSelectDate(_date)
+        } 
+
+        const {success,diary,book,workout,study,food,msg} = await send.get("/history/",{params:{date:formatDate(_date)}});
+        if(success) {
+            setHistory({diary,book,workout,study,food})
+        } else {
+            alert(`${msg}\n다시 시도해 주세요.`);
+        }
     }
     
     const handleDateList = async(_moment)=>{
@@ -104,7 +121,6 @@ export default ()=>{
             textStyle = {color:"#000000"};
         } else {
             textStyle = {color:"#EEEEEE"};
-
         }
 
         if(selectDate === null) { //today
@@ -181,25 +197,35 @@ export default ()=>{
                         <View style={{marginTop:30,paddingHorizontal:20}}>
                             <View style={styles.bottomSheetWrap}>
                                 <StyleText style={styles.bottomSheetText}>일기</StyleText>
-                                <StyleText style={styles.bottomSheetText}>O</StyleText>
+                                <TouchableOpacity onPress={()=>alert('일기')}>
+                                    <StyleText style={styles.bottomSheetText}>{history.diary ? 'O' : 'X'}</StyleText>
+                                </TouchableOpacity>
                             </View>
                             <View style={[{marginTop:16},styles.bottomSheetWrap]}>
                                 <StyleText style={styles.bottomSheetText}>운동</StyleText>
-                                <StyleText style={styles.bottomSheetText}>3 시간</StyleText>
+                                <TouchableOpacity onPress={()=>dispatch(openModalWithProps('health',{date:formatDate(selectDate)}))}>
+                                    <StyleText style={styles.bottomSheetText}>{`${parseInt(history.workout/60)} 시간 ${history.workout%60} 분`}</StyleText>
+                                </TouchableOpacity>
                             </View>
                             <View style={[{marginTop:16},styles.bottomSheetWrap]}>
                                 <StyleText style={styles.bottomSheetText}>공부</StyleText>
-                                <StyleText style={styles.bottomSheetText}>2.5 시간</StyleText>
+                                <TouchableOpacity onPress={()=>alert("공부")}>
+                                    <StyleText style={styles.bottomSheetText}>{`${parseInt(history.study/60)} 시간 ${history.study%60} 분`}</StyleText>
+                                </TouchableOpacity>
                             </View>
                             <View style={[{marginTop:16},styles.bottomSheetWrap]}>
                                 <StyleText style={styles.bottomSheetText}>책장</StyleText>
-                                <StyleText style={styles.bottomSheetText}>36 Page</StyleText>
+                                <TouchableOpacity onPress={()=>alert('책장')}>
+                                    <StyleText style={styles.bottomSheetText}>{history.book} Page</StyleText>
+                                </TouchableOpacity>
                             </View>
                             <View style={[{marginTop:16},styles.bottomSheetWrap]}>
                                 <StyleText style={styles.bottomSheetText}>냉장고</StyleText>
-                                <StyleText style={styles.bottomSheetText}>
-                                    <StyleText style={[styles.bottomSheetText,{color:"#94C9FF"}]}>100</StyleText>/800 kcal
-                                </StyleText>
+                                <TouchableOpacity onPress={()=>alert("냉장고")}>
+                                    <StyleText style={styles.bottomSheetText}>
+                                        <StyleText style={[styles.bottomSheetText,{color:"#94C9FF"}]}>{history.food.intake}</StyleText>/{history.food.goal} kcal
+                                    </StyleText>
+                                </TouchableOpacity>
                             </View>
                         </View>
                     </View>
