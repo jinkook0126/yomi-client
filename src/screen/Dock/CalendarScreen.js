@@ -8,7 +8,7 @@ import {formatDate} from '../../modules/common';
 import {openModalWithProps,openModal} from '../../reducers/modal';
 
 const dayName = ['일','월','화','수','목','금','토']
-export default ()=>{
+export default ({navigation})=>{
     const dispatch = useDispatch();
     const [getMoment, setMoment]=useState(moment());     
     const [monthName,setMonthName] = useState(getMoment.format('MMMM'));
@@ -39,21 +39,18 @@ export default ()=>{
         getHistory();
     },[])
 
-    const updateHistory=(target)=>{
-        dispatch(openModalWithProps(target));
-    }
-
     const getHistory = async(_date) => {
         if(_date){
             if( selectDate === null || (toggle === true && selectDate===_date) || toggle===false ) handleBottomSheet();
             setSelectDate(_date)
-        } 
-
-        const {success,diary,book,workout,study,food,msg} = await send.get("/history/",{params:{date:formatDate(_date)}});
-        if(success) {
-            setHistory({diary,book,workout,study,food})
-        } else {
-            alert(`${msg}\n다시 시도해 주세요.`);
+        }
+        if( selectDate === null || selectDate!==_date) {
+            const {success,diary,book,workout,study,food,msg} = await send.get("/history/",{params:{date:formatDate(_date)}});
+            if(success) {
+                setHistory({diary,book,workout,study,food})
+            } else {
+                alert(`${msg}\n다시 시도해 주세요.`);
+            }
         }
     }
     
@@ -197,7 +194,7 @@ export default ()=>{
                         <View style={{marginTop:30,paddingHorizontal:20}}>
                             <View style={styles.bottomSheetWrap}>
                                 <StyleText style={styles.bottomSheetText}>일기</StyleText>
-                                <TouchableOpacity onPress={()=>alert('일기')}>
+                                <TouchableOpacity onPress={()=>navigation.navigate("Diary",{date:formatDate(selectDate)})}>
                                     <StyleText style={styles.bottomSheetText}>{history.diary ? 'O' : 'X'}</StyleText>
                                 </TouchableOpacity>
                             </View>
@@ -209,7 +206,7 @@ export default ()=>{
                             </View>
                             <View style={[{marginTop:16},styles.bottomSheetWrap]}>
                                 <StyleText style={styles.bottomSheetText}>공부</StyleText>
-                                <TouchableOpacity onPress={()=>alert("공부")}>
+                                <TouchableOpacity onPress={()=>dispatch(openModalWithProps('desk',{date:formatDate(selectDate)}))}>
                                     <StyleText style={styles.bottomSheetText}>{`${parseInt(history.study/60)} 시간 ${history.study%60} 분`}</StyleText>
                                 </TouchableOpacity>
                             </View>

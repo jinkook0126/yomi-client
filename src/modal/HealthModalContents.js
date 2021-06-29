@@ -24,7 +24,7 @@ export default ()=>{
     const [bgHeight,setBgHeight] = useState(360);
 
     useEffect(()=>{
-        const initDesk = async()=>{
+        const initModal = async()=>{
             const {success,LISTS : lists,IDX} = await send.get("/contents/workout",{params:{date:params.date || null}});
             if(success && lists.length !== 0) {
                 setContentsIdx(IDX);
@@ -49,7 +49,7 @@ export default ()=>{
                 setTotalMin(fromMin);
             }
         }
-        initDesk();
+        initModal();
     },[])
 
     const handleClose=()=>{
@@ -76,12 +76,17 @@ export default ()=>{
     }
     const addList = ()=>{
         calcTotalHousrs();
+        let mm = min !== "" ? parseInt(min%60) : 0;
+        let hh = hours !== "" ? parseInt(hours) + parseInt(min/60) : 0;
+        if(mm !== '' && mm >=60) {
+            hh += parseInt(min/60)
+        }
 
         setLists(lists.concat([
             {
                 expl:edit?expl:pickerList[selectedValue],
-                hours:parseInt(hours) + parseInt(min/60),
-                min:parseInt(min%60)
+                hours:hh,
+                min:mm
             }
         ]))
         setExpl("")

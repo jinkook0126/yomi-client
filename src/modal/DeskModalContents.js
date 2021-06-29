@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import { View,Image,TouchableOpacity,FlatList,Alert } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import {closeModal} from '../reducers/modal';
 import send from '../modules/send';
 import StyleText from '../components/UI/StyleText';
@@ -8,6 +8,7 @@ import StyleInput from '../components/UI/StyleInput';
 
 export default (props)=>{
     const dispatch = useDispatch();
+    const params = useSelector(state=> state.modal.params);
     const [extraView,setExtraView] = useState(false);
     const [lists,setLists] = useState([]);
     const [expl,setExpl] = useState("");
@@ -19,7 +20,7 @@ export default (props)=>{
 
     useEffect(()=>{
         const initDesk = async()=>{
-            const {success,LISTS : lists,IDX} = await send.get("/contents/desk");
+            const {success,LISTS : lists,IDX} = await send.get("/contents/desk",{params:{date:params.date || null}});
             if(success && lists.length !== 0) {
                 setContentsIdx(IDX);
                 const fromList = [];
@@ -54,7 +55,7 @@ export default (props)=>{
         let flag = false;
         const update = contentsIdx !== "";
         if(!update) { // 신규
-            const {success} = await send.post("/contents/desk",{list:lists});
+            const {success} = await send.post("/contents/desk",{list:lists,date:params.date || null});
             flag = success;
         } else if(!update && lists.length === 0) { //에러
             Alert.alert("알림","목록을 입력해주세요.",[{text:'확인'}]);
@@ -72,11 +73,17 @@ export default (props)=>{
 
     const addList = ()=>{
         calcTotalHousrs();
+        let mm = min !== "" ? parseInt(min%60) : 0;
+        let hh = hours !== "" ? parseInt(hours) + parseInt(min/60) : 0;
+        if(mm !== '' && mm >=60) {
+            hh += parseInt(min/60)
+        }
+
         setLists(lists.concat([
             {
                 expl:expl,
-                hours:parseInt(hours) + parseInt(min/60),
-                min:parseInt(min%60)
+                hours:hh,
+                min:mm
             }
         ]))
         setExpl("")
