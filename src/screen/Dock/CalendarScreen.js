@@ -53,7 +53,7 @@ export default ({navigation})=>{
 
     const getHistory = async(_date) => {
         if(_date){
-            if( selectDate === null || (toggle === true && selectDate===_date) || toggle===false ) handleBottomSheet();
+            if( (selectDate === null && toggle === false) || (toggle === true && selectDate===_date) || toggle===false ) handleBottomSheet();
             setSelectDate(_date)
         }
         if( selectDate === null || selectDate!==_date) {
