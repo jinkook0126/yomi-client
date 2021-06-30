@@ -229,7 +229,7 @@ export default ({navigation})=>{
                             </View>
                             <View style={[{marginTop:16},styles.bottomSheetWrap]}>
                                 <StyleText style={styles.bottomSheetText}>냉장고</StyleText>
-                                <TouchableOpacity onPress={()=>alert("냉장고")}>
+                                <TouchableOpacity onPress={()=>navigation.navigate("Calorie",{date:formatDate(selectDate)})}>
                                     <StyleText style={styles.bottomSheetText}>
                                         <StyleText style={[styles.bottomSheetText,{color:"#94C9FF"}]}>{history.food.intake}</StyleText>/{history.food.goal} kcal
                                     </StyleText>

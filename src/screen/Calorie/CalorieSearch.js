@@ -131,7 +131,7 @@ export default ({navigation,route})=>{
     const handleSave = async() => {
         if(selectList.length !== 0) {
             try {
-                const {success} = await send.post("/contents/food",{foods:{[route.params.type]:selectList}});
+                const {success} = await send.post("/contents/food",{foods:{[route.params.type]:selectList},date:route.params.date||null});
                 if(success) {
                     Alert.alert("알림","저장되었습니다.",[{text:'저장',onPress:()=>{
                         navigation.goBack();

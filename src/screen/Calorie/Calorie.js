@@ -5,7 +5,7 @@ import Modal from 'react-native-modal';
 import StyleText from '../../components/UI/StyleText';
 import StyleInput from '../../components/UI/StyleInput';
 
-export default ({navigation})=>{
+export default ({navigation,route})=>{
     const [visible,setVisible] = useState(false);
     const [foods,setFoods] = useState({});
     const [goalKcal,setGoalKcal] = useState(0);
@@ -14,17 +14,17 @@ export default ({navigation})=>{
     const navigateInfo = (type,lists)=>{
         navigation.navigate('CalorieSearch',{
             type:type,
-            lists:lists
+            lists:lists,
+            date:route.params?route.params.date:null
         })
     }
 
     useEffect(()=>{
         const unsubscribe = navigation.addListener('focus', async() => {
-            const {lists,intake} = await send.get("/contents/food");
+            const {lists,intake,goal} = await send.get("/contents/food",{params:{date:route.params?route.params.date:null}});
             setFoods(lists);
             setIntakeKcal(intake);
-            const {goal} = await send.get("/info/kcal");
-            setGoalKcal(goal)
+            setGoalKcal(goal);
         });
         return unsubscribe;
     },[navigation]);
@@ -65,9 +65,16 @@ export default ({navigation})=>{
                     <StyleText style={{fontSize:15}}>목표 칼로리</StyleText>
                     <View style={{flexDirection:'row',alignItems:"center"}}>
                         <StyleText style={{fontSize:15}}>{`${intakeKcal?intakeKcal:0}/${goalKcal} kcal`}</StyleText>
-                        <TouchableOpacity onPress={()=>setVisible(true)}>
-                            <Image source={require("../../img/ico_edit.png")} style={{marginLeft:6}}/>
-                        </TouchableOpacity>
+                        {
+                            !route.params? 
+                            (
+                                <TouchableOpacity onPress={()=>setVisible(true)}>
+                                    <Image source={require("../../img/ico_edit.png")} style={{marginLeft:6}}/>
+                                </TouchableOpacity>
+                            ) :
+                            null
+                        }
+                        
                     </View>
                 </View>
                 <ScrollView style={{marginTop:22,flex:1}}>
