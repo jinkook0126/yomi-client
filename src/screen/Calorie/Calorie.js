@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import { View,SafeAreaView,Image,StyleSheet,TouchableOpacity,ScrollView } from 'react-native'
+import { View,SafeAreaView,Image,StyleSheet,TouchableOpacity,ScrollView,ImageBackground } from 'react-native'
 import send from '../../modules/send';
 import Modal from 'react-native-modal';
 import StyleText from '../../components/UI/StyleText';
@@ -55,13 +55,13 @@ export default ({navigation,route})=>{
             <View style={{height:50,flexDirection:"row",alignItems:'center'}}>
                 <TouchableOpacity onPress={()=>navigation.goBack()}>
                     <View style={{height:50,width:28,justifyContent:'center',alignItems:"flex-end"}}>
-                        <Image source={require('../../img/ico_back.png')}  />
+                        <Image source={require('../../img/common/ico_back.png')}  />
                     </View>
                 </TouchableOpacity>
                 <StyleText style={{paddingLeft:20,fontSize:16}}>냉장고</StyleText>
             </View>
             <View style={{paddingVertical:16,paddingHorizontal:26,flex:1}}>
-                <View style={{flexDirection:"row",justifyContent:"space-between",alignContent:"center",paddingBottom:17,borderBottomColor:"#EEEEEE",borderBottomWidth:1}}>
+                <View style={{flexDirection:"row",justifyContent:"space-between",alignContent:"center",paddingBottom:17}}>
                     <StyleText style={{fontSize:15}}>목표 칼로리</StyleText>
                     <View style={{flexDirection:'row',alignItems:"center"}}>
                         <StyleText style={{fontSize:15}}>{`${intakeKcal?intakeKcal:0}/${goalKcal} kcal`}</StyleText>
@@ -69,7 +69,7 @@ export default ({navigation,route})=>{
                             !route.params? 
                             (
                                 <TouchableOpacity onPress={()=>setVisible(true)}>
-                                    <Image source={require("../../img/ico_edit.png")} style={{marginLeft:6}}/>
+                                    <Image source={require("../../img/common/ico_edit.png")} style={{marginLeft:6}}/>
                                 </TouchableOpacity>
                             ) :
                             null
@@ -77,82 +77,73 @@ export default ({navigation,route})=>{
                         
                     </View>
                 </View>
+                <ImageBackground source={require("../../img/common/dash2.png")} style={{width:'100%',height:4}} resizeMode={'stretch'}/>
                 <ScrollView style={{marginTop:22,flex:1}}>
                     <StyleText style={{fontSize:15}}>오늘 먹은 음식</StyleText>
                     <View style={{marginTop:15}}>
-                        <View style={styles.foodHeaderWrap}>
-                            <View style={styles.foodHeader}>
-                                <StyleText style={styles.foodHeaderText}>아침</StyleText>
-                                <TouchableOpacity onPress={()=>navigateInfo("M01",foods["M01"])} >
-                                    <View style={styles.foodNext}>
-                                        <Image source={require("../../img/ico_next_arrow.png")}/>
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
-                            {
-                                foods["M01"] ? foods["M01"].map((item)=>renderFood(item)) : null
-                            }
-                        </View>
+                        <ImageBackground source={require('../../img/calorie/header.png')} style={styles.foodHeader}>
+                            <StyleText style={styles.foodHeaderText}>아침</StyleText>
+                            <TouchableOpacity onPress={()=>navigateInfo("M01",foods["M01"])} >
+                                <View style={styles.foodNext}>
+                                    <Image source={require("../../img/common/ico_forward.png")}/>
+                                </View>
+                            </TouchableOpacity>
+                        </ImageBackground>
+                        {
+                            foods["M01"] ? foods["M01"].map((item)=>renderFood(item)) : null
+                        }
                     </View>
                     <View style={{marginTop:10}}>
-                        <View style={styles.foodHeaderWrap}>
-                            <View style={styles.foodHeader}>
-                                <StyleText style={styles.foodHeaderText}>점심</StyleText>
-                                <TouchableOpacity onPress={()=>navigateInfo("M02",foods["M02"])} >
-                                    <View style={styles.foodNext}>
-                                        <Image source={require("../../img/ico_next_arrow.png")}/>
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
-                            {
-                                foods["M02"] ? foods["M02"].map((item)=>renderFood(item)) : null
-                            }
-                        </View>
+                        <ImageBackground source={require('../../img/calorie/header.png')} style={styles.foodHeader}>
+                            <StyleText style={styles.foodHeaderText}>점심</StyleText>
+                            <TouchableOpacity onPress={()=>navigateInfo("M02",foods["M02"])} >
+                                <View style={styles.foodNext}>
+                                    <Image source={require("../../img/common/ico_forward.png")}/>
+                                </View>
+                            </TouchableOpacity>
+                        </ImageBackground>
+                        {
+                            foods["M02"] ? foods["M02"].map((item)=>renderFood(item)) : null
+                        }
                     </View>
                     <View style={{marginTop:10}}>
-                        <View style={styles.foodHeaderWrap}>
-                            <View style={styles.foodHeader}>
-                                <StyleText style={styles.foodHeaderText}>저녁</StyleText>
-                                <TouchableOpacity onPress={()=>navigateInfo("M03",foods["M03"])} >
-                                    <View style={styles.foodNext}>
-                                        <Image source={require("../../img/ico_next_arrow.png")}/>
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
-                            {
-                                foods["M03"] ? foods["M03"].map((item)=>renderFood(item)) : null
-                            }
-                        </View>
+                        <ImageBackground source={require('../../img/calorie/header.png')} style={styles.foodHeader}>
+                            <StyleText style={styles.foodHeaderText}>저녁</StyleText>
+                            <TouchableOpacity onPress={()=>navigateInfo("M03",foods["M03"])} >
+                                <View style={styles.foodNext}>
+                                    <Image source={require("../../img/common/ico_forward.png")}/>
+                                </View>
+                            </TouchableOpacity>
+                        </ImageBackground>
+                        {
+                            foods["M03"] ? foods["M03"].map((item)=>renderFood(item)) : null
+                        }
                     </View>
                     <View style={{marginTop:10}}>
-                        <View style={styles.foodHeaderWrap}>
-                            <View style={styles.foodHeader}>
-                                <StyleText style={styles.foodHeaderText}>야식</StyleText>
-                                <TouchableOpacity onPress={()=>navigateInfo("M04",foods["M04"])} >
-                                    <View style={styles.foodNext}>
-                                        <Image source={require("../../img/ico_next_arrow.png")}/>
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
-                            {
-                                foods["M04"] ? foods["M04"].map((item)=>renderFood(item)) : null
-                            }
-                        </View>
+                        <ImageBackground source={require('../../img/calorie/header.png')} style={styles.foodHeader}>
+                            <StyleText style={styles.foodHeaderText}>야식</StyleText>
+                            <TouchableOpacity onPress={()=>navigateInfo("M04",foods["M04"])} >
+                                <View style={styles.foodNext}>
+                                    <Image source={require("../../img/common/ico_forward.png")}/>
+                                </View>
+                            </TouchableOpacity>
+                        </ImageBackground>
+                        {
+                            foods["M04"] ? foods["M04"].map((item)=>renderFood(item)) : null
+                        }
                     </View>
                     <View style={{marginTop:10}}>
-                        <View style={styles.foodHeaderWrap}>
-                            <View style={styles.foodHeader}>
-                                <StyleText style={styles.foodHeaderText}>간식</StyleText>
-                                <TouchableOpacity onPress={()=>navigateInfo("M05",foods["M05"])} >
-                                    <View style={styles.foodNext}>
-                                        <Image source={require("../../img/ico_next_arrow.png")}/>
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
-                            {
-                                foods["M05"] ? foods["M05"].map((item)=>renderFood(item)) : null
-                            }
-                        </View>
+                        <ImageBackground source={require('../../img/calorie/header.png')} style={styles.foodHeader}>
+                            <StyleText style={styles.foodHeaderText}>간식</StyleText>
+                            <TouchableOpacity onPress={()=>navigateInfo("M05",foods["M05"])} >
+                                <View style={styles.foodNext}>
+                                    <Image source={require("../../img/common/ico_forward.png")}/>
+                                </View>
+                            </TouchableOpacity>
+                        </ImageBackground>
+                        {
+                            foods["M05"] ? foods["M05"].map((item)=>renderFood(item)) : null
+                        }
                     </View>
                 </ScrollView>
             </View>
@@ -190,8 +181,7 @@ const styles = StyleSheet.create({
         borderWidth:1
     },
     foodHeader:{
-        height:36,
-        backgroundColor:"#C7B6A0",
+        height:39,
         flexDirection:"row",
         alignItems:'center',
         justifyContent:"space-between",

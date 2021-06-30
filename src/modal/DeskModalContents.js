@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import { View,Image,TouchableOpacity,FlatList,Alert } from 'react-native';
+import { View,Image,TouchableOpacity,FlatList,Alert,ImageBackground } from 'react-native';
 import { useDispatch,useSelector } from 'react-redux';
 import {closeModal} from '../reducers/modal';
 import send from '../modules/send';
@@ -17,6 +17,7 @@ export default (props)=>{
     const [totalHours,setTotalHours] = useState(0);
     const [totalMin,setTotalMin] = useState(0);
     const [contentsIdx,setContentsIdx] = useState("");
+    const [bgHeight,setBgHeight] = useState(360);
 
     useEffect(()=>{
         const initDesk = async()=>{
@@ -127,7 +128,7 @@ export default (props)=>{
     }
     
     return (
-        <View style={{width:320,padding:16,backgroundColor:'white',borderRadius:8}}>
+        <ImageBackground resizeMode={'stretch'} source={require('../img/common_modal/modal_bg.png')} style={{width:320,height:bgHeight,padding:16}}>
             <View style={{justifyContent:'center',alignItems:'center'}}>
                 <StyleText style={{fontSize:16}}>책상</StyleText>
             </View>
@@ -140,23 +141,27 @@ export default (props)=>{
                     data={lists}
                     renderItem={renderItem}
                     keyExtractor={(item, index) => String(index)}
-                    style={{marginTop:26,height:70,borderBottomWidth:1,borderBottomColor:"#EEEEEE"}}
+                    style={{marginTop:26,height:70}}
                 />
+                <ImageBackground source={require("../img/common/dash.png")} style={{width:'100%',height:4}} resizeMode={'stretch'}/>
                 <View style={{marginTop:16,flexDirection:"row",alignItems:"center"}}>
                     <StyleText>공부 추가하기</StyleText>
-                    <TouchableOpacity onPress={()=>setExtraView(!extraView)}>
+                    <TouchableOpacity onPress={()=>{
+                        setExtraView(!extraView);
+                        !extraView ? setBgHeight(460) : setBgHeight(360);
+                    }}>
                         {
                             extraView ? 
-                                <Image source={require("../img/ico_minus.png")} style={{marginLeft:8}}/>
+                                <Image source={require("../img/common/ico_minus.png")} style={{marginLeft:8}}/>
                                 :
-                                <Image source={require("../img/ico_plus.png")} style={{marginLeft:8}}/>
+                                <Image source={require("../img/common/ico_plus.png")} style={{marginLeft:8}}/>
                         }
                     </TouchableOpacity>
                 </View>
                 {
                     extraView ?
                     <View style={{marginTop:16}}>
-                        <View style={{borderWidth:1,borderColor:'#EEEEEE',borderRadius:2,height:36}}>
+                        <View style={{borderRadius:2,height:36}}>
                             <StyleInput
                                 value={expl}
                                 onChangeText={(value)=>setExpl(value)}
@@ -164,20 +169,20 @@ export default (props)=>{
                                 placeholder={"내가 한 공부를 입력해주세요."} />
                         </View>
                         <View style={{marginTop:10,flexDirection:"row",justifyContent:"flex-end",alignItems:"center"}}>
-                            <View style={{backgroundColor:"#EEEEEE",width:24,height:16,marginRight:8}}>
+                            <ImageBackground source={require('../img/common/input_small_bg_1.png')} style={{width:24,height:16,marginRight:8}}>
                                 <StyleInput value={hours} keyboardType={"number-pad"} onChangeText={(value)=>setHours(value)} style={{flex:1,height:16,alignItems:"stretch",paddingVertical:0,fontSize:12}}/>
-                            </View>
+                            </ImageBackground>
                             <StyleText>시간</StyleText>
 
-                            <View style={{backgroundColor:"#EEEEEE",width:24,height:16,marginRight:8,marginLeft:16}}>
+                            <ImageBackground source={require('../img/common/input_small_bg_2.png')} style={{width:24,height:16,marginHorizontal:8}}>
                                 <StyleInput value={min} keyboardType={"number-pad"} onChangeText={(value)=>setMin(value)} style={{flex:1,height:16,alignItems:"stretch",paddingVertical:0,fontSize:12}}/>
-                            </View>
+                            </ImageBackground>
                             <StyleText>분</StyleText>
 
                             <TouchableOpacity onPress={addList}>
-                                <View style={{height:30,width:60,backgroundColor:"#8C6C51",borderRadius:6,justifyContent:'center',alignItems:"center",marginLeft:20}}>
+                                <ImageBackground source={require('../img/common_modal/modal_add.png')} style={{justifyContent:'center',alignItems:"center",marginLeft:20,height:36,width:64}}>
                                     <StyleText style={{color:"#ffffff"}}>추가</StyleText>
-                                </View>
+                                </ImageBackground>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -186,17 +191,17 @@ export default (props)=>{
                 }
                 <View style={{marginTop:90,flexDirection:"row",justifyContent:"space-between",alignItems:'center'}}>
                     <TouchableOpacity onPress={handleClose}>
-                        <View style={{width:134,height:40,backgroundColor:'#C7B6A0',borderRadius:6,justifyContent:'center',alignItems:"center"}}>
+                        <ImageBackground source={require('../img/common_modal/modal_cancel.png')} style={{justifyContent:'center',alignItems:"center",width:139,height:45}}>
                             <StyleText style={{color:"#ffffff"}}>취소</StyleText>
-                        </View>
+                        </ImageBackground>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handleSave}>
-                        <View style={{width:134,height:40,backgroundColor:'#8C6C51',borderRadius:6,justifyContent:'center',alignItems:"center"}}>
+                        <ImageBackground source={require('../img/common_modal/modal_confirm.png')} style={{justifyContent:'center',alignItems:"center",width:139,height:45}}>
                             <StyleText style={{color:"#ffffff"}}>저장</StyleText>
-                        </View>
+                        </ImageBackground>
                     </TouchableOpacity>
                 </View>
             </View>
-        </View>
+        </ImageBackground>
     )
 }

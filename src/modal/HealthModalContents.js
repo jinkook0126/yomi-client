@@ -122,7 +122,7 @@ export default ()=>{
                 <View style={{flexDirection:"row",alignItems:'center',justifyContent:"flex-end"}}>
                     <StyleText>{`${item.hours} 시간 ${item.min} 분`}</StyleText>
                     <TouchableOpacity onPress={()=>removeItem(index)}>
-                        <Image source={require('../img/ico_close.png')} style={{marginLeft:10}}/>
+                        <Image source={require('../img/common/ico_remove.png')} style={{marginLeft:10}}/>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -135,7 +135,7 @@ export default ()=>{
     }
 
     return (
-        <ImageBackground resizeMode={'stretch'} source={require('../img/modal_bg.png')} style={{width:320,height:bgHeight,padding:16}}>
+        <ImageBackground resizeMode={'stretch'} source={require('../img/common_modal/modal_bg.png')} style={{width:320,height:bgHeight,padding:16}}>
             <View style={{justifyContent:'center',alignItems:'center'}}>
                 <StyleText style={{fontSize:16}}>운동기구</StyleText>
             </View>
@@ -148,8 +148,9 @@ export default ()=>{
                     data={lists}
                     renderItem={renderItem}
                     keyExtractor={(item, index) => String(index)}
-                    style={{marginTop:26,height:70,borderBottomWidth:1,borderBottomColor:"#EEEEEE"}}
+                    style={{marginTop:26,height:70}}
                 />
+                <ImageBackground source={require("../img/common/dash.png")} style={{width:'100%',height:4}} resizeMode={'stretch'}/>
                 <View style={{marginTop:16,flexDirection:"row",alignItems:"center"}}>
                     <StyleText>운동 추가하기</StyleText>
                     <TouchableOpacity onPress={()=>{
@@ -158,9 +159,9 @@ export default ()=>{
                     }}>
                         {
                             extraView ? 
-                                <Image source={require("../img/ico_minus.png")} style={{marginLeft:8}}/>
+                                <Image source={require("../img/common/ico_minus.png")} style={{marginLeft:8}}/>
                                 :
-                                <Image source={require("../img/ico_plus.png")} style={{marginLeft:8}}/>
+                                <Image source={require("../img/common/ico_plus.png")} style={{marginLeft:8}}/>
                         }
                     </TouchableOpacity>
                 </View>
@@ -168,7 +169,7 @@ export default ()=>{
                     extraView ?
                     <View style={{marginTop:16}}>
                         <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
-                            <View style={{flex:1, borderWidth: 1, borderColor: '#EEEEEE', borderRadius: 2}}>
+                            <View style={{flex:1}}>
                                 <Picker
                                     style={{height:36}}
                                     selectedValue={selectedValue}
@@ -185,7 +186,7 @@ export default ()=>{
                                 </Picker>
                             </View>
                             <View style={{width:4}}/>
-                            <View style={{borderWidth:1,borderColor:'#EEEEEE',borderRadius:2,height:36,flex:1}}>
+                            <View style={{borderRadius:2,height:36,flex:1,overflow:"hidden"}}>
                                 <StyleInput
                                     editable={edit}
                                     value={expl}
@@ -195,18 +196,18 @@ export default ()=>{
                             </View>
                         </View>
                         <View style={{marginTop:10,flexDirection:"row",justifyContent:"flex-end",alignItems:"center"}}>
-                            <View style={{backgroundColor:"#EEEEEE",width:24,height:16,marginRight:8}}>
+                            <ImageBackground source={require('../img/common/input_small_bg_1.png')} style={{width:24,height:16,marginRight:8}}>
                                 <StyleInput value={hours} keyboardType={"number-pad"} onChangeText={(value)=>setHours(value)} style={{flex:1,height:16,alignItems:"stretch",paddingVertical:0,fontSize:12}}/>
-                            </View>
+                            </ImageBackground>
                             <StyleText>시간</StyleText>
 
-                            <View style={{backgroundColor:"#EEEEEE",width:24,height:16,marginRight:8,marginLeft:16}}>
+                            <ImageBackground source={require('../img/common/input_small_bg_2.png')} style={{width:24,height:16,marginHorizontal:8}}>
                                 <StyleInput value={min} keyboardType={"number-pad"} onChangeText={(value)=>setMin(value)} style={{flex:1,height:16,alignItems:"stretch",paddingVertical:0,fontSize:12}}/>
-                            </View>
+                            </ImageBackground>
                             <StyleText>분</StyleText>
 
                             <TouchableOpacity onPress={addList}>
-                                <ImageBackground source={require('../img/btn_add.png')} style={{justifyContent:'center',alignItems:"center",marginLeft:20,height:30,width:60}}>
+                                <ImageBackground source={require('../img/common_modal/modal_add.png')} style={{justifyContent:'center',alignItems:"center",marginLeft:20,height:36,width:64}}>
                                     <StyleText style={{color:"#ffffff"}}>추가</StyleText>
                                 </ImageBackground>
                             </TouchableOpacity>
@@ -217,12 +218,12 @@ export default ()=>{
                 }
                 <View style={{marginTop:90,flexDirection:"row",justifyContent:"space-between",alignItems:'center'}}>
                     <TouchableOpacity onPress={handleClose}>
-                        <ImageBackground source={require('../img/btn_cancel.png')} style={{justifyContent:'center',alignItems:"center",width:134,height:40}}>
+                        <ImageBackground source={require('../img/common_modal/modal_cancel.png')} style={{justifyContent:'center',alignItems:"center",width:139,height:45}}>
                             <StyleText style={{color:"#ffffff"}}>취소</StyleText>
                         </ImageBackground>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handleSave}>
-                        <ImageBackground source={require('../img/btn_confirm.png')} style={{justifyContent:'center',alignItems:"center",width:134,height:40}}>
+                        <ImageBackground source={require('../img/common_modal/modal_confirm.png')} style={{justifyContent:'center',alignItems:"center",width:139,height:45}}>
                             <StyleText style={{color:"#ffffff"}}>저장</StyleText>
                         </ImageBackground>
                     </TouchableOpacity>
