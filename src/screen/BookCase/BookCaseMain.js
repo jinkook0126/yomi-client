@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import { View,SafeAreaView,Image,ScrollView,StyleSheet,TouchableOpacity } from 'react-native'
+import { View,SafeAreaView,Image,ScrollView,StyleSheet,TouchableOpacity,Dimensions } from 'react-native'
 import { useDispatch } from 'react-redux';
 import Dash from 'react-native-dash';
 import Modal from 'react-native-modal';
@@ -15,6 +15,7 @@ export default ({navigation})=>{
     const [ingList,setIngList] = useState([]);
     const [compList,setCompList] = useState([]);
     const [orderText,setOrderText] = useState("최신순");
+    const margin = (Dimensions.get('window').width-52-270)/2;
     const handleOrder=(_order)=>{
         setOrder(_order);
         switch(_order) {
@@ -97,8 +98,8 @@ export default ({navigation})=>{
             </View>
             <ScrollView style={{paddingTop:16,paddingHorizontal:26}}>
                 <StyleText>현재 읽고 있는 책</StyleText>
-                <View style={{flexWrap:'wrap',flexDirection:"row",justifyContent:'space-between'}}>
-                    <TouchableOpacity onPress={()=>{navigation.navigate("BookSearch")}}>
+                <View style={{flexWrap:'wrap',flexDirection:"row"}}>
+                    <TouchableOpacity onPress={()=>{navigation.navigate("BookSearch")}} style={{marginRight:margin}}>
                         <View style={{width:90,height:116,marginTop:16,borderWidth:1,borderStyle:"dotted",borderColor:'#9E9E9E',borderRadius:6,justifyContent:"center",alignItems:'center'}}>
                             <StyleText style={{fontSize:10,color:"#757575",lineHeight:12}}>  새로운 책을{"\n"}추가해보세요!</StyleText>
                             <View style={{borderWidth:1,borderRadius:6,borderStyle:"dotted",width:28,height:28,marginTop:17,borderColor:"#9E9E9E",overflow:"hidden"}}>
@@ -108,28 +109,26 @@ export default ({navigation})=>{
                         </View>
                     </TouchableOpacity>
                     {
-                        ingList.map((item,index)=>{
-                            return (
-                                <TouchableOpacity style={{marginTop:16}} key={index} onPress={()=>{handleIngBook(item.ISBN)}}>
-                                    <Image source={{uri:item.BOOK_URL}} style={{width:90,height:116,borderRadius:6}} />
-                                    <View style={{width:90}}>
-                                        <StyleText numberOfLines={1} ellipsizeMode={"tail"} style={{fontSize:14,marginTop:6}}>{item.BOOK_NM}</StyleText>
-                                        <StyleText numberOfLines={1} ellipsizeMode={"tail"} style={{color:'#757575',fontSize:10,marginTop:2}}>{item.BOOK_AUTHOR}</StyleText>
-                                    </View>
-                                    <View style={{alignItems:"flex-start"}}>
-                                        <Rating
-                                            readonly={true}
-                                            fractions={2}
-                                            ratingCount={5}
-                                            minValue={0.5}
-                                            jumpValue={0.5}
-                                            imageSize={14}
-                                            startingValue={parseFloat(item.STAR_RATE)}
-                                        />
-                                    </View>
-                                </TouchableOpacity>
-                            )
-                        })
+                        ingList.map((item,index)=>(
+                            <TouchableOpacity style={{marginTop:16,marginRight:index % 3 === 0 || index % 3 === 2 ? margin:0}} key={index} onPress={()=>{handleIngBook(item.ISBN)}}>
+                                <Image source={{uri:item.BOOK_URL}} style={{width:90,height:116,borderRadius:6}} />
+                                <View style={{width:90}}>
+                                    <StyleText numberOfLines={1} ellipsizeMode={"tail"} style={{marginTop:6}}>{item.BOOK_NM}</StyleText>
+                                    <StyleText numberOfLines={1} ellipsizeMode={"tail"} style={{color:'#757575',fontSize:10,marginTop:2}}>{item.BOOK_AUTHOR}</StyleText>
+                                </View>
+                                <View style={{alignItems:"flex-start"}}>
+                                    <Rating
+                                        readonly={true}
+                                        fractions={2}
+                                        ratingCount={5}
+                                        minValue={0.5}
+                                        jumpValue={0.5}
+                                        imageSize={14}
+                                        startingValue={parseFloat(item.STAR_RATE)}
+                                    />
+                                </View>
+                            </TouchableOpacity>
+                        ))
                     }
                 </View>
                 <View style={{marginVertical:28}}>
@@ -142,30 +141,28 @@ export default ({navigation})=>{
                             </View>
                         </TouchableOpacity>
                     </View>
-                    <View style={{flexWrap:'wrap',flexDirection:"row",justifyContent:'space-between'}}>
+                    <View style={{flexWrap:'wrap',flexDirection:"row"}}>
                     {
-                        compList.map((item,index)=>{
-                            return (
-                                <TouchableOpacity style={{marginTop:16}} key={index} onPress={()=>{handleCompBook(item.ISBN)}}>
-                                    <Image source={{uri:item.BOOK_URL}} style={{width:90,height:116,borderRadius:6}} />
-                                    <View style={{width:90}}>
-                                        <StyleText numberOfLines={1} ellipsizeMode={"tail"} style={{marginTop:6}}>{item.BOOK_NM}</StyleText>
-                                        <StyleText numberOfLines={1} ellipsizeMode={"tail"} style={{color:'#757575',fontSize:10,marginTop:2}}>{item.BOOK_AUTHOR}</StyleText>
-                                    </View>
-                                    <View style={{alignItems:"flex-start"}}>
-                                        <Rating
-                                            readonly={true}
-                                            fractions={2}
-                                            ratingCount={5}
-                                            minValue={0.5}
-                                            jumpValue={0.5}
-                                            imageSize={14}
-                                            startingValue={parseFloat(item.STAR_RATE)}
-                                        />
-                                    </View>
-                                </TouchableOpacity>
-                            )
-                        })
+                        compList.map((item,index)=>(
+                            <TouchableOpacity style={{marginTop:16,marginRight:index % 3 === 0 || index % 3 === 1 ? margin:0}} key={index} onPress={()=>{handleCompBook(item.ISBN)}}>
+                                <Image source={{uri:item.BOOK_URL}} style={{width:90,height:116,borderRadius:6}} />
+                                <View style={{width:90}}>
+                                    <StyleText numberOfLines={1} ellipsizeMode={"tail"} style={{marginTop:6}}>{item.BOOK_NM}</StyleText>
+                                    <StyleText numberOfLines={1} ellipsizeMode={"tail"} style={{color:'#757575',fontSize:10,marginTop:2}}>{item.BOOK_AUTHOR}</StyleText>
+                                </View>
+                                <View style={{alignItems:"flex-start"}}>
+                                    <Rating
+                                        readonly={true}
+                                        fractions={2}
+                                        ratingCount={5}
+                                        minValue={0.5}
+                                        jumpValue={0.5}
+                                        imageSize={14}
+                                        startingValue={parseFloat(item.STAR_RATE)}
+                                    />
+                                </View>
+                            </TouchableOpacity>
+                        ))
                     }
                     </View> 
                 </View>
