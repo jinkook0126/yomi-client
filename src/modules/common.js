@@ -8,4 +8,10 @@ module.exports = {
         day = day >= 10 ? day : '0' + day;
         return  year + '' + month + '' + day;
     },
+    DashedFormatDate:(dt)=>{
+        return `${dt.substr(0,4)}-${dt.substr(4,2)}-${dt.substr(6,2)}`;
+    },
+    isEmpty:(param) => {
+        return Object.keys(param).length === 0;
+    }
 }

@@ -4,12 +4,15 @@ import { View,FlatList,SafeAreaView, TouchableOpacity, Image,Animated,StyleSheet
 import StyleText from '../../components/UI/StyleText';
 import moment from 'moment';
 import send from '../../modules/send';
-import {formatDate} from '../../modules/common';
-import {openModalWithProps,openModal} from '../../reducers/modal';
+import {formatDate,isEmpty} from '../../modules/common';
+import {openModalWithProps} from '../../reducers/modal';
+import DiaryModal from '../../components/Diary/DiaryModal';
 
 const dayName = ['일','월','화','수','목','금','토']
 export default ({navigation})=>{
     const dispatch = useDispatch();
+    const [visible,setVisible] = useState(false);
+    const [diaryContents,setDiaryContents] = useState({});
     const [getMoment, setMoment]=useState(moment());     
     const [monthName,setMonthName] = useState(getMoment.format('MMMM'));
     const [dayList,setDayList] = useState([]);
@@ -20,7 +23,6 @@ export default ({navigation})=>{
         diary:"X",book:0,workout:0,study:0,food:{goal:0,intake:0}
     });
     const animatedHeight = useRef(new Animated.Value(30)).current;
-
     const handleBottomSheet = ()=>{
         !toggle ? setItemHeight(46) : setItemHeight(66);
         setToggle(!toggle)
@@ -37,7 +39,17 @@ export default ({navigation})=>{
     useEffect(()=>{
         handleDateList(getMoment);
         getHistory();
-    },[])
+    },[]);
+
+    const openDiary = async() => {
+        const {success,message,today} = await send.get("/history/diary",{params:{date:formatDate(selectDate)}});
+        if(success) {
+            setDiaryContents(today)
+            setVisible(true)
+        } else {
+            alert(message)
+        }
+    }
 
     const getHistory = async(_date) => {
         if(_date){
@@ -107,7 +119,6 @@ export default ({navigation})=>{
             );
         };
         const isCurrentMonth = (dateItem) =>{
-            const today = moment();
             return (
                 moment(dateItem).format("M") === getMoment.format("M") &&
                 moment(dateItem).format("YYYY") === getMoment.format("YYYY")
@@ -194,7 +205,7 @@ export default ({navigation})=>{
                         <View style={{marginTop:30,paddingHorizontal:20}}>
                             <View style={styles.bottomSheetWrap}>
                                 <StyleText style={styles.bottomSheetText}>일기</StyleText>
-                                <TouchableOpacity onPress={()=>navigation.navigate("Diary",{date:formatDate(selectDate)})}>
+                                <TouchableOpacity onPress={openDiary}>
                                     <StyleText style={styles.bottomSheetText}>{history.diary ? 'O' : 'X'}</StyleText>
                                 </TouchableOpacity>
                             </View>
@@ -228,6 +239,14 @@ export default ({navigation})=>{
                     </View>
                 </Animated.View>
             </View>
+            <DiaryModal
+                display={visible}
+                inputDiary={isEmpty(diaryContents) ? "" : diaryContents.CONTENTS}
+                diaryDate={formatDate(selectDate)}
+                updateNo={isEmpty(diaryContents) ? "" : diaryContents.IDX}
+                today={diaryContents}
+                closeModal={()=>setVisible(false)}
+            />
         </SafeAreaView>
     );
 }

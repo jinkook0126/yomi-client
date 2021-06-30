@@ -1,12 +1,11 @@
 import React,{useState,useEffect} from 'react';
-import { View,SafeAreaView,Image,Dimensions,StyleSheet,TouchableOpacity,Alert } from 'react-native'
+import { View,SafeAreaView,Image,Dimensions,TouchableOpacity } from 'react-native'
 import { useDispatch } from 'react-redux';
-import Modal from 'react-native-modal';
 import { FlatList } from 'react-native-gesture-handler';
 import send from '../../modules/send';;
-import {formatDate} from '../../modules/common'
+import {formatDate,DashedFormatDate} from '../../modules/common'
 import StyleText from '../../components/UI/StyleText';
-import StyleInput from '../../components/UI/StyleInput';
+import DiaryModal from '../../components/Diary/DiaryModal';
 
 export default ({navigation})=>{
     const dispatch = useDispatch();
@@ -31,50 +30,24 @@ export default ({navigation})=>{
             setDiaryList(rows)
         }
     }
-    const handleModalSave = async()=>{
-        let flag = false;
-        
-        if(Object.keys(today).length === 0 && updateNo === "" && inputDiary !== "") { //신규
-            const {success} =await send.post('/contents/diary',{diary:inputDiary});
-            flag = success;
-        } else if(Object.keys(today).length !== 0 && inputDiary !== ""){ // 수정
-            const {success} =await send.put('/contents/diary',{diary:inputDiary,index:updateNo||today.IDX});
-            flag = success;
-        } else if(inputDiary === ""){ // 삭제
-            const {success} =await send.delete('/contents/diary',{params:{index:updateNo||today.IDX}});
-            flag = success;
-        }
-        if(flag) {
-            Alert.alert("알림","저장되었습니다.",[{text:'저장',onPress:()=>{
-                getList();
-                setVisible(false)
-            }}])
-        }
-    }
-    const dashedDate = (date)=>{
-        return `${date.substr(0,4)}-${date.substr(4,2)}-${date.substr(6,2)}`;
-    }
+    
     const openDiaryModal = (_idx)=>{
         setUpdateNo(_idx)
         diaryList.map((item,index)=>{
             if(item.IDX === _idx) {
                 setInputDiary(item.CONTENTS);
-                setDiaryDate(dashedDate(item.DATE_DT))
+                setDiaryDate(item.DATE_DT)
             }
         });
         setVisible(true);
     }
     const openTodayDiaryModal = ()=>{
         setUpdateNo("")
-        if(Object.keys(today).length === 0) {
-            setDiaryDate(dashedDate(formatDate()))
-        } else {
-            setDiaryDate(dashedDate(today.DATE_DT))
-        }
-
+        setDiaryDate(today.DATE_DT || formatDate())
         setInputDiary(today.CONTENTS);
         setVisible(true);
     }
+
     const renderItem=({item,index})=>{
         const margin = (Dimensions.get('window').width-(90*3)-(26*2)) / 2;
         
@@ -89,7 +62,7 @@ export default ({navigation})=>{
                             <StyleText numberOfLines={7} ellipsizeMode={"tail"} style={{fontSize:8}}>{item.CONTENTS}</StyleText>
                         </View>
                     </View>
-                    <StyleText style={{marginTop:10}}>{dashedDate(item.DATE_DT)}</StyleText>
+                    <StyleText style={{marginTop:10}}>{DashedFormatDate(item.DATE_DT)}</StyleText>
                 </View>
             </TouchableOpacity>
         )
@@ -128,50 +101,15 @@ export default ({navigation})=>{
                     />
                 </View>
             </View>
-            <Modal
-                useNativeDriver
-                animationIn="zoomInDown"
-                animationOut="zoomOutUp"
-                animationInTiming={600}
-                animationOutTiming={600}
-                backdropTransitionInTiming={600}
-                backdropTransitionOutTiming={600}
-                isVisible={visible}
-                hideModalContentWhileAnimating={true}
-                onBackdropPress={()=>{setVisible(false)}}
-            >
-                <View style={styles.modalContents}>
-                    <View style={{justifyContent:'center',alignItems:"center"}}>
-                        <StyleText style={{fontSize:16}}>{diaryDate}</StyleText>
-                    </View>
-                    <View style={{marginTop:12,alignItems:'center',justifyContent:'center'}}>
-                        <Image source={require('../../img/emoji_01.png')} />
-                    </View>
-                    <View style={{marginTop:22,height:286}}>
-                        <StyleInput
-                            value={inputDiary}
-                            onChangeText={(value)=>setInputDiary(value)}
-                            multiline={true}
-                        />
-                    </View>
-                    <View style={{marginTop:40,flexDirection:"row", justifyContent:"flex-end",}}>
-                        <TouchableOpacity onPress={()=>setVisible(false)}>
-                            <StyleText style={{color:"#8C6C51"}}>취소</StyleText>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={handleModalSave}>
-                            <StyleText style={{color:"#8C6C51",marginLeft:30}}>저장</StyleText>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </Modal>
+            <DiaryModal
+                display={visible}
+                inputDiary={inputDiary}
+                diaryDate={diaryDate}
+                callback={getList}
+                updateNo={updateNo}
+                today={today}
+                closeModal={()=>setVisible(false)}
+            />
         </SafeAreaView>
     )
 }
-const styles = StyleSheet.create({
-    modalContents:{
-        backgroundColor:'#FFFBE9',
-        borderRadius:8,
-        paddingHorizontal:16,
-        paddingVertical:26
-    }
-});
