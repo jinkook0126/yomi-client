@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import { View,SafeAreaView,Image,Dimensions,TouchableOpacity } from 'react-native'
+import { View,SafeAreaView,Image,Dimensions,TouchableOpacity,ImageBackground } from 'react-native'
 import { useDispatch } from 'react-redux';
 import { FlatList } from 'react-native-gesture-handler';
 import send from '../../modules/send';;
@@ -72,7 +72,7 @@ export default ({navigation})=>{
             <View style={{height:50,flexDirection:"row",alignItems:'center'}}>
                 <TouchableOpacity onPress={()=>navigation.goBack()}>
                     <View style={{height:50,width:28,justifyContent:'center',alignItems:"flex-end"}}>
-                        <Image source={require('../../img/ico_back.png')}  />
+                        <Image source={require('../../img/common/ico_back.png')}  />
                     </View>
                 </TouchableOpacity>
                 <StyleText style={{paddingLeft:20,fontSize:16,}}>일기장</StyleText>
@@ -80,14 +80,14 @@ export default ({navigation})=>{
             <View style={{marginTop:16,paddingHorizontal:26,paddingBottom:26,flex:1}}>
                 <StyleText style={{fontSize:14}}>오늘의 일기</StyleText>
                 <TouchableOpacity onPress={openTodayDiaryModal}>
-                    <View style={{height:153,backgroundColor:"#FFFBE9",marginTop:16,paddingHorizontal:16,borderRadius:6}}>
+                    <ImageBackground source={require('../../img/diary/memo_bg.png')} resizeMode='stretch' style={{height:161,marginTop:16,paddingHorizontal:16}}>
                         <View style={{marginTop:10,alignItems:"flex-end"}}>
                             <Image source={require('../../img/emoji_01.png')}  />
                         </View>
                         <View style={{marginTop:10,paddingBottom:16}}>
                             <StyleText numberOfLines={6} ellipsizeMode={"tail"} style={{fontSize:12}}>{today.CONTENTS}</StyleText>
                         </View>
-                    </View>
+                    </ImageBackground>
                 </TouchableOpacity>
                 <View style={{marginTop:26,flex:1}}>
                     <StyleText>지난 일기</StyleText>

@@ -39,7 +39,7 @@ export default ()=>{
         }
     }
     return (
-        <View style={{width:320,padding:16,backgroundColor:'white',borderRadius:8}}>
+        <ImageBackground source={require("../img/book/modal_bg.png")} resizeMode='stretch' style={{width:335,padding:16}}>
             <View>
                 <View style={{flexDirection:'row',borderBottomWidth:1,borderBottomColor:"#EEEEEE",paddingBottom:16}}>
                     <Image source={
@@ -66,7 +66,7 @@ export default ()=>{
                         jumpValue={0.5}
                         imageSize={14}
                         startingValue={parseFloat(rate)}
-                        style={{marginLeft:16,backgroundColor:'red'}}
+                        style={{marginLeft:16}}
                         onFinishRating={value=>setRate(value)}
                     />
                 </View>
@@ -84,7 +84,7 @@ export default ()=>{
                         />
                     </View>
                 </View>
-                <ImageBackground resizeMode={"contain"} source={require("../img/bg_memo.png")} style={{marginTop:10,height:100,borderRadius:2,overflow:"hidden",elevation:2}}>
+                <ImageBackground resizeMode={"stretch"} source={require("../img/book/memo_bg.png")} resizeMode="stretch" style={{marginTop:10,height:106,overflow:"hidden"}}>
                     <StyleInput
                         multiline={true}
                         value={memo}
@@ -93,17 +93,17 @@ export default ()=>{
                 </ImageBackground>
                 <View style={{marginTop:40,flexDirection:'row',alignItems:"center",justifyContent:"space-between"}}>
                     <TouchableOpacity onPress={handleClose}>
-                        <View style={{width:134,height:40,backgroundColor:'#C7B6A0',borderRadius:6,justifyContent:'center',alignItems:"center"}}>
+                        <ImageBackground source={require('../img/common_modal/modal_cancel.png')} style={{width:142,height:47,justifyContent:'center',alignItems:"center"}}>
                             <StyleText style={{color:"#ffffff"}}>취소</StyleText>
-                        </View>
+                        </ImageBackground>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handleSave}>
-                        <View style={{width:134,height:40,backgroundColor:'#8C6C51',borderRadius:6,justifyContent:'center',alignItems:"center"}}>
+                        <ImageBackground source={require('../img/common_modal/modal_confirm.png')} style={{width:142,height:47,justifyContent:'center',alignItems:"center"}}>
                             <StyleText style={{color:"#ffffff"}}>저장</StyleText>
-                        </View>
+                        </ImageBackground>
                     </TouchableOpacity>
                 </View>
             </View>
-        </View>
+        </ImageBackground>
     )
 }

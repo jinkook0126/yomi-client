@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import { View,SafeAreaView,Image,FlatList,StyleSheet,TouchableOpacity } from 'react-native'
+import { View,SafeAreaView,Image,FlatList,StyleSheet,TouchableOpacity,ImageBackground } from 'react-native'
 import { useDispatch } from 'react-redux';
 import send from '../../modules/send';
 import {openModalWithProps} from '../../reducers/modal';
@@ -64,18 +64,18 @@ export default ({navigation})=>{
             <View style={{height:50,flexDirection:"row",alignItems:'center'}}>
                 <TouchableOpacity onPress={()=>navigation.goBack()}>
                     <View style={{height:50,width:28,justifyContent:'center',alignItems:"flex-end"}}>
-                        <Image source={require('../../img/ico_back.png')}  />
+                        <Image source={require('../../img/common/ico_back.png')}  />
                     </View>
                 </TouchableOpacity>
                 <StyleText style={{paddingLeft:20,fontSize:16}}>책 검색</StyleText>
             </View>
             <View style={{flex:1,paddingVertical:20,paddingHorizontal:26}}>
-                <View style={{borderWidth:1,borderColor:"#EEEEEE",borderRadius:2,height:36,flexDirection:"row",alignItems:"center",justifyContent:'space-between',paddingHorizontal:12,overflow:"hidden"}}>
+                <ImageBackground source={require("../../img/calorie/search_border.png")} resizeMode={'stretch'} style={{height:39,backgroundColor:"#FFFFFF",flexDirection:"row",justifyContent:"space-between",alignItems:'center',paddingHorizontal:12}}>
                     <StyleInput onChangeText={(value)=>setSearchTitle(value)} style={{flex:1,height:30,alignItems:"stretch",paddingVertical:0}}></StyleInput>
                     <TouchableOpacity onPress={()=>doSearch(true)} style={{width:25,height:25,justifyContent:"center",alignItems:'center'}}>
-                        <Image source={require("../../img/ico_search.png")}/>
+                        <Image source={require("../../img/common/ico_search.png")}/>
                     </TouchableOpacity>
-                </View>
+                </ImageBackground>
                 <View style={{marginTop:26,flex:1}}>
                     <StyleText style={{fontSize:12}}>총 {totalCnt} 건의 검색 결과</StyleText>
                     <View style={[styles.listContainer,{marginTop:10,border:1,flex:1,overflow:"hidden"}]}>

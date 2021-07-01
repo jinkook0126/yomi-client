@@ -1,6 +1,6 @@
 import Modal from 'react-native-modal';
 import React,{useState,useEffect} from 'react';
-import { View,TouchableOpacity,Image,Alert } from 'react-native'
+import { View,TouchableOpacity,Image,Alert,ImageBackground } from 'react-native'
 import StyleText from '../../components/UI/StyleText';
 import StyleInput from '../UI/StyleInput';
 import {DashedFormatDate,isEmpty} from '../../modules/common';
@@ -51,7 +51,7 @@ export default ({display,closeModal,inputDiary,diaryDate,callback,today,updateNo
             hideModalContentWhileAnimating={true}
             onBackdropPress={closeModal}
         >
-            <View style={{backgroundColor:'#FFFBE9',borderRadius:8,paddingHorizontal:16,paddingVertical:26}}>
+            <ImageBackground resizeMode='stretch' source={require('../../img/diary/modal_bg.png')} style={{paddingHorizontal:16,paddingVertical:26}}>
                 <View style={{justifyContent:'center',alignItems:"center"}}>
                     <StyleText style={{fontSize:16}}>{DashedFormatDate(headerDate)}</StyleText>
                 </View>
@@ -73,7 +73,7 @@ export default ({display,closeModal,inputDiary,diaryDate,callback,today,updateNo
                         <StyleText style={{color:"#8C6C51",marginLeft:30}}>저장</StyleText>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </ImageBackground>
         </Modal>
     )
 }

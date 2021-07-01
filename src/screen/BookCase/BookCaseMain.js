@@ -91,7 +91,7 @@ export default ({navigation})=>{
             <View style={{height:50,flexDirection:"row",alignItems:'center'}}>
                 <TouchableOpacity onPress={()=>navigation.goBack()}>
                     <View style={{height:50,width:28,justifyContent:'center',alignItems:"flex-end"}}>
-                        <Image source={require('../../img/ico_back.png')}  />
+                        <Image source={require('../../img/common/ico_back.png')}  />
                     </View>
                 </TouchableOpacity>
                 <StyleText style={{paddingLeft:20,fontSize:16}}>책장</StyleText>
