@@ -27,7 +27,7 @@ export default ()=>{
     }
     const handleSave=async()=>{
         try {
-            const {success} = await send.put("/contents/book",{...params,rate:rate,complete:complete,readPage:readPage,memo:memo,daily:true});
+            const {success} = await send.put("/contents/book",{...params,rate:rate,complete:complete,readPage:readPage,memo:memo,daily:true,date:params.date});
             if(success) {
                 Alert.alert("알림","저장되었습니다.",[{text:'저장',onPress:()=>{
                     params.refresh();

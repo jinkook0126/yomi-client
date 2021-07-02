@@ -71,7 +71,11 @@ export default ()=>{
             flag = success;
         }
         if(flag) {
-            Alert.alert("알림","저장되었습니다.",[{text:'저장',onPress:()=>dispatch(closeModal())}])
+            Alert.alert("알림","저장되었습니다.",[{text:'저장',onPress:()=>{
+                dispatch(closeModal());
+                if(params.callback) params.callback();
+            }}])
+            
         }
     }
     const addList = ()=>{

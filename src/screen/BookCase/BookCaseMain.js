@@ -8,7 +8,7 @@ import { Rating } from 'react-native-ratings';
 import send from '../../modules/send';
 import StyleText from '../../components/UI/StyleText';
 
-export default ({navigation})=>{
+export default ({navigation,route})=>{
     const dispatch = useDispatch();
     const [visible,setVisible] = useState(false);
     const [order,setOrder] = useState("latest");
@@ -63,7 +63,8 @@ export default ({navigation})=>{
                     idx:item.IDX,
                     authors:item.BOOK_AUTHOR,
                     comp:false,
-                    refresh:getList
+                    refresh:getList,
+                    date:route.params?route.params.date:null
                 }));
         })
     }
@@ -89,7 +90,12 @@ export default ({navigation})=>{
     return (
         <SafeAreaView style={{ flex: 1,backgroundColor:'#ffffff' }}>
             <View style={{height:50,flexDirection:"row",alignItems:'center'}}>
-                <TouchableOpacity onPress={()=>navigation.goBack()}>
+                <TouchableOpacity onPress={()=>{
+                    if(route.params && route.params.onGoBack) {
+                        route.params.onGoBack();
+                    }
+                    navigation.goBack();
+                }}>
                     <View style={{height:50,width:28,justifyContent:'center',alignItems:"flex-end"}}>
                         <Image source={require('../../img/common/ico_back.png')}  />
                     </View>

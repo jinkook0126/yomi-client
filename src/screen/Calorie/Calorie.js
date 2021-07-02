@@ -53,7 +53,12 @@ export default ({navigation,route})=>{
     return (
         <SafeAreaView style={{ flex: 1,backgroundColor:'#ffffff' }}>
             <View style={{height:50,flexDirection:"row",alignItems:'center'}}>
-                <TouchableOpacity onPress={()=>navigation.goBack()}>
+                <TouchableOpacity onPress={()=>{
+                    if(route.params && route.params.onGoBack) {
+                        route.params.onGoBack();
+                    }
+                    navigation.goBack();
+                }}>
                     <View style={{height:50,width:28,justifyContent:'center',alignItems:"flex-end"}}>
                         <Image source={require('../../img/common/ico_back.png')}  />
                     </View>

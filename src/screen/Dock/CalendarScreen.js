@@ -57,12 +57,16 @@ export default ({navigation})=>{
             setSelectDate(_date)
         }
         if( selectDate === null || selectDate!==_date) {
-            const {success,diary,book,workout,study,food,msg} = await send.get("/history/",{params:{date:formatDate(_date)}});
-            if(success) {
-                setHistory({diary,book,workout,study,food})
-            } else {
-                alert(`${msg}\n다시 시도해 주세요.`);
-            }
+            requestHistory(_date)
+        }
+    }
+
+    const requestHistory = async(_date)=>{
+        const {success,diary,book,workout,study,food,msg} = await send.get("/history/",{params:{date:formatDate(_date)}});
+        if(success) {
+            setHistory({diary,book,workout,study,food})
+        } else {
+            alert(`${msg}\n다시 시도해 주세요.`);
         }
     }
     
@@ -211,25 +215,25 @@ export default ({navigation})=>{
                             </View>
                             <View style={[{marginTop:16},styles.bottomSheetWrap]}>
                                 <StyleText style={styles.bottomSheetText}>운동</StyleText>
-                                <TouchableOpacity onPress={()=>dispatch(openModalWithProps('health',{date:formatDate(selectDate)}))}>
+                                <TouchableOpacity onPress={()=>dispatch(openModalWithProps('health',{date:formatDate(selectDate),callback:()=>requestHistory(selectDate)}))}>
                                     <StyleText style={styles.bottomSheetText}>{`${parseInt(history.workout/60)} 시간 ${history.workout%60} 분`}</StyleText>
                                 </TouchableOpacity>
                             </View>
                             <View style={[{marginTop:16},styles.bottomSheetWrap]}>
                                 <StyleText style={styles.bottomSheetText}>공부</StyleText>
-                                <TouchableOpacity onPress={()=>dispatch(openModalWithProps('desk',{date:formatDate(selectDate)}))}>
+                                <TouchableOpacity onPress={()=>dispatch(openModalWithProps('desk',{date:formatDate(selectDate),callback:()=>requestHistory(selectDate)}))}>
                                     <StyleText style={styles.bottomSheetText}>{`${parseInt(history.study/60)} 시간 ${history.study%60} 분`}</StyleText>
                                 </TouchableOpacity>
                             </View>
                             <View style={[{marginTop:16},styles.bottomSheetWrap]}>
                                 <StyleText style={styles.bottomSheetText}>책장</StyleText>
-                                <TouchableOpacity onPress={()=>alert('책장')}>
+                                <TouchableOpacity onPress={()=>navigation.navigate("BookMain",{date:formatDate(selectDate),onGoBack:()=>requestHistory(selectDate)})}>
                                     <StyleText style={styles.bottomSheetText}>{history.book} Page</StyleText>
                                 </TouchableOpacity>
                             </View>
                             <View style={[{marginTop:16},styles.bottomSheetWrap]}>
                                 <StyleText style={styles.bottomSheetText}>냉장고</StyleText>
-                                <TouchableOpacity onPress={()=>navigation.navigate("Calorie",{date:formatDate(selectDate)})}>
+                                <TouchableOpacity onPress={()=>navigation.navigate("Calorie",{date:formatDate(selectDate),onGoBack:()=>requestHistory(selectDate)})}>
                                     <StyleText style={styles.bottomSheetText}>
                                         <StyleText style={[styles.bottomSheetText,{color:"#94C9FF"}]}>{history.food.intake}</StyleText>/{history.food.goal} kcal
                                     </StyleText>
@@ -246,6 +250,7 @@ export default ({navigation})=>{
                 updateNo={isEmpty(diaryContents) ? "" : diaryContents.IDX}
                 today={diaryContents}
                 closeModal={()=>setVisible(false)}
+                callback={requestHistory}
             />
         </SafeAreaView>
     );
