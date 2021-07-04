@@ -155,7 +155,7 @@ export default ({navigation,route})=>{
                 <View style={{flexDirection:"row",alignItems:'center',flex:1,justifyContent:"flex-end"}}>
                     <TouchableOpacity onPress={()=>{handleCount('plus',item.id)}}>
                         <View style={{width:14,height:14}}>
-                            <Image source={require("../../img/ico_plus.png")}/>
+                            <Image source={require("../../img/common/ico_plus.png")}/>
                         </View>
                     </TouchableOpacity>
                     <ImageBackground source={require("../../img/calorie/input_bg.png")} style={{marginHorizontal:5,width:38,height:29,justifyContent:"center",alignItems:"center"}}>

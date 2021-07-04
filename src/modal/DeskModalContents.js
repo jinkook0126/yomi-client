@@ -140,7 +140,7 @@ export default (props)=>{
                 <View style={{flexDirection:"row",alignItems:'center',justifyContent:"flex-end"}}>
                     <StyleText>{`${item.hours} 시간 ${item.min} 분`}</StyleText>
                     <TouchableOpacity onPress={()=>removeItem(index)}>
-                        <Image source={require('../img/ico_close.png')} style={{marginLeft:10}}/>
+                        <Image source={require('../img/common/ico_remove.png')} style={{marginLeft:10}}/>
                     </TouchableOpacity>
                 </View>
             </View>
