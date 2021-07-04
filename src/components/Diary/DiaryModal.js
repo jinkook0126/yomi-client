@@ -63,6 +63,7 @@ export default ({display,closeModal,inputDiary,diaryDate,callback,today,updateNo
                         value={contents}
                         onChangeText={(value)=>setContents(value)}
                         multiline={true}
+                        placeholder={'일기를 입력해주세요.'}
                     />
                 </View>
                 <View style={{marginTop:40,flexDirection:"row", justifyContent:"flex-end",}}>

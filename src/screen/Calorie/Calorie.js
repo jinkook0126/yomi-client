@@ -4,6 +4,7 @@ import send from '../../modules/send';
 import Modal from 'react-native-modal';
 import StyleText from '../../components/UI/StyleText';
 import StyleInput from '../../components/UI/StyleInput';
+import { validNumber } from '../../modules/common';
 
 export default ({navigation,route})=>{
     const [visible,setVisible] = useState(false);
@@ -42,6 +43,14 @@ export default ({navigation,route})=>{
     };
 
     const onSaveKcal = async() => {
+        if(changeKcal === '') {
+            alert("목표 칼로리를 작성해주세요.");
+            return;
+        }
+        if(!validNumber(changeKcal)) {
+            alert("숫자만 입력가능합니다.");
+            return;
+        }
         const {success} = await send.put("/info/kcal",{goal:changeKcal});
         if(success) {
             alert("저장되었습니다.");

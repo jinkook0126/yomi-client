@@ -6,6 +6,7 @@ import {closeModal} from '../reducers/modal';
 import send from '../modules/send';
 import StyleText from '../components/UI/StyleText';
 import StyleInput from '../components/UI/StyleInput';
+import {validNumber} from '../modules/common'
 
 export default ()=>{
     const dispatch = useDispatch();
@@ -79,11 +80,27 @@ export default ()=>{
         }
     }
     const addList = ()=>{
+        if(hours !== '' && !validNumber(hours)) {
+            alert('숫자만 입력 가능합니다.');
+            return;
+        }
+        if(min !== '' && !validNumber(min)) {
+            alert('숫자만 입력 가능합니다.');
+            return;
+        }
+        if(hours === '' && min === '') {
+            alert('시간을 입력해주세요.');
+            return;
+        }
+        if(edit && expl === '') {
+            alert('내용을 입력해주세요.');
+            return;
+        }
         calcTotalHousrs();
         let mm = min !== "" ? parseInt(min%60) : 0;
         let hh = hours !== "" ? parseInt(hours) + parseInt(min/60) : 0;
         if(mm !== '' && mm >=60) {
-            hh += parseInt(min/60)
+            hh += parseInt(min/60);
         }
 
         setLists(lists.concat([
@@ -92,10 +109,10 @@ export default ()=>{
                 hours:hh,
                 min:mm
             }
-        ]))
-        setExpl("")
-        setHours("")
-        setMin("")
+        ]));
+        setExpl("");
+        setHours("");
+        setMin("");
     }
     const calcTotalHousrs = ()=>{
         let calcMin = Number(totalMin)+Number(min);

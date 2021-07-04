@@ -5,6 +5,7 @@ import {closeModal} from '../reducers/modal';
 import send from '../modules/send';
 import StyleText from '../components/UI/StyleText';
 import StyleInput from '../components/UI/StyleInput';
+import {validNumber} from '../modules/common'
 
 export default (props)=>{
     const dispatch = useDispatch();
@@ -76,6 +77,22 @@ export default (props)=>{
     }
 
     const addList = ()=>{
+        if(hours !== '' && !validNumber(hours)) {
+            alert('숫자만 입력 가능합니다.')
+            return;
+        }
+        if(min !== '' && !validNumber(min)) {
+            alert('숫자만 입력 가능합니다.')
+            return;
+        }
+        if(expl === '') {
+            alert('내용을 입력해주세요.')
+            return;
+        }
+        if(hours === '' && min === '') {
+            alert('시간을 입력해주세요.')
+            return;
+        }
         calcTotalHousrs();
         let mm = min !== "" ? parseInt(min%60) : 0;
         let hh = hours !== "" ? parseInt(hours) + parseInt(min/60) : 0;

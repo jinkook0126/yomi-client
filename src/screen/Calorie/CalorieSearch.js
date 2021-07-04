@@ -260,6 +260,14 @@ export default ({navigation,route})=>{
                                             </TouchableOpacity>
                                         </View>
                                         <TouchableOpacity onPress={()=>{
+                                            if(customFoodName === '') {
+                                                alert('음식 이름을 입력해주세요.')
+                                                return;
+                                            }
+                                            if (customFoodCnt === 0) {
+                                                alert('1 이상의 수량을 입력해주세요.')
+                                                return;
+                                            }
                                             setSelectList(selectList.concat({"cnt": customFoodCnt, "desc": customFoodName, "id": `${userNo}_${new Date().getTime()}`, "kcal": customFoodKcal}))
                                             setSelectCnt(selectCnt+1);
                                             setCustomFoodCnt(0);

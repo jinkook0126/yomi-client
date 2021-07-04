@@ -91,6 +91,7 @@ export default ()=>{
                         multiline={true}
                         value={memo}
                         onChangeText={(value)=>setMemo(value)}
+                        placeholder={"메모를 작성해 보세요."}
                     />
                 </ImageBackground>
                 <View style={{marginTop:40,flexDirection:'row',alignItems:"center",justifyContent:"space-between"}}>

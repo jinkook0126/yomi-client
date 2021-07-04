@@ -13,5 +13,8 @@ module.exports = {
     },
     isEmpty:(param) => {
         return Object.keys(param).length === 0;
+    },
+    validNumber:(value) => {
+        return /^[0-9]*$/.test(value);
     }
 }

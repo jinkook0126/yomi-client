@@ -7,6 +7,7 @@ import {closeModal} from '../reducers/modal';
 import send from '../modules/send';
 import StyleText from '../components/UI/StyleText';
 import StyleInput from '../components/UI/StyleInput';
+import { validNumber } from '../modules/common';
 
 export default ()=>{
     const dispatch = useDispatch();
@@ -26,6 +27,14 @@ export default ()=>{
         dispatch(closeModal());
     }
     const handleSave=async()=>{
+        if(!validNumber(readPage)) {
+            alert("페이지 수는 숫자만 입력 가능합니다.");
+            return;
+        }
+        if(readPage === '' || readPage ===0 ) {
+            alert("페이지 수는 공백 또는 0을 입력할 수 없습니다.");
+            return;
+        }
         try {
             const {success} = await send.put("/contents/book",{...params,rate:rate,complete:complete,readPage:readPage,memo:memo,daily:true,date:params.date});
             if(success) {
@@ -89,6 +98,7 @@ export default ()=>{
                         multiline={true}
                         value={memo}
                         onChangeText={(value)=>setMemo(value)}
+                        placeholder={"메모를 작성해 보세요."}
                     />
                 </ImageBackground>
                 <View style={{marginTop:40,flexDirection:'row',alignItems:"center",justifyContent:"space-between"}}>
