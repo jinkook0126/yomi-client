@@ -67,24 +67,25 @@ export default ({navigation})=>{
             alert(message)
         }
     }
-
     return (
         <SafeAreaView style={{backgroundColor:"#FFFFFF",flex:1,justifyContent:"space-between"}}>
             <View>
-                <View style={{justifyContent:'center',alignItems:'center'}}>
-                    <Image source={require("../img/login_yomi.png")}/>
+                <View style={{justifyContent:'center',alignItems:'center',marginVertical:62}}>
+                    <Image source={require("../img/login_dust.png")}/>
                 </View>
-                <View style={{paddingHorizontal:20,marginTop:10}}>
-                    <View style={{borderBottomWidth:1,borderBottomColor:"#EEEEEE",height:40}}>
+                <View style={{paddingHorizontal:20}}>
+                    <View style={{height:40}}>
                         <StyleInput placeholder={"이메일"} style={{flex:1,height:30,alignItems:"stretch",paddingVertical:0}} placeholderTextColor={"#9E9E9E"}
                             onChangeText={value=>setMail(value)}
                         ></StyleInput>
+                        <Image source={require('../img/login/input-dash01.png')} style={{width:'100%'}}/>
                     </View>
-                    <View style={{borderBottomWidth:1,borderBottomColor:"#EEEEEE",height:40,marginTop:16}}>
+                    <View style={{height:40,marginTop:16}}>
                         <StyleInput placeholder={"비밀번호"} style={{flex:1,height:30,alignItems:"stretch",paddingVertical:0}} placeholderTextColor={"#9E9E9E"}
                             secureTextEntry={true}
                             onChangeText={value=>setPw(value)}
                         ></StyleInput>
+                        <Image source={require('../img/login/input-dash02.png')} style={{width:'100%'}}/>
                     </View>
                     <TouchableOpacity onPress={onLogin}>
                         <View style={{marginTop:16,backgroundColor:'#8C6C51',justifyContent:'center',alignItems:"center",height:40,borderRadius:6}}>
@@ -95,11 +96,11 @@ export default ({navigation})=>{
                         <StyleText style={{fontSize:13,paddingBottom:2,borderBottomWidth:1,alignSelf:"flex-start",borderBottomColor:"#2B2B2B"}}>비밀번호를 잊어버리셨나요?</StyleText>
                     </View>
                     <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center",marginTop:20}}>
-                        <View style={{borderBottomWidth:1,borderBottomColor:"#ECECEC",height:1,flex:1}} />
+                        <Image source={require('../img/login/dash01.png')} style={{flex:1}}/>
                         <View style={{marginHorizontal:14}}>
                             <StyleText>계정으로 로그인</StyleText>
                         </View>
-                        <View style={{borderBottomWidth:1,borderBottomColor:"#ECECEC",height:1,flex:1}} />
+                        <Image source={require('../img/login/dash02.png')} style={{flex:1}}/>
                     </View>
                     <View style={{flexDirection:"row",justifyContent:"center",alignItems:"center",marginTop:14}}>
                         <TouchableOpacity onPress={requestGoogle}>
