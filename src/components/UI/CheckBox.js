@@ -1,14 +1,17 @@
 import React,{useState,useEffect} from 'react';
-import { StyleSheet,Image,TouchableOpacity } from 'react-native';
+import { Image,TouchableOpacity } from 'react-native';
 
 
-export default ({chk,onValueChange})=>{
+export default ({chk,onValueChange,style,disabled})=>{
     const [check,setCheck] = useState(null);
     useEffect(()=>{
         setCheck(chk);
     },[chk])
     return (
-        <TouchableOpacity onPress={()=>{
+        <TouchableOpacity 
+            style={[style]}
+            disabled={disabled}
+            onPress={()=>{
             setCheck(!check);
             onValueChange(!check);
         }}>
@@ -21,6 +24,3 @@ export default ({chk,onValueChange})=>{
         </TouchableOpacity>
     )
 }
-const styles = StyleSheet.create({
-  default:{fontFamily:"Namu_Regular"}
-})

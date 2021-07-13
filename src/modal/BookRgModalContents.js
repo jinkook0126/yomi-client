@@ -1,12 +1,12 @@
 import React,{useState,useEffect} from 'react';
 import { View,Image,ImageBackground,TouchableOpacity,Alert } from 'react-native';
-import CheckBox from '@react-native-community/checkbox';
 import { Rating } from 'react-native-ratings';
 import { useDispatch, useSelector } from 'react-redux';
 import {closeModal} from '../reducers/modal';
 import send from '../modules/send';
 import StyleText  from '../components/UI/StyleText';
 import StyleInput from '../components/UI/StyleInput';
+import CheckBox from '../components/UI/CheckBox';
 
 export default ()=>{
     const dispatch = useDispatch();
