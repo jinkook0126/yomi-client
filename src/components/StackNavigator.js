@@ -9,6 +9,9 @@ import BookSearch from '../screen/BookCase/BookSearch';
 import Diary from '../screen/Diary/Diary';
 import Calorie from '../screen/Calorie/Calorie';
 import CalorieSearch from '../screen/Calorie/CalorieSearch';
+import NoticeScreen from '../screen/NoticeScreen';
+import ContactScreen from '../screen/ContactScreen';
+import QuestionScreen from '../screen/QuestionScreen';
 
 import { useDispatch } from 'react-redux';
 import {verifyRequest} from '../reducers/auth';
@@ -32,6 +35,9 @@ export default ()=> {
             <Stack.Screen name="Diary" component={Diary}/>
             <Stack.Screen name="Calorie" component={Calorie}/>
             <Stack.Screen name="CalorieSearch" component={CalorieSearch}/>
+            <Stack.Screen name="Notice" component={NoticeScreen}/>
+            <Stack.Screen name="Contact" component={ContactScreen}/>
+            <Stack.Screen name="Question" component={QuestionScreen}/>
         </Stack.Navigator> 
     );
   }

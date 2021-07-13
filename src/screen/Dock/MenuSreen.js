@@ -27,17 +27,17 @@ export default ({navigation})=>{
                         <StyleText>내 정보</StyleText>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>navigation.navigate("Notice")}>
                     <View style={styles.menuWrap}>
-                        <StyleText>내 공지사항</StyleText>
+                        <StyleText>공지사항</StyleText>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>navigation.navigate("Contact")}>
                     <View style={styles.menuWrap}>
                         <StyleText>문의하기</StyleText>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>navigation.navigate("Question")}>
                     <View style={styles.menuWrap}>
                         <StyleText>FAQ</StyleText>
                     </View>

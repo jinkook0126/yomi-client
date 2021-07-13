@@ -77,8 +77,9 @@ export default ({navigation,route})=>{
                 </View>
             </TouchableWithoutFeedback>
             <TouchableWithoutFeedback onPress={()=>{alert("yomi")}}>
-                <View style={{position:"absolute",right:80,bottom:'10%',width:'32%',height:yomiHeight}}>
-                    <Image source={require("../../img/yomi.png")} style={styles.window}/>
+                <View style={{position:"absolute",right:80,bottom:'7%',width:'32%',height:yomiHeight,display: 'flex',flexDirection:'row',alignItems:"flex-end"}}>
+                    <Image source={require("../../img/yomi.png")} resizeMode="stretch" style={{width:109,height:220,marginRight:10}}/>
+                    <Image source={require("../../img/munji.png")} resizeMode="stretch" style={{width:79,height:61}}/>
                 </View>
             </TouchableWithoutFeedback>
             {/* <TouchableWithoutFeedback onPress={()=>{alert("window!")}}>
