@@ -286,7 +286,7 @@ export default ({navigation,route})=>{
                     }
                 </View>
                 <TouchableOpacity onPress={handleSave}>
-                    <ImageBackground source={require('../../img/calorie/save_btn.png')} style={{height:40,justifyContent:'center',alignItems:'center'}}>
+                    <ImageBackground source={require('../../img/common/long_btn.png')} resizeMode='stretch' style={{height:40,justifyContent:'center',alignItems:'center'}}>
                         <StyleText style={{color:"#FFFFFF"}}>저장</StyleText>
                     </ImageBackground>
                 </TouchableOpacity>

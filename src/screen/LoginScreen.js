@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import { View,SafeAreaView,Image,TouchableOpacity } from 'react-native'
+import { View,SafeAreaView,Image,TouchableOpacity,ImageBackground } from 'react-native'
 import { useDispatch } from 'react-redux';
 import {loginRequest, loginSuccess} from '../reducers/auth';
 import EncryptedStorage from 'react-native-encrypted-storage';
@@ -88,9 +88,9 @@ export default ({navigation})=>{
                         <Image source={require('../img/login/input-dash02.png')} style={{width:'100%'}}/>
                     </View>
                     <TouchableOpacity onPress={onLogin}>
-                        <View style={{marginTop:16,backgroundColor:'#8C6C51',justifyContent:'center',alignItems:"center",height:40,borderRadius:6}}>
+                        <ImageBackground resizeMode="stretch" source={require('../img/common/long_btn.png')} style={{marginTop:16,justifyContent:'center',alignItems:"center",height:40}}>
                             <StyleText style={{color:"#FFFFFF",fontSize:15}}>로그인</StyleText>
-                        </View>
+                        </ImageBackground>
                     </TouchableOpacity>
                     <View style={{marginTop:10}}>
                         <StyleText style={{fontSize:13,paddingBottom:2,borderBottomWidth:1,alignSelf:"flex-start",borderBottomColor:"#2B2B2B"}}>비밀번호를 잊어버리셨나요?</StyleText>
