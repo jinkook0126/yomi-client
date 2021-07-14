@@ -22,7 +22,7 @@ export default ()=>{
     const [edit,setEdit] = useState(false);
     const pickerList = ["걷기","러닝","헬스장","요가","필라테스","홈트레이닝","직접입력"]
     const [contentsIdx,setContentsIdx] = useState("");
-    const [bgHeight,setBgHeight] = useState(360);
+    const [bgHeight,setBgHeight] = useState(310);
 
     useEffect(()=>{
         const initModal = async()=>{
@@ -177,7 +177,7 @@ export default ()=>{
                         <StyleText>운동 추가하기</StyleText>
                         <TouchableOpacity onPress={()=>{
                             setExtraView(!extraView);
-                            !extraView ? setBgHeight(460) : setBgHeight(360);
+                            !extraView ? setBgHeight(410) : setBgHeight(310);
                         }}>
                             {
                                 extraView ? 
@@ -238,17 +238,21 @@ export default ()=>{
                         :
                         null
                     }
-                    <View style={{marginTop:90,flexDirection:"row",justifyContent:"space-between",alignItems:'center'}}>
-                        <TouchableOpacity onPress={handleClose}>
-                            <ImageBackground source={require('../img/common_modal/modal_cancel.png')} style={{justifyContent:'center',alignItems:"center",width:139,height:45}}>
-                                <StyleText style={{color:"#ffffff"}}>취소</StyleText>
-                            </ImageBackground>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={handleSave}>
-                            <ImageBackground source={require('../img/common_modal/modal_confirm.png')} style={{justifyContent:'center',alignItems:"center",width:139,height:45}}>
-                                <StyleText style={{color:"#ffffff"}}>저장</StyleText>
-                            </ImageBackground>
-                        </TouchableOpacity>
+                    <View style={{marginTop:40,flexDirection:"row",justifyContent:"space-between",alignItems:'flex-end',display:"flex"}}>
+                        <View style={{flex:1,paddingRight:4}}>
+                            <TouchableOpacity onPress={handleClose}>
+                                <ImageBackground source={require('../img/common_modal/modal_cancel.png')} resizeMode={'stretch'} style={{justifyContent:'center',alignItems:"center",width:'100%',height:47}}>
+                                    <StyleText style={{color:"#FFFFFF"}}>취소</StyleText>
+                                </ImageBackground>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{flex:1,paddingLeft:4}}>
+                            <TouchableOpacity onPress={handleSave}>
+                                <ImageBackground source={require('../img/common_modal/modal_confirm.png')} resizeMode={'stretch'} style={{justifyContent:'center',alignItems:"center",width:'100%',height:47}}>
+                                    <StyleText style={{color:"#FFFFFF"}}>저장</StyleText>
+                                </ImageBackground>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
             </View>

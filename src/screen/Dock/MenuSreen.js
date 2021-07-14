@@ -21,40 +21,43 @@ export default ({navigation})=>{
                 }
                 
             </View>
-            <View style={{marginTop:58,paddingHorizontal:16}}>
+            <View style={{marginTop:38,paddingHorizontal:16}}>
                 <TouchableOpacity>
                     <View style={styles.menuWrap}>
                         <StyleText>내 정보</StyleText>
                     </View>
                 </TouchableOpacity>
+                <Image source={require("../../img/login/dash01.png")} style={{width:'100%'}}/>
                 <TouchableOpacity onPress={()=>navigation.navigate("Notice")}>
                     <View style={styles.menuWrap}>
                         <StyleText>공지사항</StyleText>
                     </View>
                 </TouchableOpacity>
+                <Image source={require("../../img/login/dash01.png")} style={{width:'100%'}}/>
                 <TouchableOpacity onPress={()=>navigation.navigate("Contact")}>
                     <View style={styles.menuWrap}>
                         <StyleText>문의하기</StyleText>
                     </View>
                 </TouchableOpacity>
+                <Image source={require("../../img/login/dash01.png")} style={{width:'100%'}}/>
                 <TouchableOpacity onPress={()=>navigation.navigate("Question")}>
                     <View style={styles.menuWrap}>
                         <StyleText>FAQ</StyleText>
                     </View>
                 </TouchableOpacity>
+                <Image source={require("../../img/login/dash01.png")} style={{width:'100%'}}/>
                 <TouchableOpacity onPress={doLogOut}>
                     <View style={styles.menuWrap}>
                         <StyleText>로그아웃</StyleText>
                     </View>
                 </TouchableOpacity>
+                <Image source={require("../../img/login/dash01.png")} style={{width:'100%'}}/>
             </View>
         </SafeAreaView>
     )
 }
 const styles = StyleSheet.create({
     menuWrap:{
-        borderBottomColor:'#ECECEC',
-        borderBottomWidth:1,
         paddingVertical:16
     }
 })
