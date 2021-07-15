@@ -1,6 +1,6 @@
 import React,{useState,useEffect,useRef} from 'react';
 import { useDispatch } from 'react-redux';
-import { View,FlatList,SafeAreaView, TouchableOpacity, Image,Animated,StyleSheet } from 'react-native';
+import { View,FlatList,SafeAreaView, TouchableOpacity, Image,Animated,StyleSheet, ImageBackground } from 'react-native';
 import StyleText from '../../components/UI/StyleText';
 import moment from 'moment';
 import send from '../../modules/send';
@@ -9,8 +9,11 @@ import {openModalWithProps} from '../../reducers/modal';
 import DiaryModal from '../../components/Diary/DiaryModal';
 
 const dayName = ['일','월','화','수','목','금','토']
+const FOLD_IMG = require("../../img/calendar/fold-calendar.png")
+const UNFOLD_IMG = require("../../img/calendar/unfold-calendar.png")
 export default ({navigation})=>{
     const dispatch = useDispatch();
+    const [calendarBg,setCalendarBg] = useState(UNFOLD_IMG)
     const [visible,setVisible] = useState(false);
     const [diaryContents,setDiaryContents] = useState({});
     const [getMoment, setMoment]=useState(moment());     
@@ -22,16 +25,16 @@ export default ({navigation})=>{
     const [history,setHistory] = useState({
         diary:"X",book:0,workout:0,study:0,food:{goal:0,intake:0}
     });
-    const animatedHeight = useRef(new Animated.Value(30)).current;
+    const animatedPostion = useRef(new Animated.ValueXY({x:0,y:150})).current;
     const handleBottomSheet = ()=>{
         !toggle ? setItemHeight(46) : setItemHeight(66);
         setToggle(!toggle)
     }
     useEffect(()=>{
-        const height = toggle ? 258 : 30
-        Animated.timing(animatedHeight,{
-            toValue:height,
-            duration:100,
+        const height = toggle ? 40 : 150
+        Animated.timing(animatedPostion,{
+            toValue:{x:0,y:height},
+            duration : 100,
             useNativeDriver:false
         }).start();
     },[toggle])
@@ -166,13 +169,13 @@ export default ({navigation})=>{
                 <View style={{marginTop:27,flexDirection:"row",justifyContent:"center",alignItems:"center"}}>
                     <TouchableOpacity onPress={()=>handleMonth(false)}>
                         <View style={{width:9,height:9}}>
-                            <Image source={require("../../img/ico_left_arrow.png")}/>
+                            <Image source={require("../../img/calendar/ico_pre_month.png")}/>
                         </View>
                     </TouchableOpacity>
                     <StyleText style={{fontSize:12,color:"#000000",marginHorizontal:16}}>{monthName}</StyleText>
                     <TouchableOpacity onPress={()=>handleMonth(true)}>
                         <View style={{width:9,height:9}}>
-                            <Image source={require("../../img/ico_right_arrow.png")}/>
+                            <Image source={require("../../img/calendar/ico_next_month.png")}/>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -201,8 +204,8 @@ export default ({navigation})=>{
                 </View>
             </View>
             <View style={{justifyContent:"flex-end"}}>
-                <Animated.View style={{backgroundColor:"#8C6C51",height:animatedHeight,width:'100%',borderTopLeftRadius:12,borderTopRightRadius:12,justifyContent:'center',alignItems:"center"}}>
-                    <View style={{flex:1,width:'100%'}}>
+                <Animated.View style={{height:258,width:'100%',justifyContent:'center',alignItems:"center",transform:[{translateY:animatedPostion.y}]}}>
+                    <ImageBackground resizeMode={'stretch'} source={require("../../img/calendar/bottom-sheet.png")} style={{width:"100%",flex:1}}>
                         <TouchableOpacity onPress={handleBottomSheet} style={{alignItems:'center'}}>
                             <View style={{width:34,backgroundColor:'#FFFFFF',height:6,marginTop:6,borderRadius:4}} />
                         </TouchableOpacity>
@@ -240,7 +243,7 @@ export default ({navigation})=>{
                                 </TouchableOpacity>
                             </View>
                         </View>
-                    </View>
+                    </ImageBackground>
                 </Animated.View>
             </View>
             <DiaryModal
