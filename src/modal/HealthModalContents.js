@@ -1,17 +1,20 @@
 import React,{useState,useEffect} from 'react';
 import { View,Image,TouchableOpacity,FlatList,Alert,ImageBackground } from 'react-native';
-import {Picker} from '@react-native-picker/picker';
 import { useDispatch,useSelector } from 'react-redux';
 import {closeModal} from '../reducers/modal';
 import send from '../modules/send';
 import StyleText from '../components/UI/StyleText';
 import StyleInput from '../components/UI/StyleInput';
 import {validNumber} from '../modules/common'
+import Tooltip from 'react-native-walkthrough-tooltip';
 
+const ACTIVE_INPUT = require("../img/common/active_input.png");
+const INACTIVE_INPUT = require("../img/common/inactive_input.png")
 export default ()=>{
     const dispatch = useDispatch();
     const params = useSelector(state=> state.modal.params);
     const [extraView,setExtraView] = useState(false);
+    const [tooltip,setTooltip] = useState(false);
     const [lists,setLists] = useState([]);
     const [expl,setExpl] = useState("");
     const [min,setMin] = useState("");
@@ -20,7 +23,8 @@ export default ()=>{
     const [totalMin,setTotalMin] = useState(0);
     const [selectedValue, setSelectedValue] = useState(0);
     const [edit,setEdit] = useState(false);
-    const pickerList = ["걷기","러닝","헬스장","요가","필라테스","홈트레이닝","직접입력"]
+    const pickerList = ["걷기","러닝","헬스장","요가","필라테스","홈트레이닝","직접입력"];
+    const [pickerLabel,setPickerLabel] = useState("걷기")
     const [contentsIdx,setContentsIdx] = useState("");
     const [bgHeight,setBgHeight] = useState(310);
 
@@ -149,10 +153,14 @@ export default ()=>{
             </View>
         )
     }
-    const handlePicker=(value,idx)=>{
-        setSelectedValue(idx)
+    const handlePicker=(idx)=>{
+        console.log(idx);
+        setSelectedValue(idx);
+        setPickerLabel(pickerList[idx])
+
         if (idx === 6) setEdit(true);
         else setEdit(false);
+        setTooltip(false);
     }
 
     return (
@@ -192,30 +200,42 @@ export default ()=>{
                         <View style={{marginTop:16}}>
                             <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
                                 <View style={{flex:1}}>
-                                    <Picker
-                                        style={{height:36}}
-                                        selectedValue={selectedValue}
-                                        onValueChange={handlePicker}
-                                        mode="dropdown"
-                                    >
-                                        <Picker.Item label="걷기" value={0} />
-                                        <Picker.Item label="러닝" value={1} />
-                                        <Picker.Item label="헬스장" value={2} />
-                                        <Picker.Item label="요가" value={3} />
-                                        <Picker.Item label="필라테스" value={4} />
-                                        <Picker.Item label="홈트레이닝" value={5} />
-                                        <Picker.Item label="직접입력" value={6} />
-                                    </Picker>
+                                    <Tooltip
+                                        showChildInTooltip={false}
+                                        isVisible={tooltip}
+                                        content={
+                                            <View>
+                                                {pickerList.map((item,idx)=>(
+                                                    <TouchableOpacity key={idx} onPress={()=>{
+                                                        handlePicker(idx)
+                                                    }}>
+                                                        <View style={{marginVertical:8,width:120}}>
+                                                            <StyleText>{item}</StyleText>
+                                                        </View>
+                                                    </TouchableOpacity>
+                                                ))}
+                                            </View>
+                                        }
+                                        placement="top"
+                                        onClose={()=>setTooltip(false)}
+                                        >
+                                        <TouchableOpacity onPress={()=>setTooltip(true)}>
+                                            <View style={{height:36,justifyContent:'space-between',alignItems:"center",flexDirection:"row"}}>
+                                                <StyleText>{pickerLabel}</StyleText>
+                                                <Image source={require("../img/common_modal/ico_down_arrow.png")}/>
+                                            </View>
+                                        </TouchableOpacity>
+                                    </Tooltip>
                                 </View>
-                                <View style={{width:4}}/>
-                                <View style={{borderRadius:2,height:36,flex:1,overflow:"hidden"}}>
+                                <View style={{width:10}}/>
+                                <ImageBackground source={edit? ACTIVE_INPUT:INACTIVE_INPUT } resizeMode="stretch" style={{height:36,flex:1,overflow:"hidden"}}>
                                     <StyleInput
                                         editable={edit}
                                         value={expl}
                                         onChangeText={(value)=>setExpl(value)}
-                                        style={{flex:1,height:36,alignItems:"stretch",paddingVertical:0,backgroundColor:edit?"#ffffff":"#CECECE"}}
+                                        style={{flex:1,height:36,alignItems:"stretch",paddingVertical:0}}
                                     />
-                                </View>
+                                </ImageBackground>
                             </View>
                             <View style={{marginTop:10,flexDirection:"row",justifyContent:"flex-end",alignItems:"center"}}>
                                 <ImageBackground source={require('../img/common/input_small_bg_1.png')} style={{width:24,height:16,marginRight:8}}>
