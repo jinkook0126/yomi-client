@@ -122,7 +122,7 @@ export default ({navigation,route})=>{
                                     <StyleText numberOfLines={1} ellipsizeMode={"tail"} style={{marginTop:6}}>{item.BOOK_NM}</StyleText>
                                     <StyleText numberOfLines={1} ellipsizeMode={"tail"} style={{color:'#757575',fontSize:10,marginTop:2}}>{item.BOOK_AUTHOR}</StyleText>
                                 </View>
-                                <View style={{alignItems:"flex-start"}}>
+                                <View style={{alignItems:"flex-start",marginTop:4}}>
                                     <Rating
                                         readonly={true}
                                         fractions={2}
@@ -143,7 +143,7 @@ export default ({navigation,route})=>{
                         <TouchableOpacity onPress={()=>setVisible(true)}>
                             <View style={{flexDirection:'row',alignItems:'center'}}>
                                 <Image source={require("../../img/ico_orderby.png")}/>
-                                <StyleText style={{fontSize:12,marginLeft:4}}>{orderText}</StyleText>
+                                <StyleText style={{fontSize:14,marginLeft:4}}>{orderText}</StyleText>
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -156,7 +156,7 @@ export default ({navigation,route})=>{
                                     <StyleText numberOfLines={1} ellipsizeMode={"tail"} style={{marginTop:6}}>{item.BOOK_NM}</StyleText>
                                     <StyleText numberOfLines={1} ellipsizeMode={"tail"} style={{color:'#757575',fontSize:10,marginTop:2}}>{item.BOOK_AUTHOR}</StyleText>
                                 </View>
-                                <View style={{alignItems:"flex-start"}}>
+                                <View style={{alignItems:"flex-start",marginTop:4}}>
                                     <Rating
                                         readonly={true}
                                         fractions={2}

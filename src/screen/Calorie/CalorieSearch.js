@@ -237,7 +237,7 @@ export default ({navigation,route})=>{
                                     />
                                 </View>
                                 <View style={{marginTop:10,flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
-                                    <View style={{height:36,width:160,borderRadius:2,borderColor:'#EEEEEE',borderWidth:1,paddingHorizontal:10,flexDirection:'row',justifyContent:'space-between',alignItems:"center"}}>
+                                    <View style={{height:36,width:100,borderRadius:2,borderColor:'#EEEEEE',borderWidth:1,paddingHorizontal:10,flexDirection:'row',justifyContent:'space-between',alignItems:"center"}}>
                                         <StyleInput
                                             placeholder={"열량"}
                                             style={{padding:0,height:36,flex:1}}

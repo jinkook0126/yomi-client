@@ -2,7 +2,7 @@ import React,{useEffect} from 'react';
 import { useDispatch,useSelector } from 'react-redux';
 import {openModal} from '../../reducers/modal';
 import {initFurnitureRequest} from '../../reducers/furniture'
-import { View,Image,ImageBackground,StyleSheet,TouchableWithoutFeedback,Dimensions } from 'react-native';
+import { View,Image,ImageBackground,StyleSheet,TouchableWithoutFeedback,Dimensions, SafeAreaView } from 'react-native';
 
 const img_prefix = "https://yomi-image.s3.ap-northeast-2.amazonaws.com";
 const styles = StyleSheet.create({
@@ -48,70 +48,88 @@ export default ({navigation,route})=>{
         dispatch(openModal(target));
     }
     return (
-        <ImageBackground source={require("../../img/home_bg.png")} style={{width: '100%', height: '100%'}}>
-            <TouchableWithoutFeedback onPress={()=>openModalTest("health")}>
-                <View style={{position:"absolute",right:20,top:20,width:'30%',height:windowHeight}}>
-                    {furniture.FT03 !== '' ? 
-                    <Image source={{uri:img_prefix+furniture.FT03}} style={styles.window}/>:null}
+        <SafeAreaView style={{flex:1}}>
+            <ImageBackground source={require("../../img/home_bg.png")} style={{width: '100%', height: '100%'}}>
+                {/* <TouchableWithoutFeedback onPress={()=>openModalTest("health")}>
+                    <View style={{position:"absolute",right:20,top:20,width:'30%',height:windowHeight}}>
+                        {furniture.FT03 !== '' ? 
+                        <Image source={{uri:img_prefix+furniture.FT03}} style={styles.window}/>:null}
+                    </View>
+                </TouchableWithoutFeedback> */}
+                {/* <TouchableWithoutFeedback onPress={()=>openModalTest("desk")}>
+                    <View style={{position:"absolute",right:0,top: halfPosition-deskHeight,width:'48%',height:deskHeight}}>
+                        
+                        {furniture.FT02 !== '' ? <Image source={{uri:img_prefix+furniture.FT02}} style={styles.window}/> : null}
+                    </View>
+                </TouchableWithoutFeedback> */}
+                {/* <TouchableWithoutFeedback onPress={()=>{navigation.navigate("Diary")}}>
+                    <View style={{position:"absolute",right:20,top:(halfPosition-deskHeight)-(calcHeight/2)-10,width:'27%',height:calcHeight}}>
+                        {furniture.FT04 !== '' ? <Image source={{uri:img_prefix+furniture.FT04}} style={styles.window}/> : null}
+                    </View>
+                </TouchableWithoutFeedback> */}
+                {/* <TouchableWithoutFeedback onPress={()=>{navigation.navigate("BookMain")}}>
+                    <View style={{position:"absolute",right:'48%',top:halfPosition-bookCaseHeight,width:'33%',height:bookCaseHeight}}>
+                        {furniture.FT05 !== '' ? <Image source={{uri:img_prefix+furniture.FT05}} style={styles.window}/> : null}
+                    </View>
+                </TouchableWithoutFeedback> */}
+                {/* <TouchableWithoutFeedback onPress={()=>{navigation.navigate("Calorie")}}>
+                    <View style={{position:"absolute",left:0,top:halfPosition-(fridgeHeight/2),width:'30%',height:fridgeHeight}}>
+                        {furniture.FT01 !== '' ? <Image source={{uri:img_prefix+furniture.FT01}} resizeMode="stretch" style={{width:"100%",height:"100%"}}/> : null}
+                    </View>
+                </TouchableWithoutFeedback> */}
+                {/* <TouchableWithoutFeedback onPress={()=>{alert("yomi")}}>
+                    <View style={{position:"absolute",right:80,bottom:'7%',width:'32%',height:yomiHeight,display: 'flex',flexDirection:'row',alignItems:"flex-end"}}>
+                        <Image source={require("../../img/yomi.png")} resizeMode="stretch" style={{width:109,height:220,marginRight:10}}/>
+                        <Image source={require("../../img/munji.png")} resizeMode="stretch" style={{width:79,height:61}}/>
+                    </View>
+                </TouchableWithoutFeedback> */}
+                {
+                    furniture.FT05 !== '' ?
+                    <TouchableWithoutFeedback onPress={()=>{navigation.navigate("BookMain")}}>
+                        <ImageBackground source={{uri:img_prefix+furniture.FT05}} resizeMode="stretch" style={{position:"absolute",left:'25%',top:'8%',width:117,height:86}}>
+                        </ImageBackground>
+                    </TouchableWithoutFeedback>
+                    :
+                    null
+                }
+                {
+                    furniture.FT02 !== '' && furniture.FT04 !== '' ?
+                    <View style={{position:"absolute",position:"absolute",right:'20%',top:halfPosition-120}}>
+                        <TouchableWithoutFeedback onPress={()=>{navigation.navigate("Diary")}}>
+                            <ImageBackground source={{uri:img_prefix+furniture.FT04}} resizeMode="stretch" style={{width:81.25,height:37.5,zIndex:10,left:25,top:25}}>
+                            </ImageBackground>
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={()=>openModalTest("desk")}>
+                            <ImageBackground source={{uri:img_prefix+furniture.FT02}} resizeMode="stretch" style={{width:130,height:102}}>
+                            </ImageBackground>
+                        </TouchableWithoutFeedback>
+                    </View>
+                    :
+                    null
+                }
+                {
+                    furniture.FT01 !== '' ?
+                    <TouchableWithoutFeedback onPress={()=>{navigation.navigate("Calorie")}}>
+                        <ImageBackground source={{uri:img_prefix+furniture.FT01}} resizeMode="stretch" style={{position:"absolute",left:'6%',top:halfPosition-130,width:92,height:168}}>
+                        </ImageBackground>
+                    </TouchableWithoutFeedback>
+                    :
+                    null
+                }
+                {
+                    furniture.FT03 !== ""?
+                    <TouchableWithoutFeedback onPress={()=>openModalTest("health")}>
+                        <ImageBackground source={{uri:img_prefix+furniture.FT03}} resizeMode="stretch" style={{position:"absolute",right:'3%',bottom:"10%",width:120,height:168}}>
+                        </ImageBackground>
+                    </TouchableWithoutFeedback>
+                    :
+                null
+                }
+                <View style={{position:"absolute",left:"20%",bottom:'16%',width:'32%',height:yomiHeight,display: 'flex',flexDirection:'row',alignItems:"flex-end"}}>
+                    <Image source={require("../../img/munji.png")} resizeMode="stretch" style={{width:55,height:42,marginRight:10}}/>
+                    <Image source={require("../../img/yomi.png")} resizeMode="stretch" style={{width:87,height:172}}/>
                 </View>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={()=>openModalTest("desk")}>
-                <View style={{position:"absolute",right:0,top: halfPosition-deskHeight,width:'48%',height:deskHeight}}>
-                    
-                    {furniture.FT02 !== '' ? <Image source={{uri:img_prefix+furniture.FT02}} style={styles.window}/> : null}
-                </View>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={()=>{navigation.navigate("Diary")}}>
-                <View style={{position:"absolute",right:20,top:(halfPosition-deskHeight)-(calcHeight/2)-10,width:'27%',height:calcHeight}}>
-                    {furniture.FT04 !== '' ? <Image source={{uri:img_prefix+furniture.FT04}} style={styles.window}/> : null}
-                </View>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={()=>{navigation.navigate("BookMain")}}>
-                <View style={{position:"absolute",right:'48%',top:halfPosition-bookCaseHeight,width:'33%',height:bookCaseHeight}}>
-                    {furniture.FT05 !== '' ? <Image source={{uri:img_prefix+furniture.FT05}} style={styles.window}/> : null}
-                </View>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={()=>{navigation.navigate("Calorie")}}>
-                <View style={{position:"absolute",left:0,top:halfPosition-(fridgeHeight/2),width:'30%',height:fridgeHeight}}>
-                    {furniture.FT01 !== '' ? <Image source={{uri:img_prefix+furniture.FT01}} style={styles.window}/> : null}
-                </View>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={()=>{alert("yomi")}}>
-                <View style={{position:"absolute",right:80,bottom:'7%',width:'32%',height:yomiHeight,display: 'flex',flexDirection:'row',alignItems:"flex-end"}}>
-                    <Image source={require("../../img/yomi.png")} resizeMode="stretch" style={{width:109,height:220,marginRight:10}}/>
-                    <Image source={require("../../img/munji.png")} resizeMode="stretch" style={{width:79,height:61}}/>
-                </View>
-            </TouchableWithoutFeedback>
-            {/* <TouchableWithoutFeedback onPress={()=>{alert("window!")}}>
-                <View style={{position:"absolute",right:20,top:20,width:150,height:100}}>
-                    <Image source={require("../img/window.png")} style={styles.window}/>
-                </View>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={()=>{alert("desk")}}>
-                <View style={{position:"absolute",right:0,top:200,width:182,height:120}}>
-                    <Image source={require("../img/desk.png")} style={styles.window}/>
-                </View>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={()=>{alert("bookcase")}}>
-                <View style={{position:"absolute",right:182,top:104,width:130,height:216}}>
-                    <Image source={require("../img/bookcase.png")} style={styles.window}/>
-                </View>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={()=>{alert("calc")}}>
-                <View style={{position:"absolute",right:20,top:200-40,width:91,height:62}}>
-                    <Image source={require("../img/calc.png")} style={styles.window}/>
-                </View>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={()=>{alert("fridge")}}>
-                <View style={{position:"absolute",left:0,top:200,width:120,height:218}}>
-                    <Image source={require("../img/fridge.png")} style={styles.window}/>
-                </View>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={()=>{alert("yomi")}}>
-                <View style={{position:"absolute",right:80,top:'50%',width:120,height:188}}>
-                    <Image source={require("../img/yomi.png")} style={styles.window}/>
-                </View>
-            </TouchableWithoutFeedback> */}
-        </ImageBackground>
+            </ImageBackground>    
+        </SafeAreaView>
     )
 }

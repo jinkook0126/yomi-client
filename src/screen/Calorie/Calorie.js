@@ -95,7 +95,7 @@ export default ({navigation,route})=>{
                 <ScrollView style={{marginTop:22,flex:1}}>
                     <StyleText style={{fontSize:15}}>오늘 먹은 음식</StyleText>
                     <View style={{marginTop:15}}>
-                        <ImageBackground source={require('../../img/calorie/header.png')} style={styles.foodHeader}>
+                        <ImageBackground source={require('../../img/calorie/header.png')} resizeMode={'stretch'} style={styles.foodHeader}>
                             <StyleText style={styles.foodHeaderText}>아침</StyleText>
                             <TouchableOpacity onPress={()=>navigateInfo("M01",foods["M01"])} >
                                 <View style={styles.foodNext}>
@@ -108,7 +108,7 @@ export default ({navigation,route})=>{
                         }
                     </View>
                     <View style={{marginTop:10}}>
-                        <ImageBackground source={require('../../img/calorie/header.png')} style={styles.foodHeader}>
+                        <ImageBackground source={require('../../img/calorie/header.png')} resizeMode={'stretch'} style={styles.foodHeader}>
                             <StyleText style={styles.foodHeaderText}>점심</StyleText>
                             <TouchableOpacity onPress={()=>navigateInfo("M02",foods["M02"])} >
                                 <View style={styles.foodNext}>
@@ -121,7 +121,7 @@ export default ({navigation,route})=>{
                         }
                     </View>
                     <View style={{marginTop:10}}>
-                        <ImageBackground source={require('../../img/calorie/header.png')} style={styles.foodHeader}>
+                        <ImageBackground source={require('../../img/calorie/header.png')} resizeMode={'stretch'} style={styles.foodHeader}>
                             <StyleText style={styles.foodHeaderText}>저녁</StyleText>
                             <TouchableOpacity onPress={()=>navigateInfo("M03",foods["M03"])} >
                                 <View style={styles.foodNext}>
@@ -134,7 +134,7 @@ export default ({navigation,route})=>{
                         }
                     </View>
                     <View style={{marginTop:10}}>
-                        <ImageBackground source={require('../../img/calorie/header.png')} style={styles.foodHeader}>
+                        <ImageBackground source={require('../../img/calorie/header.png')} resizeMode={'stretch'} style={styles.foodHeader}>
                             <StyleText style={styles.foodHeaderText}>야식</StyleText>
                             <TouchableOpacity onPress={()=>navigateInfo("M04",foods["M04"])} >
                                 <View style={styles.foodNext}>
@@ -147,7 +147,7 @@ export default ({navigation,route})=>{
                         }
                     </View>
                     <View style={{marginTop:10}}>
-                        <ImageBackground source={require('../../img/calorie/header.png')} style={styles.foodHeader}>
+                        <ImageBackground source={require('../../img/calorie/header.png')} resizeMode={'stretch'} style={styles.foodHeader}>
                             <StyleText style={styles.foodHeaderText}>간식</StyleText>
                             <TouchableOpacity onPress={()=>navigateInfo("M05",foods["M05"])} >
                                 <View style={styles.foodNext}>
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
         borderWidth:1
     },
     foodHeader:{
-        height:39,
+        height:45,
         flexDirection:"row",
         alignItems:'center',
         justifyContent:"space-between",

@@ -7,12 +7,12 @@ export default(props)=>{
     const initScreen = useSelector(state => state.auth.login.stat);
     return (
         <>
-        {
-            initScreen?
-            <MainScreen {...props}/>
-            :
-            <LoginScreen {...props}/>
-        }
+            {
+                initScreen?
+                <MainScreen {...props}/>
+                :
+                <LoginScreen {...props}/>
+            }
         </>
     )
 }
