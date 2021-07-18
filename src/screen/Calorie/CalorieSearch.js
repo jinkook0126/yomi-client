@@ -149,8 +149,8 @@ export default ({navigation,route})=>{
         return (
             <View style={{paddingVertical:16,paddingHorizontal:20,flexDirection:"row",alignContent:'center',justifyContent:"space-between",flex:1}}>
                 <View style={{flexDirection:"row",alignItems:"center",flex:1}}>
-                    <StyleText style={{fontSize:12}}>{item.desc}</StyleText>
-                    <StyleText style={{fontSize:9,marginLeft:10}}>({item.brand})</StyleText>
+                    <StyleText style={{fontSize:17}}>{item.desc}</StyleText>
+                    <StyleText style={{fontSize:9,marginLeft:10,fontSize:17}}>({item.brand})</StyleText>
                 </View>
                 <View style={{flexDirection:"row",alignItems:'center',flex:1,justifyContent:"flex-end"}}>
                     <TouchableOpacity onPress={()=>{handleCount('plus',item.id)}}>
@@ -159,7 +159,7 @@ export default ({navigation,route})=>{
                         </View>
                     </TouchableOpacity>
                     <ImageBackground source={require("../../img/calorie/input_bg.png")} style={{marginHorizontal:5,width:38,height:29,justifyContent:"center",alignItems:"center"}}>
-                        <StyleText style={{fontSize:15}}>{item.cnt}</StyleText>
+                        <StyleText style={{fontSize:17}}>{item.cnt}</StyleText>
                     </ImageBackground>
                     <TouchableOpacity onPress={()=>{handleCount('minus',item.id)}}>
                         <View style={{width:14,height:14}}>
@@ -180,10 +180,10 @@ export default ({navigation,route})=>{
                             <Image source={require('../../img/common/ico_back.png')}  />
                         </View>
                     </TouchableOpacity>
-                    <StyleText style={{paddingLeft:20,fontSize:16}}>{renderTitle(route.params.type)}</StyleText>
+                    <StyleText style={{paddingLeft:20,fontSize:20}} type='bold'>{renderTitle(route.params.type)}</StyleText>
                 </View>
                 <View style={{flexDirection:"row",alignItems:'center',justifyContent:"flex-end",paddingRight:26}}>
-                    <StyleText>{selectCnt}</StyleText>
+                    <StyleText style={{fontSize:18}}>{selectCnt}</StyleText>
                     <TouchableOpacity onPress={()=>{
                         setIsVisible(true)
                     }}>
@@ -198,7 +198,7 @@ export default ({navigation,route})=>{
                     <ImageBackground source={require("../../img/calorie/search_border.png")} resizeMode={'stretch'} style={{height:39,backgroundColor:"#FFFFFF",flexDirection:"row",justifyContent:"space-between",alignItems:'center',paddingHorizontal:12}}>
                         <StyleInput
                             onChangeText={(value)=>{setSearchKey(value)}}
-                            style={{flex:1,padding:0,height:30}}
+                            style={{flex:1,padding:0,height:30,fontSize:16}}
                         />
                         <TouchableOpacity onPress={()=>searchFood(true)}>
                             <Image source={require("../../img/common/ico_search.png")}/>
@@ -216,7 +216,7 @@ export default ({navigation,route})=>{
                     </ImageBackground>
                     <TouchableOpacity onPress={()=>setExtraView(!extraView)}>
                         <View style={{marginTop:16,flexDirection:'row',justifyContent:"center",alignItems:'center'}}>
-                            <StyleText>직접입력</StyleText>
+                            <StyleText style={{fontSize:17}}>직접입력</StyleText>
                             {
                                 extraView? 
                                     <Image source={require("../../img/common/ico_minus.png")} style={{marginLeft:10}}/>
@@ -228,32 +228,34 @@ export default ({navigation,route})=>{
                     {
                         extraView? 
                             <View style={{marginTop:10}}>
-                                <View style={{height:36,borderRadius:2,borderColor:'#EEEEEE',borderWidth:1,paddingHorizontal:10}}>
+                                <ImageBackground source={require("../../img/calorie/search_border.png")} resizeMode={'stretch'}
+                                    style={{height:36,paddingHorizontal:10}}>
                                     <StyleInput
                                         placeholder={"음식 이름"}
-                                        style={{padding:0,height:36,flex:1}}
+                                        style={{padding:0,height:36,flex:1,fontSize:16}}
                                         onChangeText={text=>setCustomFoodName(text)}
                                         value={customFoodName}
                                     />
-                                </View>
+                                </ImageBackground>
                                 <View style={{marginTop:10,flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
-                                    <View style={{height:36,width:100,borderRadius:2,borderColor:'#EEEEEE',borderWidth:1,paddingHorizontal:10,flexDirection:'row',justifyContent:'space-between',alignItems:"center"}}>
+                                    <ImageBackground source={require("../../img/calorie/search_border.png")} resizeMode={'stretch'}
+                                        style={{height:36,width:100,paddingHorizontal:10,flexDirection:'row',justifyContent:'space-between',alignItems:"center"}}>
                                         <StyleInput
                                             placeholder={"열량"}
-                                            style={{padding:0,height:36,flex:1}}
+                                            style={{padding:0,height:36,flex:1,fontSize:16,backgroundColor:"transparent",overflow: 'hidden'}}
                                             keyboardType={"numeric"}
                                             onChangeText={(kcal)=>setCustomFoodKcal(kcal)}
                                             value={String(Number(customFoodKcal))}
                                         />
                                         <StyleText style={{marginLeft:5}}>Kcal</StyleText>
-                                    </View>
+                                    </ImageBackground>
                                     <View style={{flexDirection:'row',alignItems:"center"}}>
                                         <View style={{marginRight:10,justifyContent:"space-between",alignItems:'center',flexDirection:"row"}}>
                                             <TouchableOpacity onPress={()=>customFoodCntHandler('minus')}>
                                                 <Image source={require("../../img/common/ico_minus.png")}/>
                                             </TouchableOpacity>
                                             <ImageBackground source={require("../../img/calorie/input_bg.png")} style={{height:29,width:38,marginHorizontal:6,justifyContent:"center",alignItems:'center'}}>
-                                                <StyleText style={{fontSize:15}}>{customFoodCnt}</StyleText>
+                                                <StyleText style={{fontSize:17}}>{customFoodCnt}</StyleText>
                                             </ImageBackground>
                                             <TouchableOpacity onPress={()=>customFoodCntHandler('plus')}>
                                                 <Image source={require("../../img/common/ico_plus.png")}/>
@@ -275,7 +277,7 @@ export default ({navigation,route})=>{
                                             setCustomFoodName("");
                                         }}>
                                             <ImageBackground source={require('../../img/common_modal/modal_add.png')} style={{height:36,width:64,justifyContent:'center',alignItems:'center'}}>
-                                                <StyleText style={{color:"#FFFFFF"}}>추가</StyleText>            
+                                                <StyleText style={{color:"#FFFFFF",fontSize:17}} type='bold'>추가</StyleText>            
                                             </ImageBackground>
                                         </TouchableOpacity>
                                     </View>
@@ -287,7 +289,7 @@ export default ({navigation,route})=>{
                 </View>
                 <TouchableOpacity onPress={handleSave}>
                     <ImageBackground source={require('../../img/common/long_btn.png')} resizeMode='stretch' style={{height:40,justifyContent:'center',alignItems:'center'}}>
-                        <StyleText style={{color:"#FFFFFF"}}>저장</StyleText>
+                        <StyleText style={{color:"#FFFFFF",fontSize:18}} type='bold'>저장</StyleText>
                     </ImageBackground>
                 </TouchableOpacity>
             </View>
@@ -318,17 +320,17 @@ export default ({navigation,route})=>{
                                             }}>
                                                 <Image source={require("../../img/common/ico_remove.png")}/>
                                             </TouchableOpacity>
-                                            <StyleText style={{marginLeft:20 }}>{item.desc}</StyleText>
+                                            <StyleText style={{marginLeft:20,fontSize:17 }}>{item.desc}</StyleText>
                                         </View>
                                         <View style={{flex:1,alignItems:"center"}}>
-                                            <StyleText>{`${item.kcal}Kcal`}</StyleText>
+                                            <StyleText style={{fontSize:17}}>{`${item.kcal}Kcal`}</StyleText>
                                         </View>
                                         <View style={{flexDirection:"row",alignItems:'center',flex:1,justifyContent:"flex-end"}}>
                                             <TouchableOpacity onPress={()=>{
                                                 setSearchList(searchList.map(food=> food.id === item.id ? ({...food,...{cnt:parseInt(food.cnt)-1}}) : food));
                                                 if(item.cnt === 1) {
                                                     setSelectList(selectList.filter(food => food.id !== item.id));
-                                                    setSelectCnt(cnt -1);
+                                                    setSelectCnt(selectCnt -1);
                                                 } else {
                                                     setSelectList(selectList.map(food => food.id === item.id ? ({...food,...{cnt:parseInt(food.cnt)-1}}) : food ));
 
@@ -337,7 +339,7 @@ export default ({navigation,route})=>{
                                                 <Image source={require("../../img/common/ico_minus.png")}/>
                                             </TouchableOpacity>
                                             <View style={{backgroundColor:"#EEEEEE",width:20,height:20,marginHorizontal:6,justifyContent:'center',alignItems:'center'}}>
-                                                <StyleText style={{fontSize:15}}>{item.cnt}</StyleText>
+                                                <StyleText style={{fontSize:17}}>{item.cnt}</StyleText>
                                             </View>
                                             <TouchableOpacity onPress={()=>{
                                                 setSelectList(selectList.map(food => food.id === item.id ? ({...food,...{cnt:parseInt(food.cnt)+1}}) : food ));

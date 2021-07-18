@@ -25,13 +25,13 @@ export default ({navigation})=>{
     const [history,setHistory] = useState({
         diary:"X",book:0,workout:0,study:0,food:{goal:0,intake:0}
     });
-    const animatedPostion = useRef(new Animated.ValueXY({x:0,y:150})).current;
+    const animatedPostion = useRef(new Animated.ValueXY({x:0,y:1000})).current;
     const handleBottomSheet = ()=>{
         !toggle ? setItemHeight(46) : setItemHeight(66);
         setToggle(!toggle)
     }
     useEffect(()=>{
-        const height = toggle ? 40 : 150
+        const height = toggle ? -34 : 1000
         Animated.timing(animatedPostion,{
             toValue:{x:0,y:height},
             duration : 100,
@@ -172,7 +172,7 @@ export default ({navigation})=>{
                             <Image source={require("../../img/calendar/ico_pre_month.png")}/>
                         </View>
                     </TouchableOpacity>
-                    <StyleText style={{fontSize:12,color:"#000000",marginHorizontal:16}}>{monthName}</StyleText>
+                    <StyleText style={{fontSize:18,color:"#000000",marginHorizontal:16}} type="bold">{monthName}</StyleText>
                     <TouchableOpacity onPress={()=>handleMonth(true)}>
                         <View style={{width:9,height:9}}>
                             <Image source={require("../../img/calendar/ico_next_month.png")}/>
@@ -206,8 +206,11 @@ export default ({navigation})=>{
             <View style={{justifyContent:"flex-end"}}>
                 <Animated.View style={{height:258,width:'100%',justifyContent:'center',alignItems:"center",transform:[{translateY:animatedPostion.y}]}}>
                     <ImageBackground resizeMode={'stretch'} source={require("../../img/calendar/bottom-sheet.png")} style={{width:"100%",flex:1}}>
-                        <TouchableOpacity onPress={handleBottomSheet} style={{alignItems:'center'}}>
-                            <View style={{width:34,backgroundColor:'#FFFFFF',height:6,marginTop:6,borderRadius:4}} />
+                        <TouchableOpacity onPress={handleBottomSheet} style={{alignItems:'center',marginTop:10}}>
+                            <Image
+                                resizeMode="stretch"
+                                source={require("../../img/calendar/bottom-sheet-down.png")}
+                            />
                         </TouchableOpacity>
                         <View style={{marginTop:30,paddingHorizontal:20}}>
                             <View style={styles.bottomSheetWrap}>

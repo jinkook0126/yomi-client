@@ -100,10 +100,10 @@ export default ({navigation,route})=>{
                         <Image source={require('../../img/common/ico_back.png')}  />
                     </View>
                 </TouchableOpacity>
-                <StyleText style={{paddingLeft:20,fontSize:16}}>책장</StyleText>
+                <StyleText style={{paddingLeft:20,fontSize:20}} type='bold'>책장</StyleText>
             </View>
             <ScrollView style={{paddingTop:16,paddingHorizontal:26}}>
-                <StyleText>현재 읽고 있는 책</StyleText>
+                <StyleText style={{fontSize:18}} type='bold'>현재 읽고 있는 책</StyleText>
                 <View style={{flexWrap:'wrap',flexDirection:"row"}}>
                     <TouchableOpacity onPress={()=>{navigation.navigate("BookSearch")}} style={{marginRight:margin}}>
                         <View style={{width:90,height:116,marginTop:16,borderWidth:1,borderStyle:"dotted",borderColor:'#9E9E9E',borderRadius:6,justifyContent:"center",alignItems:'center'}}>
@@ -139,7 +139,7 @@ export default ({navigation,route})=>{
                 </View>
                 <View style={{marginVertical:28}}>
                     <View style={{flexDirection:'row',justifyContent:"space-between"}}>
-                        <StyleText>완독한 책</StyleText>
+                        <StyleText style={{fontSize:18}} type='bold'>완독한 책</StyleText>
                         <TouchableOpacity onPress={()=>setVisible(true)}>
                             <View style={{flexDirection:'row',alignItems:'center'}}>
                                 <Image source={require("../../img/ico_orderby.png")}/>

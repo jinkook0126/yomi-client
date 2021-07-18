@@ -166,11 +166,11 @@ export default ()=>{
         <ImageBackground resizeMode={'stretch'} imageStyle={{width:"100%"}} source={require('../img/common_modal/modal_bg.png')} style={{width:'90%',height:bgHeight}}>
             <View style={{padding:20}}>
                 <View style={{justifyContent:'center',alignItems:'center'}}>
-                    <StyleText style={{fontSize:20,fontFamily:"Namu_Bold"}}>운동</StyleText>
+                    <StyleText style={{fontSize:20}} type='bold'>운동</StyleText>
                 </View>
                 <View style={{marginTop:26}}>
                     <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:'center'}}>
-                        <StyleText style={{fontSize:18,fontFamily:"Namu_Bold"}}>오늘 나의 운동</StyleText>
+                        <StyleText style={{fontSize:18}} type='bold'>오늘 나의 운동</StyleText>
                         <StyleText style={{fontSize:14}}>{`Total ${totalHours}시간 ${totalMin}분`}</StyleText>
                     </View>
                     <FlatList
@@ -249,7 +249,7 @@ export default ()=>{
 
                                 <TouchableOpacity onPress={addList}>
                                     <ImageBackground source={require('../img/common_modal/modal_add.png')} style={{justifyContent:'center',alignItems:"center",marginLeft:10,height:36,width:64}}>
-                                        <StyleText style={{color:"#ffffff",fontFamily:"Namu_Bold",fontSize:17}}>추가</StyleText>
+                                        <StyleText style={{color:"#ffffff",fontSize:17}} type='bold'>추가</StyleText>
                                     </ImageBackground>
                                 </TouchableOpacity>
                             </View>
@@ -261,14 +261,14 @@ export default ()=>{
                         <View style={{flex:1,paddingRight:4}}>
                             <TouchableOpacity onPress={handleClose}>
                                 <ImageBackground source={require('../img/common_modal/modal_cancel.png')} resizeMode={'stretch'} style={{justifyContent:'center',alignItems:"center",width:'100%',height:50}}>
-                                    <StyleText style={{color:"#FFFFFF",fontFamily:"Namu_Bold",fontSize:18}}>취소</StyleText>
+                                    <StyleText style={{color:"#FFFFFF",fontSize:18}} type='bold'>취소</StyleText>
                                 </ImageBackground>
                             </TouchableOpacity>
                         </View>
                         <View style={{flex:1,paddingLeft:4}}>
                             <TouchableOpacity onPress={handleSave}>
                                 <ImageBackground source={require('../img/common_modal/modal_confirm.png')} resizeMode={'stretch'} style={{justifyContent:'center',alignItems:"center",width:'100%',height:50}}>
-                                    <StyleText style={{color:"#FFFFFF",fontFamily:"Namu_Bold",fontSize:18}}>저장</StyleText>
+                                    <StyleText style={{color:"#FFFFFF",fontSize:18}} type='bold'>저장</StyleText>
                                 </ImageBackground>
                             </TouchableOpacity>
                         </View>

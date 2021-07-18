@@ -15,7 +15,7 @@ const Contact = ({navigation})=>{
                         <WithLocalSvg width={8} height={16} asset={require('../img/menu/ico_back.svg')} />
                     </View>
                 </TouchableOpacity>
-                <StyleText style={{paddingLeft:20,fontSize:16}}>문의하기</StyleText>
+                <StyleText style={{paddingLeft:20,fontSize:20}} type="bold">문의하기</StyleText>
             </View>        
             <View style={{height:2,backgroundColor:'#ECECEC',width:'100%'}}/>
             <View style={{paddingTop:4,paddingHorizontal:20}}>

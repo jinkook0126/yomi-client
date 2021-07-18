@@ -18,7 +18,7 @@ export default (props)=>{
     const [totalHours,setTotalHours] = useState(0);
     const [totalMin,setTotalMin] = useState(0);
     const [contentsIdx,setContentsIdx] = useState("");
-    const [bgHeight,setBgHeight] = useState(320);
+    const [bgHeight,setBgHeight] = useState(330);
 
     useEffect(()=>{
         const initDesk = async()=>{
@@ -135,10 +135,10 @@ export default (props)=>{
     }
     const renderItem=({item,index})=>{
         return (
-            <View style={{padding:4,flexDirection:'row',justifyContent:"space-between",alignItems:"center"}}>
-                <StyleText>{item.expl}</StyleText>
+            <View style={{paddingVertical:4,flexDirection:'row',justifyContent:"space-between",alignItems:"center"}}>
+                <StyleText style={{fontSize:17}}>{item.expl}</StyleText>
                 <View style={{flexDirection:"row",alignItems:'center',justifyContent:"flex-end"}}>
-                    <StyleText>{`${item.hours} 시간 ${item.min} 분`}</StyleText>
+                    <StyleText style={{fontSize:17}}>{`${item.hours} 시간 ${item.min} 분`}</StyleText>
                     <TouchableOpacity onPress={()=>removeItem(index)}>
                         <Image source={require('../img/common/ico_remove.png')} style={{marginLeft:10}}/>
                     </TouchableOpacity>
@@ -151,12 +151,12 @@ export default (props)=>{
         <ImageBackground resizeMode={'stretch'} imageStyle={{width:"100%"}} source={require('../img/common_modal/modal_bg.png')} style={{width:'90%',height:bgHeight}}>
             <View style={{padding:16}}>
                 <View style={{justifyContent:'center',alignItems:'center'}}>
-                    <StyleText style={{fontSize:16}}>책상</StyleText>
+                    <StyleText style={{fontSize:20}} type='bold'>책상</StyleText>
                 </View>
                 <View style={{marginTop:26}}>
                     <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:'center'}}>
-                        <StyleText>오늘 나의 공부</StyleText>
-                        <StyleText style={{fontSize:11}}>{`Total ${totalHours}시간 ${totalMin}분`}</StyleText>
+                        <StyleText style={{fontSize:18}} type='bold'>오늘 나의 공부</StyleText>
+                        <StyleText style={{fontSize:14}}>{`Total ${totalHours}시간 ${totalMin}분`}</StyleText>
                     </View>
                     <FlatList
                         data={lists}
@@ -166,10 +166,10 @@ export default (props)=>{
                     />
                     <ImageBackground source={require("../img/common/dash.png")} style={{width:'100%',height:4}} resizeMode={'stretch'}/>
                     <View style={{marginTop:16,flexDirection:"row",alignItems:"center"}}>
-                        <StyleText>공부 추가하기</StyleText>
+                        <StyleText style={{fontSize:18}}>공부 추가하기</StyleText>
                         <TouchableOpacity onPress={()=>{
                             setExtraView(!extraView);
-                            !extraView ? setBgHeight(410) : setBgHeight(320);
+                            !extraView ? setBgHeight(430) : setBgHeight(330);
                         }}>
                             {
                                 extraView ? 
@@ -182,27 +182,27 @@ export default (props)=>{
                     {
                         extraView ?
                         <View style={{marginTop:16}}>
-                            <View style={{borderRadius:2,height:36}}>
+                            <ImageBackground source={require("../img/common/active_input.png")} resizeMode="stretch" style={{height:36,width:"100%",overflow:"hidden"}}>
                                 <StyleInput
                                     value={expl}
                                     onChangeText={(value)=>setExpl(value)}
-                                    style={{flex:1,height:36,alignItems:"stretch",paddingVertical:0}}
+                                    style={{flex:1,height:36,alignItems:"stretch",paddingVertical:0,paddingLeft:10}}
                                     placeholder={"내가 한 공부를 입력해주세요."} />
-                            </View>
+                            </ImageBackground>
                             <View style={{marginTop:10,flexDirection:"row",justifyContent:"flex-end",alignItems:"center"}}>
-                                <ImageBackground source={require('../img/common/input_small_bg_1.png')} style={{width:24,height:16,marginRight:8}}>
-                                    <StyleInput value={hours} keyboardType={"number-pad"} onChangeText={(value)=>setHours(value)} style={{flex:1,height:16,alignItems:"stretch",paddingVertical:0,fontSize:12}}/>
+                            <ImageBackground source={require('../img/common/input_small_bg_2.png')} resizeMode="stretch" style={{width:50,height:28,marginRight:4,paddingLeft:8}}>
+                                    <StyleInput value={hours} keyboardType={"number-pad"} onChangeText={(value)=>setHours(value)} style={{flex:1,height:16,alignItems:"stretch",paddingVertical:0,fontSize:16}}/>
                                 </ImageBackground>
-                                <StyleText>시간</StyleText>
+                                <StyleText style={{fontSize:18}}>시간</StyleText>
 
-                                <ImageBackground source={require('../img/common/input_small_bg_2.png')} style={{width:24,height:16,marginHorizontal:8}}>
-                                    <StyleInput value={min} keyboardType={"number-pad"} onChangeText={(value)=>setMin(value)} style={{flex:1,height:16,alignItems:"stretch",paddingVertical:0,fontSize:12}}/>
+                                <ImageBackground source={require('../img/common/input_small_bg_2.png')} resizeMode="stretch" style={{width:50,height:28,marginRight:4,paddingLeft:8}}>
+                                    <StyleInput value={min} keyboardType={"number-pad"} onChangeText={(value)=>setMin(value)} style={{flex:1,height:16,alignItems:"stretch",paddingVertical:0,fontSize:16}}/>
                                 </ImageBackground>
-                                <StyleText>분</StyleText>
+                                <StyleText style={{fontSize:18}}>분</StyleText>
 
                                 <TouchableOpacity onPress={addList}>
                                     <ImageBackground source={require('../img/common_modal/modal_add.png')} style={{justifyContent:'center',alignItems:"center",marginLeft:20,height:36,width:64}}>
-                                        <StyleText style={{color:"#ffffff"}}>추가</StyleText>
+                                        <StyleText style={{color:"#ffffff",fontSize:17}} type='bold'>추가</StyleText>
                                     </ImageBackground>
                                 </TouchableOpacity>
                             </View>
@@ -210,17 +210,21 @@ export default (props)=>{
                         :
                         null
                     }
-                    <View style={{marginTop:40,flexDirection:"row",justifyContent:"space-between",alignItems:'center'}}>
-                        <TouchableOpacity onPress={handleClose}>
-                            <ImageBackground source={require('../img/common_modal/modal_cancel.png')} style={{justifyContent:'center',alignItems:"center",width:139,height:45}}>
-                                <StyleText style={{color:"#ffffff"}}>취소</StyleText>
-                            </ImageBackground>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={handleSave}>
-                            <ImageBackground source={require('../img/common_modal/modal_confirm.png')} style={{justifyContent:'center',alignItems:"center",width:139,height:45}}>
-                                <StyleText style={{color:"#ffffff"}}>저장</StyleText>
-                            </ImageBackground>
-                        </TouchableOpacity>
+                    <View style={{marginTop:40,flexDirection:"row",justifyContent:"space-between",alignItems:'flex-end',display:'flex'}}>
+                        <View style={{flex:1,paddingRight:4}}>
+                            <TouchableOpacity onPress={handleClose}>
+                                <ImageBackground source={require('../img/common_modal/modal_cancel.png')} resizeMode={'stretch'} style={{justifyContent:'center',alignItems:"center",width:'100%',height:50}}>
+                                    <StyleText style={{color:"#FFFFFF",fontSize:18}} type='bold'>취소</StyleText>
+                                </ImageBackground>
+                            </TouchableOpacity>    
+                        </View>
+                        <View style={{flex:1,paddingLeft:4}}>
+                            <TouchableOpacity onPress={handleSave}>
+                                <ImageBackground source={require('../img/common_modal/modal_confirm.png')}  resizeMode={'stretch'} style={{justifyContent:'center',alignItems:"center",width:'100%',height:50}}>
+                                    <StyleText style={{color:"#FFFFFF",fontSize:18}} type='bold'>저장</StyleText>
+                                </ImageBackground>
+                            </TouchableOpacity>    
+                        </View>
                     </View>
                 </View>
             </View>

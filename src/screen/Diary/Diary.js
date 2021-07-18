@@ -62,7 +62,7 @@ export default ({navigation})=>{
                             <StyleText numberOfLines={7} ellipsizeMode={"tail"} style={{fontSize:8}}>{item.CONTENTS}</StyleText>
                         </View>
                     </View>
-                    <StyleText style={{marginTop:10}}>{DashedFormatDate(item.DATE_DT)}</StyleText>
+                    <StyleText style={{marginTop:10,fontSize:17}}>{DashedFormatDate(item.DATE_DT)}</StyleText>
                 </View>
             </TouchableOpacity>
         )
@@ -75,22 +75,22 @@ export default ({navigation})=>{
                         <Image source={require('../../img/common/ico_back.png')}  />
                     </View>
                 </TouchableOpacity>
-                <StyleText style={{paddingLeft:20,fontSize:16,}}>일기장</StyleText>
+                <StyleText style={{fontSize:20,paddingLeft:20}} type='bold'>일기장</StyleText>
             </View>
             <View style={{marginTop:16,paddingHorizontal:26,paddingBottom:26,flex:1}}>
-                <StyleText style={{fontSize:14}}>오늘의 일기</StyleText>
+                <StyleText style={{fontSize:18}} type='bold'>오늘의 일기</StyleText>
                 <TouchableOpacity onPress={openTodayDiaryModal}>
                     <ImageBackground source={require('../../img/diary/memo_bg.png')} resizeMode='stretch' style={{height:161,marginTop:16,paddingHorizontal:16}}>
                         <View style={{marginTop:10,alignItems:"flex-end"}}>
                             <Image source={require('../../img/emoji_01.png')}  />
                         </View>
                         <View style={{marginTop:10,paddingBottom:16}}>
-                            <StyleText numberOfLines={6} ellipsizeMode={"tail"} style={{fontSize:12}}>{today.CONTENTS}</StyleText>
+                            <StyleText numberOfLines={6} ellipsizeMode={"tail"} style={{fontSize:17}}>{today.CONTENTS}</StyleText>
                         </View>
                     </ImageBackground>
                 </TouchableOpacity>
                 <View style={{marginTop:26,flex:1}}>
-                    <StyleText>지난 일기</StyleText>
+                    <StyleText style={{fontSize:18}}>지난 일기</StyleText>
                     <FlatList 
                         numColumns={3}
                         data={diaryList}

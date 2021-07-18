@@ -34,10 +34,10 @@ export default ({navigation,route})=>{
         return (
             <View style={styles.foodItemWrap} key={food.id}>
                 <View style={{flexDirection:"row",alignItems:'center'}}>
-                    <StyleText style={{fontSize:12}}>{food.desc}</StyleText>
-                    <StyleText style={{fontSize:12,marginLeft:12,color:"#757575"}}>{food.cnt}</StyleText>
+                    <StyleText style={{fontSize:17}}>{food.desc}</StyleText>
+                    <StyleText style={{fontSize:17,marginLeft:12,color:"#757575"}}>{food.cnt}</StyleText>
                 </View>
-                <StyleText style={{fontSize:14}}>{`${Number(food.kcal)*Number(food.cnt)} kcal`}</StyleText>
+                <StyleText style={{fontSize:17}}>{`${Number(food.kcal)*Number(food.cnt)} kcal`}</StyleText>
             </View>
         )
     };
@@ -72,13 +72,13 @@ export default ({navigation,route})=>{
                         <Image source={require('../../img/common/ico_back.png')}  />
                     </View>
                 </TouchableOpacity>
-                <StyleText style={{paddingLeft:20,fontSize:16}}>냉장고</StyleText>
+                <StyleText style={{fontSize:20,paddingLeft:20}} type='bold'>냉장고</StyleText>
             </View>
             <View style={{paddingVertical:16,paddingHorizontal:26,flex:1}}>
                 <View style={{flexDirection:"row",justifyContent:"space-between",alignContent:"center",paddingBottom:17}}>
-                    <StyleText style={{fontSize:15}}>목표 칼로리</StyleText>
+                    <StyleText style={{fontSize:18}} type='bold'>목표 칼로리</StyleText>
                     <View style={{flexDirection:'row',alignItems:"center"}}>
-                        <StyleText style={{fontSize:15}}>{`${intakeKcal?intakeKcal:0}/${goalKcal} kcal`}</StyleText>
+                        <StyleText style={{fontSize:18}}>{`${intakeKcal?intakeKcal:0}/${goalKcal} kcal`}</StyleText>
                         {
                             !route.params? 
                             (
@@ -93,7 +93,7 @@ export default ({navigation,route})=>{
                 </View>
                 <ImageBackground source={require("../../img/common/dash2.png")} style={{width:'100%',height:4}} resizeMode={'stretch'}/>
                 <ScrollView style={{marginTop:22,flex:1}}>
-                    <StyleText style={{fontSize:15}}>오늘 먹은 음식</StyleText>
+                    <StyleText style={{fontSize:18}}>오늘 먹은 음식</StyleText>
                     <View style={{marginTop:15}}>
                         <ImageBackground source={require('../../img/calorie/header.png')} resizeMode={'stretch'} style={styles.foodHeader}>
                             <StyleText style={styles.foodHeaderText}>아침</StyleText>
@@ -163,17 +163,21 @@ export default ({navigation,route})=>{
             </View>
             <Modal useNativeDriver isVisible={visible} onBackButtonPress={()=>setVisible(false)}>
                 <View style={{backgroundColor:"white",padding:16}}>
-                    <StyleInput placeholder={"목표 칼로리를 입력해주세요."} keyboardType={"numeric"} onChangeText={(text)=>setChangeKcal(text)}/>
+                    <ImageBackground source={require("../../img/calorie/search_border.png")} resizeMode={'stretch'} style={{width:"100%",paddingHorizontal:12}}>
+                        <StyleInput placeholder={"목표 칼로리를 입력해주세요."} keyboardType={"numeric"} onChangeText={(text)=>setChangeKcal(text)}/>
+                    </ImageBackground>
                     <View style={{marginTop:20,flexDirection:'row',alignItems:'center',justifyContent:'space-around'}}>
-                        <TouchableOpacity onPress={()=>setVisible(false)}>
-                            <View style={{width:134,height:40,backgroundColor:'#C7B6A0',borderRadius:6,justifyContent:'center',alignItems:"center"}}>
-                                <StyleText style={styles.btnText}>취소</StyleText>
-                            </View>
+                        <TouchableOpacity onPress={()=>setVisible(false)} style={{flex:1}}>
+                            <ImageBackground style={{width:'100%',height:50,justifyContent:'center',alignItems:"center"}}
+                                source={require('../../img/common_modal/modal_cancel.png')} resizeMode={'stretch'}>
+                                <StyleText style={styles.btnText} type='bold'>취소</StyleText>
+                            </ImageBackground>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={onSaveKcal}>
-                            <View style={{width:134,height:40,backgroundColor:'#8C6C51',borderRadius:6,justifyContent:'center',alignItems:"center"}}>
-                                <StyleText style={styles.btnText}>저장</StyleText>
-                            </View>
+                        <TouchableOpacity onPress={onSaveKcal} style={{flex:1}}>
+                            <ImageBackground source={require('../../img/common_modal/modal_confirm.png')} resizeMode={'stretch'}
+                                style={{width:'100%',height:50,justifyContent:'center',alignItems:"center"}}>
+                                <StyleText style={styles.btnText} type='bold'>저장</StyleText>
+                            </ImageBackground>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -183,10 +187,11 @@ export default ({navigation,route})=>{
 }
 const styles = StyleSheet.create({
     foodHeaderText: {
-        fontSize:14,paddingLeft:12
+        fontSize:18,paddingLeft:12
     },
     btnText:{
-        fontSize:14,color:"#ffffff"
+        fontSize:20,
+        color:"#ffffff"
     },
     foodHeaderWrap:{
         borderRadius:2,

@@ -1,8 +1,9 @@
 import axios from 'axios'
 import EncryptedStorage from 'react-native-encrypted-storage';
 const instance = axios.create({
-    // baseURL: 'https://api.yomis-day.com/api/v0',
-    baseURL: 'http://192.168.0.16:3000/api/v0',
+    baseURL: 'https://api.yomis-day.com/api/v0',
+    // baseURL: 'http://192.168.0.16:3000/api/v0',
+    // baseURL: 'http://220.117.16.16:3000/api/v0',
     timeout: 1000 * 60,
   });
 

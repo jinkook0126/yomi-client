@@ -53,7 +53,7 @@ export default ({display,closeModal,inputDiary,diaryDate,callback,today,updateNo
         >
             <ImageBackground resizeMode='stretch' source={require('../../img/diary/modal_bg.png')} style={{paddingHorizontal:16,paddingVertical:26}}>
                 <View style={{justifyContent:'center',alignItems:"center"}}>
-                    <StyleText style={{fontSize:16}}>{DashedFormatDate(headerDate)}</StyleText>
+                    <StyleText style={{fontSize:20}} type="bold">{DashedFormatDate(headerDate)}</StyleText>
                 </View>
                 <View style={{marginTop:12,alignItems:'center',justifyContent:'center'}}>
                     <Image source={require('../../img/emoji_01.png')} />
@@ -64,14 +64,15 @@ export default ({display,closeModal,inputDiary,diaryDate,callback,today,updateNo
                         onChangeText={(value)=>setContents(value)}
                         multiline={true}
                         placeholder={'일기를 입력해주세요.'}
+                        style={{fontSize:16}}
                     />
                 </View>
                 <View style={{marginTop:40,flexDirection:"row", justifyContent:"flex-end",}}>
                     <TouchableOpacity onPress={closeModal}>
-                        <StyleText style={{color:"#8C6C51"}}>취소</StyleText>
+                        <StyleText style={{color:"#8C6C51",fontSize:18}} type='bold'>취소</StyleText>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handleModalSave}>
-                        <StyleText style={{color:"#8C6C51",marginLeft:30}}>저장</StyleText>
+                        <StyleText style={{color:"#8C6C51",marginLeft:30,fontSize:18}} type='bold'>저장</StyleText>
                     </TouchableOpacity>
                 </View>
             </ImageBackground>

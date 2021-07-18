@@ -14,7 +14,7 @@ const Notice = ({navigation})=>{
                         <WithLocalSvg width={8} height={16} asset={require('../img/menu/ico_back.svg')} />
                     </View>
                 </TouchableOpacity>
-                <StyleText style={{paddingLeft:20,fontSize:16}}>공지사항</StyleText>
+                <StyleText style={{paddingLeft:20,fontSize:20}} type="bold">공지사항</StyleText>
             </View>
             <View style={{height:2,backgroundColor:'#ECECEC',width:'100%'}}/>
             <ScrollView style={{marginTop:6,paddingHorizontal:20}}>

@@ -48,8 +48,8 @@ export default ()=>{
         }
     }
     return (
-        <ImageBackground source={require("../img/book/modal_bg.png")} resizeMode='stretch' style={{width:335,padding:16}}>
-            <View>
+        <ImageBackground resizeMode={'stretch'} imageStyle={{width:"100%"}} source={require('../img/book/modal_bg.png')} style={{width:'90%'}}>
+            <View style={{padding:16}}>
                 <View style={{flexDirection:'row',borderBottomWidth:1,borderBottomColor:"#EEEEEE",paddingBottom:16}}>
                     <Image source={
                         params.thumbnail !== "" ? {uri:params.thumbnail} : require('../img/emptyThumbnail.png')
@@ -61,13 +61,13 @@ export default ()=>{
                     </View>
                 </View>
                 <View style={{marginTop:25,paddingHorizontal:5,flexDirection:'row',alignItems:'center'}}>
-                    <StyleText style={{fontSize:12,color:"#424242"}}>읽은 페이지 수</StyleText>
-                    <View style={{backgroundColor:"#EEEEEE",width:22,height:16,marginLeft:10}}>
-                        <StyleInput keyboardType={"number-pad"} value={String(readPage)} onChangeText={(text)=>setReadPage(text)} style={{flex:1,height:16,alignItems:"stretch",paddingVertical:0,fontSize:12}}/>
-                    </View>
+                    <StyleText style={{fontSize:18,color:"#424242"}}>읽은 페이지 수</StyleText>
+                    <ImageBackground source={require('../img/common/input_small_bg_2.png')} resizeMode="stretch" style={{marginLeft:10,width:36,height:26}}>
+                        <StyleInput keyboardType={"number-pad"} value={String(readPage)} onChangeText={(text)=>setReadPage(text)} style={{flex:1,height:16,alignItems:"stretch",paddingVertical:0,fontSize:16}}/>
+                    </ImageBackground>
                 </View>
                 <View style={{marginTop:10,paddingHorizontal:5,flexDirection:'row',alignItems:'center'}}>
-                    <StyleText style={{fontSize:12,color:"#424242"}}>별점</StyleText>
+                    <StyleText style={{fontSize:18,color:"#424242"}}>별점</StyleText>
                     <Rating
                         fractions={2}
                         ratingCount={5}
@@ -81,10 +81,10 @@ export default ()=>{
                 </View>
                 <View style={{marginTop:10,paddingHorizontal:5,flexDirection:'row',alignItems:'center',justifyContent:"space-between"}}>
                     <View>
-                        <StyleText style={{fontSize:12,color:"#424242"}}>메모</StyleText>
+                        <StyleText style={{fontSize:18,color:"#424242"}}>메모</StyleText>
                     </View>
                     <View style={{flexDirection:"row",alignItems:"center",justifyContent:"flex-end"}}>
-                        <StyleText style={{fontSize:12,color:"#424242"}}>완독</StyleText>
+                        <StyleText style={{fontSize:18,color:"#424242"}}>완독</StyleText>
                         <CheckBox
                             style={{marginLeft:10}}
                             disabled={false}
@@ -98,18 +98,19 @@ export default ()=>{
                         multiline={true}
                         value={memo}
                         onChangeText={(value)=>setMemo(value)}
+                        style={{fontSize:16}}
                         placeholder={"메모를 작성해 보세요."}
                     />
                 </ImageBackground>
                 <View style={{marginTop:40,flexDirection:'row',alignItems:"center",justifyContent:"space-between"}}>
-                    <TouchableOpacity onPress={handleClose}>
-                        <ImageBackground source={require('../img/common_modal/modal_cancel.png')} style={{width:142,height:47,justifyContent:'center',alignItems:"center"}}>
-                            <StyleText style={{color:"#ffffff"}}>취소</StyleText>
+                    <TouchableOpacity onPress={handleClose} style={{flex:1,paddingRight:4}}>
+                        <ImageBackground source={require('../img/common_modal/modal_cancel.png')} style={{width:"100%",height:50,justifyContent:'center',alignItems:"center"}}>
+                            <StyleText style={{color:"#ffffff",fontSize:18}} type='bold'>취소</StyleText>
                         </ImageBackground>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={handleSave}>
-                        <ImageBackground source={require('../img/common_modal/modal_confirm.png')} style={{width:142,height:47,justifyContent:'center',alignItems:"center"}}>
-                            <StyleText style={{color:"#ffffff"}}>저장</StyleText>
+                    <TouchableOpacity onPress={handleSave} style={{flex:1,paddingLeft:4}}>
+                        <ImageBackground source={require('../img/common_modal/modal_confirm.png')} style={{width:"100%",height:50,justifyContent:'center',alignItems:"center"}}>
+                            <StyleText style={{color:"#ffffff",fontSize:18}} type='bold'>저장</StyleText>
                         </ImageBackground>
                     </TouchableOpacity>
                 </View>

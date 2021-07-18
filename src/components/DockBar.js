@@ -29,7 +29,6 @@ function MyTabBar({ state, descriptors, navigation }) {
                         : options.title !== undefined
                         ? options.title
                         : route.name;
-                    console.log(options)
                     const isFocused = state.index === index;
             
                     const onPress = () => {
@@ -59,13 +58,10 @@ function MyTabBar({ state, descriptors, navigation }) {
                             onPress={onPress}
                             onLongPress={onLongPress}
                             style={{ flex: 1 }}
+                            key={label}
                             >
-                                <View style={{width:60,height:60}}>
-                                    {/* <Text style={{ color: isFocused ? '#673ab7' : '#222' }}>
-                                        {label}
-                                    </Text>  */}
-                                    <Image source={ICO[options.icon]} />
-                                    {/* {options !== undefined ? options.tabBarIcon() :null} */}
+                                <View style={{width:60,height:60,bottom:10}}>
+                                    <Image source={ICO[label]} />
                                 </View>
                         </TouchableWithoutFeedback>
                     );
@@ -79,7 +75,7 @@ export default ()=>{
     return (
         <>
             <Dock.Navigator
-                // tabBar={props => <MyTabBar {...props} />}
+                tabBar={props => <MyTabBar {...props} />}
                 tabBarOptions={{
                     showIcon: true,
                     showLabel: false,
@@ -92,23 +88,23 @@ export default ()=>{
                         elevation: 0
                     }
                 }}>
-                <Dock.Screen name="MyRoom" component={MyRoomScreen} options={{icon:"room.png",title:"내 방",tabBarIcon:({focused})=>{
+                <Dock.Screen name="MyRoom" component={MyRoomScreen} options={{icon:"room.png",title:"room",tabBarIcon:({focused})=>{
                     return (
                         <Image source={require('../img/dockbar/dock_room.png')}/>
                     )
                 }}}
                 />
-                <Dock.Screen name="Collection" component={CollectionSreen} options={{icon:"shop.png",title:"컬렉션",tabBarIcon:({focused})=>{
+                <Dock.Screen name="Collection" component={CollectionSreen} options={{icon:"shop.png",title:"shop",tabBarIcon:({focused})=>{
                     return (
                         <Image source={require('../img/dockbar/dock_shop.png')}/>
                     )
                 }}}/>
-                <Dock.Screen name="CalendarSreen" component={CalendarSreen} options={{icon:"calendar.png",title:"기록",tabBarIcon:({focused})=>{
+                <Dock.Screen name="CalendarSreen" component={CalendarSreen} options={{icon:"calendar.png",title:"calendar",tabBarIcon:({focused})=>{
                     return (
                         <Image source={require('../img/dockbar/dock_calendar.png')}/>
                     )
                 }}}/>
-                <Dock.Screen name="Menu" component={MenuSreen} options={{icon:"menu.png",title:"메뉴",tabBarIcon:({focused})=>{
+                <Dock.Screen name="Menu" component={MenuSreen} options={{icon:"menu.png",title:"menu",tabBarIcon:({focused})=>{
                     return (
                         <Image source={require('../img/dockbar/dock_menu.png')}/>
                     )
