@@ -60,7 +60,7 @@ function MyTabBar({ state, descriptors, navigation }) {
                             style={{ flex: 1 }}
                             key={label}
                             >
-                                <View style={{width:60,height:60,bottom:10}}>
+                                <View style={{width:60,height:60,bottom:10,alignItems:"center"}}>
                                     <Image source={ICO[label]} />
                                 </View>
                         </TouchableWithoutFeedback>

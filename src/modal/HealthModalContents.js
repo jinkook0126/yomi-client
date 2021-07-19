@@ -7,11 +7,12 @@ import StyleText from '../components/UI/StyleText';
 import StyleInput from '../components/UI/StyleInput';
 import {validNumber} from '../modules/common'
 import Tooltip from 'react-native-walkthrough-tooltip';
-
+import { useSnackbarContext } from '@dooboo-ui/snackbar';
 const ACTIVE_INPUT = require("../img/common/active_input.png");
 const INACTIVE_INPUT = require("../img/common/inactive_input.png")
 export default ()=>{
     const dispatch = useDispatch();
+    const snackbar = useSnackbarContext();
     const params = useSelector(state=> state.modal.params);
     const [extraView,setExtraView] = useState(false);
     const [tooltip,setTooltip] = useState(false);
@@ -76,11 +77,9 @@ export default ()=>{
             flag = success;
         }
         if(flag) {
-            Alert.alert("알림","저장되었습니다.",[{text:'저장',onPress:()=>{
-                dispatch(closeModal());
-                if(params.callback) params.callback();
-            }}])
-            
+            snackbar.show({text:"저장되었습니다."})
+            dispatch(closeModal());
+            if(params.callback) params.callback();
         }
     }
     const addList = ()=>{

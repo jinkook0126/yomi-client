@@ -149,7 +149,7 @@ export default (props)=>{
     
     return (
         <ImageBackground resizeMode={'stretch'} imageStyle={{width:"100%"}} source={require('../img/common_modal/modal_bg.png')} style={{width:'90%',height:bgHeight}}>
-            <View style={{padding:16}}>
+            <View style={{padding:20}}>
                 <View style={{justifyContent:'center',alignItems:'center'}}>
                     <StyleText style={{fontSize:20}} type='bold'>책상</StyleText>
                 </View>

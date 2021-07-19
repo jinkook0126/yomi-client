@@ -155,7 +155,7 @@ export default ({navigation})=>{
         
         return (
             <TouchableOpacity onPress={()=>getHistory(item)}>
-                <View style={[{width:46,height:itemHeight},borderStyle]}>
+                <View style={[{width:46,height:46},borderStyle]}>
                     <View style={{paddingLeft:10,paddingTop:10}}>
                         <StyleText style={[{fontSize:12},textStyle]}>{new Date(item).getDate()}</StyleText>
                     </View>
