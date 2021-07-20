@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import { View,Image,ImageBackground,TouchableOpacity,Alert } from 'react-native';
+import { View,Image,ImageBackground,TouchableOpacity } from 'react-native';
 import { Rating } from 'react-native-ratings';
 import { useDispatch, useSelector } from 'react-redux';
 import {closeModal} from '../reducers/modal';
@@ -8,9 +8,11 @@ import StyleText from '../components/UI/StyleText';
 import StyleInput from '../components/UI/StyleInput';
 import CheckBox from '../components/UI/CheckBox';
 import { validNumber } from '../modules/common';
+import { useSnackbarContext } from '@dooboo-ui/snackbar';
 
 export default ()=>{
     const dispatch = useDispatch();
+    const snackbar = useSnackbarContext();
     const [complete, setComplete] = useState(false);
     const [memo,setMemo] = useState("");
     const [readPage,setReadPage] = useState(0);
@@ -28,23 +30,22 @@ export default ()=>{
     }
     const handleSave=async()=>{
         if(!validNumber(readPage)) {
-            alert("페이지 수는 숫자만 입력 가능합니다.");
+            snackbar.show({text:"페이지 수는 숫자만 입력 가능합니다."});
             return;
         }
         if(readPage === '' || readPage ===0 ) {
-            alert("페이지 수는 공백 또는 0을 입력할 수 없습니다.");
+            snackbar.show({text:"페이지 수는 공백 또는 0을 입력할 수 없습니다."});
             return;
         }
         try {
             const {success} = await send.put("/contents/book",{...params,rate:rate,complete:complete,readPage:readPage,memo:memo,daily:true,date:params.date});
             if(success) {
-                Alert.alert("알림","저장되었습니다.",[{text:'저장',onPress:()=>{
-                    params.refresh();
-                    dispatch(closeModal());
-                }}])
+                snackbar.show({text:"저장되었습니다."});
+                params.refresh();
+                dispatch(closeModal());
             }
         } catch(error){
-            alert(error.response.data.message);
+            snackbar.show({text:error.response.data.message});
         }
     }
     return (

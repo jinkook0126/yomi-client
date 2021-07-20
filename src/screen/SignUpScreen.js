@@ -1,12 +1,14 @@
 import React,{useState} from 'react';
-import { View,SafeAreaView,TouchableOpacity,StyleSheet,Alert,Image,ImageBackground } from 'react-native'
+import { View,SafeAreaView,TouchableOpacity,StyleSheet,Image,ImageBackground } from 'react-native'
 import { useDispatch } from 'react-redux';
 import send from '../modules/send';
 import StyleText from '../components/UI/StyleText'
 import StyleInput from '../components/UI/StyleInput';
+import { useSnackbarContext } from '@dooboo-ui/snackbar';
 
 export default ({navigation})=>{
     const dispatch = useDispatch();
+    const snackbar = useSnackbarContext();
     const [name,setName] = useState("");
     const [mail,setMail] = useState("");
     const [pw,setPw] = useState("");
@@ -23,31 +25,25 @@ export default ({navigation})=>{
     
     const signUpRequest = async() => {
         if(!name) {
-            alert("이름을 확인해주세요.")
+            snackbar.show({text:"이름을 확인해주세요."});
         } else if(!isMail()){
-            alert("메일을 확인해 주세요.")
+            snackbar.show({text:"메일을 확인해 주세요."});
         } else if(!validPw()){
-            alert("비밀번호를 확인해주세요.")
+            snackbar.show({text:"비밀번호를 확인해주세요."});
         }else {
             try {
                 const {exists} = await send.post("/users/sign-up",{name:name,pw:pw,mail:mail});
                 if(!exists) {
-                    Alert.alert("알림","가입이 완료되었습니다.",[
-                          {text: "확인",
-                            onPress: () => {
-                                navigation.reset({
-                                    index:0,
-                                    routes:[{name:"WelcomeScreen"}]
-                                });
-                            },
-                          }
-                        ]
-                      );
+                    snackbar.show({text:"가입이 완료되었습니다."});
+                    navigation.reset({
+                        index:0,
+                        routes:[{name:"WelcomeScreen"}]
+                    });
                 } else {
-                    alert("이미 가입된 메일입니다.");
+                    snackbar.show({text:"이미 가입된 메일입니다."});
                 }
             } catch(error) {
-                alert(error.response.data.message);
+                snackbar.show({text:error.response.data.message});
             }
         }
     }

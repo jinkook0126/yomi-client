@@ -1,11 +1,14 @@
 import Modal from 'react-native-modal';
 import React,{useState,useEffect} from 'react';
-import { View,TouchableOpacity,Image,Alert,ImageBackground } from 'react-native'
+import { View,TouchableOpacity,Image,ImageBackground } from 'react-native'
 import StyleText from '../../components/UI/StyleText';
 import StyleInput from '../UI/StyleInput';
 import {DashedFormatDate,isEmpty} from '../../modules/common';
 import send from '../../modules/send';
+import { useSnackbarContext } from '@dooboo-ui/snackbar';
+
 export default ({display,closeModal,inputDiary,diaryDate,callback,today,updateNo,})=>{
+    const snackbar = useSnackbarContext();
     const [contents,setContents] = useState("");
     const [headerDate,setHeaderDate] = useState("");
 
@@ -31,10 +34,9 @@ export default ({display,closeModal,inputDiary,diaryDate,callback,today,updateNo
             flag = success;
         }
         if(flag) {
-            Alert.alert("알림","저장되었습니다.",[{text:'저장',onPress:()=>{
-                closeModal();
-                if(callback) callback();
-            }}])
+            closeModal();
+            snackbar.show({text:"저장되었습니다."});
+            if(callback) callback();
         }
     }
 

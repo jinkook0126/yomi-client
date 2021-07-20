@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import { View,Image,ImageBackground,TouchableOpacity,Alert } from 'react-native';
+import { View,Image,ImageBackground,TouchableOpacity } from 'react-native';
 import { Rating } from 'react-native-ratings';
 import { useDispatch, useSelector } from 'react-redux';
 import {closeModal} from '../reducers/modal';
@@ -7,9 +7,11 @@ import send from '../modules/send';
 import StyleText  from '../components/UI/StyleText';
 import StyleInput from '../components/UI/StyleInput';
 import CheckBox from '../components/UI/CheckBox';
+import { useSnackbarContext } from '@dooboo-ui/snackbar';
 
 export default ()=>{
     const dispatch = useDispatch();
+    const snackbar = useSnackbarContext();
     const [complete, setComplete] = useState(false);
     const [memo,setMemo] = useState("");
     const [rate,setRate] = useState(2.5);
@@ -28,22 +30,21 @@ export default ()=>{
     const handleSave=async()=>{
         try {
             if(params.mode === "update") {
-                dispatch(closeModal());
                 const {success} = await send.put("/contents/book",{...params,rate:rate,complete:complete,memo:memo});
                 if(success) {
-                    Alert.alert("알림","저장되었습니다.",[{text:'저장',onPress:()=>{
-                        params.refresh();
-                        dispatch(closeModal());
-                    }}])
+                    snackbar.show({text:"저장되었습니다."})
+                    params.refresh();
+                    dispatch(closeModal());
                 }
             } else {
                 const {success} = await send.post("/contents/book/rg",{...params,rate:rate,complete:complete,memo:memo});
                 if(success) {
-                    Alert.alert("알림","저장되었습니다.",[{text:'저장',onPress:()=>dispatch(closeModal())}])
+                    snackbar.show({text:"저장되었습니다."})
+                    dispatch(closeModal())
                 }
             }
         } catch(error) {
-            alert(error.response.data.message);   
+            snackbar.show({text:error.response.data.message})
         }
     }
     return (

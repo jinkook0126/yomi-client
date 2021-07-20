@@ -1,14 +1,15 @@
 import React,{useState,useEffect} from 'react';
-import { View,SafeAreaView,Image,TouchableOpacity, ImageBackground, FlatList,Alert } from 'react-native'
+import { View,SafeAreaView,Image,TouchableOpacity, ImageBackground, FlatList } from 'react-native'
 import { useDispatch,useSelector } from 'react-redux';
 import Modal from 'react-native-modal';
 import send from '../../modules/send';
 import StyleText from '../../components/UI/StyleText';
 import StyleInput from '../../components/UI/StyleInput';
+import { useSnackbarContext } from '@dooboo-ui/snackbar';
 
 export default ({navigation,route})=>{
-    const dispatch = useDispatch();
     const userNo = useSelector(state => state.auth.userInfo.userNo);
+    const snackbar = useSnackbarContext();
     const [isVisible,setIsVisible] = useState(false);
     const [extraView,setExtraView] = useState(false);
     const [searchKey,setSearchKey] = useState("");
@@ -55,7 +56,7 @@ export default ({navigation,route})=>{
             setPage(page+1)
             setSearchList(isSearch ? foodList : searchList.concat(foodList));
         } catch(error) {
-            alert(error.response.data.message);
+            snackbar.show({text:error.response.data.message})
         }
     }
 
@@ -133,15 +134,14 @@ export default ({navigation,route})=>{
             try {
                 const {success} = await send.post("/contents/food",{foods:{[route.params.type]:selectList},date:route.params.date||null});
                 if(success) {
-                    Alert.alert("알림","저장되었습니다.",[{text:'저장',onPress:()=>{
-                        navigation.goBack();
-                    }}])
+                    snackbar.show({text:"저장되었습니다."})
+                    navigation.goBack();
                 }
             } catch(error){
-                alert(error.response.data.message);
+                snackbar.show({text:error.response.data.message})
             }
         } else {
-            alert("음식을 선택해주세요.")
+            snackbar.show({text:"음식을 선택해주세요."})
         }
     }
 
@@ -263,11 +263,11 @@ export default ({navigation,route})=>{
                                         </View>
                                         <TouchableOpacity onPress={()=>{
                                             if(customFoodName === '') {
-                                                alert('음식 이름을 입력해주세요.')
+                                                snackbar.show({text:'음식 이름을 입력해주세요.'})
                                                 return;
                                             }
                                             if (customFoodCnt === 0) {
-                                                alert('1 이상의 수량을 입력해주세요.')
+                                                snackbar.show({text:'1 이상의 수량을 입력해주세요.'})
                                                 return;
                                             }
                                             setSelectList(selectList.concat({"cnt": customFoodCnt, "desc": customFoodName, "id": `${userNo}_${new Date().getTime()}`, "kcal": customFoodKcal}))

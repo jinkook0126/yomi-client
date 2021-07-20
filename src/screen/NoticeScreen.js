@@ -23,9 +23,7 @@ const Notice = ({navigation})=>{
                         <StyleText style={{fontFamily:"Namu_Bold"}}>버그관련 공지사항</StyleText>
                         <StyleText style={{fontFamily:"Namu_Bold",fontSize:12,marginTop:8}}>2021.07.12</StyleText>
                     </View>
-                    <TouchableOpacity onPress={()=>{
-                        alert(123)
-                    }}>
+                    <TouchableOpacity>
                         <View style={{height:50,width:28,justifyContent:'flex-start',alignItems:"flex-end",paddingRight:16,paddingTop:10}}>
                             <WithLocalSvg width={8} height={16} asset={require('../img/menu/ico_next.svg')} />
                         </View>

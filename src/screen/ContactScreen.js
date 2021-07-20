@@ -35,7 +35,7 @@ const Contact = ({navigation})=>{
                         <StyleText style={{fontFamily:"Namu_Regular",color:"#757575"}}>첨부하기</StyleText>
                     </View>
                 </View>
-                <TouchableOpacity onPress={()=>alert(123)}>
+                <TouchableOpacity>
                     <View style={{marginTop:16,display:'flex',justifyContent:"center",alignItems:"center",backgroundColor:"#8C6C51",height:40}}>
                         <StyleText style={{fontFamily:"Namu_Regular",color:"#FFFFFF"}}>보내기</StyleText>
                     </View>

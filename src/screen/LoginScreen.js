@@ -8,18 +8,20 @@ import send from '../modules/send';
 import { GoogleSignin } from "@react-native-community/google-signin";
 import StyleText from '../components/UI/StyleText';
 import StyleInput from '../components/UI/StyleInput';
+import { useSnackbarContext } from '@dooboo-ui/snackbar';
 
 export default ({navigation})=>{
     const dispatch = useDispatch();
+    const snackbar = useSnackbarContext();
     const [mail,setMail] = useState("");
     const [pw,setPw] = useState("");
     const onLogin = () => {
         dispatch(loginRequest(mail,pw)).then(({login}) => {
             if(!login) {
-                alert("회원정보가 일치하지 않습니다.")
+                snackbar.show({text:"회원정보가 일치하지 않습니다."});
             }
         }).catch(error=>{
-            alert(error.response.data.message)
+            snackbar.show({text:error.response.data.message});
         })
     }
 
@@ -29,8 +31,7 @@ export default ({navigation})=>{
             const userInfo = await getProfile();
             if(token && userInfo) requstSocial({...userInfo,...{social:"KAKAO"}})
         } catch(e) {
-            alert('카카오 로그인 에러');
-            console.log(e)
+            snackbar.show({text:'카카오 로그인 에러'});
         }
     }
 
@@ -40,8 +41,7 @@ export default ({navigation})=>{
             const {user} = await GoogleSignin.signIn();
             if(user) requstSocial({...user,...{social:"GOOGLE"}})
         } catch(e) {
-            alert('구글 로그인 에러');
-            console.log(e);
+            snackbar.show({text:'구글 로그인 에러'});
         }
     }
 
@@ -64,7 +64,7 @@ export default ({navigation})=>{
                 routes:[{name:"WelcomeScreen"}]
             });
         } else {
-            alert(message)
+            snackbar.show({text:message});
         }
     }
     return (
@@ -75,13 +75,13 @@ export default ({navigation})=>{
                 </View>
                 <View style={{paddingHorizontal:20}}>
                     <View style={{height:40}}>
-                        <StyleInput placeholder={"이메일"} style={{flex:1,height:30,alignItems:"stretch",paddingVertical:0}} placeholderTextColor={"#9E9E9E"}
+                        <StyleInput placeholder={"이메일"} style={{flex:1,height:30,alignItems:"stretch",paddingVertical:0,fontSize:16}} placeholderTextColor={"#9E9E9E"}
                             onChangeText={value=>setMail(value)}
                         ></StyleInput>
                         <Image source={require('../img/login/input-dash01.png')} style={{width:'100%'}}/>
                     </View>
                     <View style={{height:40,marginTop:16}}>
-                        <StyleInput placeholder={"비밀번호"} style={{flex:1,height:30,alignItems:"stretch",paddingVertical:0}} placeholderTextColor={"#9E9E9E"}
+                        <StyleInput placeholder={"비밀번호"} style={{flex:1,height:30,alignItems:"stretch",paddingVertical:0,fontSize:16}} placeholderTextColor={"#9E9E9E"}
                             secureTextEntry={true}
                             onChangeText={value=>setPw(value)}
                         ></StyleInput>
@@ -89,16 +89,16 @@ export default ({navigation})=>{
                     </View>
                     <TouchableOpacity onPress={onLogin}>
                         <ImageBackground resizeMode="stretch" source={require('../img/common/long_btn.png')} style={{marginTop:16,justifyContent:'center',alignItems:"center",height:40}}>
-                            <StyleText style={{color:"#FFFFFF",fontSize:15}}>로그인</StyleText>
+                            <StyleText style={{color:"#FFFFFF",fontSize:18}} type='bold'>로그인</StyleText>
                         </ImageBackground>
                     </TouchableOpacity>
                     <View style={{marginTop:10}}>
-                        <StyleText style={{fontSize:13,paddingBottom:2,borderBottomWidth:1,alignSelf:"flex-start",borderBottomColor:"#2B2B2B"}}>비밀번호를 잊어버리셨나요?</StyleText>
+                        <StyleText style={{fontSize:14,paddingBottom:2,borderBottomWidth:1,alignSelf:"flex-start",borderBottomColor:"#2B2B2B"}}>비밀번호를 잊어버리셨나요?</StyleText>
                     </View>
                     <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center",marginTop:20}}>
                         <Image source={require('../img/login/dash01.png')} style={{flex:1}}/>
                         <View style={{marginHorizontal:14}}>
-                            <StyleText>계정으로 로그인</StyleText>
+                            <StyleText style={{fontSize:16}}>계정으로 로그인</StyleText>
                         </View>
                         <Image source={require('../img/login/dash02.png')} style={{flex:1}}/>
                     </View>
@@ -114,7 +114,7 @@ export default ({navigation})=>{
             </View>
             <View style={{marginBottom:26,justifyContent:'center',alignItems:"center"}}>
                 <TouchableOpacity onPress={()=>navigation.navigate("SignUp")}>
-                    <StyleText style={{borderBottomWidth:1,borderBottomColor:'#2B2B2B',paddingBottom:2}}>회원가입</StyleText>
+                    <StyleText style={{borderBottomWidth:1,borderBottomColor:'#2B2B2B',paddingBottom:2,fontSize:16}}>회원가입</StyleText>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>

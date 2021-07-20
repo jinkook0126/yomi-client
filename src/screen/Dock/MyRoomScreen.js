@@ -50,39 +50,6 @@ export default ({navigation,route})=>{
     return (
         <SafeAreaView style={{flex:1}}>
             <ImageBackground source={require("../../img/home_bg.png")} style={{width: '100%', height: '100%'}}>
-                {/* <TouchableWithoutFeedback onPress={()=>openModalTest("health")}>
-                    <View style={{position:"absolute",right:20,top:20,width:'30%',height:windowHeight}}>
-                        {furniture.FT03 !== '' ? 
-                        <Image source={{uri:img_prefix+furniture.FT03}} style={styles.window}/>:null}
-                    </View>
-                </TouchableWithoutFeedback> */}
-                {/* <TouchableWithoutFeedback onPress={()=>openModalTest("desk")}>
-                    <View style={{position:"absolute",right:0,top: halfPosition-deskHeight,width:'48%',height:deskHeight}}>
-                        
-                        {furniture.FT02 !== '' ? <Image source={{uri:img_prefix+furniture.FT02}} style={styles.window}/> : null}
-                    </View>
-                </TouchableWithoutFeedback> */}
-                {/* <TouchableWithoutFeedback onPress={()=>{navigation.navigate("Diary")}}>
-                    <View style={{position:"absolute",right:20,top:(halfPosition-deskHeight)-(calcHeight/2)-10,width:'27%',height:calcHeight}}>
-                        {furniture.FT04 !== '' ? <Image source={{uri:img_prefix+furniture.FT04}} style={styles.window}/> : null}
-                    </View>
-                </TouchableWithoutFeedback> */}
-                {/* <TouchableWithoutFeedback onPress={()=>{navigation.navigate("BookMain")}}>
-                    <View style={{position:"absolute",right:'48%',top:halfPosition-bookCaseHeight,width:'33%',height:bookCaseHeight}}>
-                        {furniture.FT05 !== '' ? <Image source={{uri:img_prefix+furniture.FT05}} style={styles.window}/> : null}
-                    </View>
-                </TouchableWithoutFeedback> */}
-                {/* <TouchableWithoutFeedback onPress={()=>{navigation.navigate("Calorie")}}>
-                    <View style={{position:"absolute",left:0,top:halfPosition-(fridgeHeight/2),width:'30%',height:fridgeHeight}}>
-                        {furniture.FT01 !== '' ? <Image source={{uri:img_prefix+furniture.FT01}} resizeMode="stretch" style={{width:"100%",height:"100%"}}/> : null}
-                    </View>
-                </TouchableWithoutFeedback> */}
-                {/* <TouchableWithoutFeedback onPress={()=>{alert("yomi")}}>
-                    <View style={{position:"absolute",right:80,bottom:'7%',width:'32%',height:yomiHeight,display: 'flex',flexDirection:'row',alignItems:"flex-end"}}>
-                        <Image source={require("../../img/yomi.png")} resizeMode="stretch" style={{width:109,height:220,marginRight:10}}/>
-                        <Image source={require("../../img/munji.png")} resizeMode="stretch" style={{width:79,height:61}}/>
-                    </View>
-                </TouchableWithoutFeedback> */}
                 {
                     furniture.FT05 !== '' ?
                     <TouchableWithoutFeedback onPress={()=>{navigation.navigate("BookMain")}}>

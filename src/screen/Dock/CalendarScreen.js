@@ -7,12 +7,14 @@ import send from '../../modules/send';
 import {formatDate,isEmpty} from '../../modules/common';
 import {openModalWithProps} from '../../reducers/modal';
 import DiaryModal from '../../components/Diary/DiaryModal';
+import { useSnackbarContext } from '@dooboo-ui/snackbar';
 
 const dayName = ['일','월','화','수','목','금','토']
 const FOLD_IMG = require("../../img/calendar/fold-calendar.png")
 const UNFOLD_IMG = require("../../img/calendar/unfold-calendar.png")
 export default ({navigation})=>{
     const dispatch = useDispatch();
+    const snackbar = useSnackbarContext();
     const [calendarBg,setCalendarBg] = useState(UNFOLD_IMG)
     const [visible,setVisible] = useState(false);
     const [diaryContents,setDiaryContents] = useState({});
@@ -50,7 +52,7 @@ export default ({navigation})=>{
             setDiaryContents(today)
             setVisible(true)
         } else {
-            alert(message)
+            snackbar.show({text:message})
         }
     }
 
@@ -69,7 +71,7 @@ export default ({navigation})=>{
         if(success) {
             setHistory({diary,book,workout,study,food})
         } else {
-            alert(`${msg}\n다시 시도해 주세요.`);
+            snackbar.show({text:`${msg}\n다시 시도해 주세요.`})
         }
     }
     

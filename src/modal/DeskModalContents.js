@@ -1,14 +1,16 @@
 import React,{useState,useEffect} from 'react';
-import { View,Image,TouchableOpacity,FlatList,Alert,ImageBackground } from 'react-native';
+import { View,Image,TouchableOpacity,FlatList,ImageBackground } from 'react-native';
 import { useDispatch,useSelector } from 'react-redux';
 import {closeModal} from '../reducers/modal';
 import send from '../modules/send';
 import StyleText from '../components/UI/StyleText';
 import StyleInput from '../components/UI/StyleInput';
 import {validNumber} from '../modules/common'
+import { useSnackbarContext } from '@dooboo-ui/snackbar';
 
 export default (props)=>{
     const dispatch = useDispatch();
+    const snackbar = useSnackbarContext();
     const params = useSelector(state=> state.modal.params);
     const [extraView,setExtraView] = useState(false);
     const [lists,setLists] = useState([]);
@@ -60,7 +62,7 @@ export default (props)=>{
             const {success} = await send.post("/contents/desk",{list:lists,date:params.date || null});
             flag = success;
         } else if(!update && lists.length === 0) { //에러
-            Alert.alert("알림","목록을 입력해주세요.",[{text:'확인'}]);
+            snackbar.show({text:"목록을 입력해주세요."})
         } else if(update && lists.length === 0) { //삭제
             const {success} = await send.delete("/contents/desk",{params:{idx:contentsIdx}});
             flag = success;
@@ -69,28 +71,27 @@ export default (props)=>{
             flag = success;
         }
         if(flag) {
-            Alert.alert("알림","저장되었습니다.",[{text:'저장',onPress:()=>{
-                dispatch(closeModal());
-                if(params.callback) params.callback();
-            }}]);
+            snackbar.show({text:"저장되었습니다."})
+            dispatch(closeModal());
+            if(params.callback) params.callback();
         }
     }
 
     const addList = ()=>{
         if(hours !== '' && !validNumber(hours)) {
-            alert('숫자만 입력 가능합니다.')
+            snackbar.show({text:"숫자만 입력 가능합니다."})
             return;
         }
         if(min !== '' && !validNumber(min)) {
-            alert('숫자만 입력 가능합니다.')
+            snackbar.show({text:"숫자만 입력 가능합니다."})
             return;
         }
         if(expl === '') {
-            alert('내용을 입력해주세요.')
+            snackbar.show({text:"내용을 입력해주세요."})
             return;
         }
         if(hours === '' && min === '') {
-            alert('시간을 입력해주세요.')
+            snackbar.show({text:"시간을 입력해주세요."})
             return;
         }
         calcTotalHousrs();

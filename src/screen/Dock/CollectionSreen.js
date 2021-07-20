@@ -4,10 +4,12 @@ import {  View,FlatList,SafeAreaView,Image,TouchableOpacity,StyleSheet } from 'r
 import send from '../../modules/send';
 import { updateFurniture } from '../../reducers/furniture'
 import StyleText from '../../components/UI/StyleText';
+import { useSnackbarContext } from '@dooboo-ui/snackbar';
 
 const img_prefix = "https://yomi-image.s3.ap-northeast-2.amazonaws.com";
 export default ()=>{
     const dispatch = useDispatch();
+    const snackbar = useSnackbarContext();
     const [itemList,setItemList] = useState([]);
     const [selectCt,setSelectCt] = useState('FT02');
     const [previewUri,setPreviewUri] = useState("");
@@ -41,11 +43,11 @@ export default ()=>{
 
     const buyItem = async(code,price) => {
         if(price > coin) {
-            alert('코인이 부족합니다.')
+            snackbar.show({text:"코인이 부족합니다."});
         } else {
             const {success,coin:dbCoin,category} = await send.post("/collection/buy",{id:code});
             if(success) {
-                alert("구매하였습니다.");
+                snackbar.show({text:"구매하였습니다."});
                 setCoin(dbCoin);
                 renderCategory(category);
             }
@@ -55,10 +57,10 @@ export default ()=>{
     const activeItem = async(code) => {
         const {success,ftInfo,msg} = await send.put("/collection/active",{id:code});
         if(success) {
-            alert("적용하였습니다.");
+            snackbar.show({text:"적용하였습니다."});
             dispatch(updateFurniture(ftInfo))
         } else {
-            alert(msg);
+            snackbar.show({text:msg});
         }
     }
 

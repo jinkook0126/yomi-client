@@ -5,13 +5,16 @@ import Modal from 'react-native-modal';
 import StyleText from '../../components/UI/StyleText';
 import StyleInput from '../../components/UI/StyleInput';
 import { validNumber } from '../../modules/common';
+import { useSnackbarContext } from '@dooboo-ui/snackbar';
 
 export default ({navigation,route})=>{
     const [visible,setVisible] = useState(false);
+    const snackbar = useSnackbarContext();
     const [foods,setFoods] = useState({});
     const [goalKcal,setGoalKcal] = useState(0);
     const [intakeKcal,setIntakeKcal] = useState(0);
     const [changeKcal,setChangeKcal] = useState('');
+    const [modalMsg,setModalMsg] = useState("");
     const navigateInfo = (type,lists)=>{
         navigation.navigate('CalorieSearch',{
             type:type,
@@ -44,18 +47,20 @@ export default ({navigation,route})=>{
 
     const onSaveKcal = async() => {
         if(changeKcal === '') {
-            alert("목표 칼로리를 작성해주세요.");
+            setModalMsg("목표 칼로리를 작성해주세요.");
             return;
         }
         if(!validNumber(changeKcal)) {
-            alert("숫자만 입력가능합니다.");
+            setModalMsg("숫자만 입력가능합니다.");
             return;
         }
         const {success} = await send.put("/info/kcal",{goal:changeKcal});
         if(success) {
-            alert("저장되었습니다.");
             setVisible(false);
             setGoalKcal(changeKcal);
+            setChangeKcal("");
+            setModalMsg("");
+            snackbar.show({text:"목표 칼로리가 변경되었습니다."});
         }
     }
 
@@ -163,11 +168,16 @@ export default ({navigation,route})=>{
             </View>
             <Modal useNativeDriver isVisible={visible} onBackButtonPress={()=>setVisible(false)}>
                 <View style={{backgroundColor:"white",padding:16}}>
-                    <ImageBackground source={require("../../img/calorie/search_border.png")} resizeMode={'stretch'} style={{width:"100%",paddingHorizontal:12}}>
-                        <StyleInput placeholder={"목표 칼로리를 입력해주세요."} keyboardType={"numeric"} onChangeText={(text)=>setChangeKcal(text)}/>
+                    <ImageBackground source={require("../../img/calorie/search_border.png")} resizeMode={'stretch'} style={{width:"100%"}}>
+                        <StyleInput style={{paddingHorizontal:12}} placeholder={"목표 칼로리를 입력해주세요."} keyboardType={"numeric"} onChangeText={(text)=>setChangeKcal(text)}/>
                     </ImageBackground>
-                    <View style={{marginTop:20,flexDirection:'row',alignItems:'center',justifyContent:'space-around'}}>
-                        <TouchableOpacity onPress={()=>setVisible(false)} style={{flex:1}}>
+                    <StyleText style={{fontSize:14,marginTop:8,color:"#FA7373"}} type='bold'>{modalMsg}</StyleText>
+                    <View style={{marginTop:10,flexDirection:'row',alignItems:'center',justifyContent:'space-around'}}>
+                        <TouchableOpacity onPress={()=>{
+                            setVisible(false);
+                            setChangeKcal("");
+                            setModalMsg("");
+                        }} style={{flex:1}}>
                             <ImageBackground style={{width:'100%',height:50,justifyContent:'center',alignItems:"center"}}
                                 source={require('../../img/common_modal/modal_cancel.png')} resizeMode={'stretch'}>
                                 <StyleText style={styles.btnText} type='bold'>취소</StyleText>
