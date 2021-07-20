@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import { View,Image,TouchableOpacity,FlatList,ImageBackground } from 'react-native';
+import { View,Image,TouchableOpacity,FlatList,ImageBackground,BackHandler } from 'react-native';
 import { useDispatch,useSelector } from 'react-redux';
 import {closeModal} from '../reducers/modal';
 import send from '../modules/send';
@@ -22,6 +22,10 @@ export default (props)=>{
     const [contentsIdx,setContentsIdx] = useState("");
     const [bgHeight,setBgHeight] = useState(330);
 
+    const backAction = () => {
+        dispatch(closeModal());
+        return true;
+    };
     useEffect(()=>{
         const initDesk = async()=>{
             const {success,LISTS : lists,IDX} = await send.get("/contents/desk",{params:{date:params.date || null}});
@@ -49,6 +53,8 @@ export default (props)=>{
             }
         }
         initDesk();
+        BackHandler.addEventListener("hardwareBackPress", backAction);
+        return () => BackHandler.removeEventListener("hardwareBackPress", backAction);
     },[])
 
     const handleClose=()=>{

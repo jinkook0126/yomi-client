@@ -52,6 +52,7 @@ export default ({display,closeModal,inputDiary,diaryDate,callback,today,updateNo
             isVisible={display}
             hideModalContentWhileAnimating={true}
             onBackdropPress={closeModal}
+            onBackButtonPress={closeModal}
         >
             <ImageBackground resizeMode='stretch' source={require('../../img/diary/modal_bg.png')} style={{paddingHorizontal:16,paddingVertical:26}}>
                 <View style={{justifyContent:'center',alignItems:"center"}}>

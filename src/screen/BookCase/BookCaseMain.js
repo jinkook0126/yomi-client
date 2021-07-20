@@ -179,6 +179,7 @@ export default ({navigation,route})=>{
                 hideModalContentWhileAnimating={true}
                 style={{margin:0,justifyContent:'flex-end'}}
                 onBackdropPress={()=>{setVisible(false)}}
+                onBackButtonPress={()=>{setVisible(false)}}
             >
                 <View style={styles.modalContents}>
                     <TouchableOpacity onPress={()=>handleOrder("latest")}>

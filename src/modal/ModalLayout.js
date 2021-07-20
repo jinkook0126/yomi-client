@@ -1,12 +1,10 @@
 import React, { useRef } from 'react';
 import { View } from 'react-native';
 import { useSelector } from 'react-redux';
-import TestModalContents from './TestModalContents';
 import BookModalContents from './BookModalContents';
 import BookRgModalContents from './BookRgModalContents';
 import DeskodalContents from './DeskModalContents';
 import HealthModalContents from './HealthModalContents';
-import CalModalContents from './CalModalContents';
 
 export default ()=>{
     const stat = useSelector(state => state.modal.stat)
@@ -15,16 +13,12 @@ export default ()=>{
 
     const getContents = ()=>{
         switch(contents) {
-            case 'test' :
-                return <TestModalContents />;
             case 'book' :
                 return <BookModalContents />;
             case 'bookRg' :
                 return <BookRgModalContents />;
             case 'desk' :
                 return <DeskodalContents />;
-            case 'cal' :
-                return <CalModalContents />;
             case 'health' :
                 return <HealthModalContents />;
             default:

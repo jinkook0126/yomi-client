@@ -304,6 +304,7 @@ export default ({navigation,route})=>{
                 isVisible={isVisible}
                 hideModalContentWhileAnimating={true}
                 onBackdropPress={()=>{setIsVisible(false)}}
+                onBackButtonPress={()=>{setIsVisible(false)}}
                 style={{justifyContent:'flex-start',marginTop:30}}
             >
                 <ImageBackground resizeMode={"stretch"} source={require('../../img/calorie/modal_bg.png')} style={{height:240}}>

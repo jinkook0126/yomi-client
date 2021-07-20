@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import { View,Image,ImageBackground,TouchableOpacity } from 'react-native';
+import { View,Image,ImageBackground,TouchableOpacity,BackHandler } from 'react-native';
 import { Rating } from 'react-native-ratings';
 import { useDispatch, useSelector } from 'react-redux';
 import {closeModal} from '../reducers/modal';
@@ -18,11 +18,17 @@ export default ()=>{
     const [readPage,setReadPage] = useState(0);
     const [rate,setRate] = useState(2.5);
     const params = useSelector(state=> state.modal.params);
+    const backAction = () => {
+        dispatch(closeModal());
+        return true;
+    };
 
     useEffect(()=>{
         setRate(params.rating);
         setMemo(params.memo);
         setComplete(params.comp);
+        BackHandler.addEventListener("hardwareBackPress", backAction);
+        return () => BackHandler.removeEventListener("hardwareBackPress", backAction);
     },[]);
 
     const handleClose=()=>{

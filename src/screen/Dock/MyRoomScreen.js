@@ -5,26 +5,6 @@ import {initFurnitureRequest} from '../../reducers/furniture'
 import { View,Image,ImageBackground,StyleSheet,TouchableWithoutFeedback,Dimensions, SafeAreaView } from 'react-native';
 
 const img_prefix = "https://yomi-image.s3.ap-northeast-2.amazonaws.com";
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    backgroundImage: {
-        flex: 1,
-        resizeMode: 'cover', // or 'stretch'
-    },
-    wrap: {
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0
-    },
-    window:{
-        width:"100%",
-        height:"100%"
-    }
-});
 const fullWidth = Dimensions.get('window').width;
 const fullHeight = Dimensions.get('window').height;
 const windowHeight = (fullWidth*0.3) * 415 / 622;
