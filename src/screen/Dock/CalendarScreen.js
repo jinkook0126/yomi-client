@@ -76,6 +76,7 @@ export default ({navigation})=>{
     }
     
     const handleDateList = async(_moment)=>{
+        console.log(_moment)
         const year = _moment.format("YYYY");
         const month = _moment.format("M")-1
         const firstWeekday = new Date(year,month,1).getDay();
@@ -110,7 +111,6 @@ export default ({navigation})=>{
     
     const renderCalendar = ({item})=>{
         let borderStyle = {};
-        let textStyle = {};
         
         const isToday = (dateItem) => {
             const today = new Date();
@@ -134,12 +134,6 @@ export default ({navigation})=>{
             );
         }
         
-        if(isCurrentMonth(item)) {
-            textStyle = {color:"#000000"};
-        } else {
-            textStyle = {color:"#EEEEEE"};
-        }
-
         if(selectDate === null) { //today
             if(isToday(new Date(item))) {
                 borderStyle = {borderColor:"#8C6C51",borderWidth:1}
@@ -156,13 +150,20 @@ export default ({navigation})=>{
 
         
         return (
-            <TouchableOpacity onPress={()=>getHistory(item)}>
-                <View style={[{width:46,height:46},borderStyle]}>
+            isCurrentMonth(item) ?
+                <TouchableOpacity onPress={()=>getHistory(item)}>
+                    <View style={[{width:46,height:itemHeight},borderStyle]}>
+                        <View style={{paddingLeft:10,paddingTop:10}}>
+                            <StyleText style={[{fontSize:12}]}>{new Date(item).getDate()}</StyleText>
+                        </View>
+                    </View>
+                </TouchableOpacity>
+            :
+                <View style={[{width:46,height:itemHeight},borderStyle]}>
                     <View style={{paddingLeft:10,paddingTop:10}}>
-                        <StyleText style={[{fontSize:12},textStyle]}>{new Date(item).getDate()}</StyleText>
                     </View>
                 </View>
-            </TouchableOpacity>
+            
         )
     }
     return (
