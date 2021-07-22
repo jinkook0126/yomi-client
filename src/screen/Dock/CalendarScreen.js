@@ -77,7 +77,7 @@ export default ({navigation})=>{
     
     const handleDateList = async(_moment)=>{
         console.log(_moment)
-        const {success} = await send.get("/history/month",{params:{moment:_moment}});
+        // const {success} = await send.get("/history/month",{params:{moment:_moment}});
         const year = _moment.format("YYYY");
         const month = _moment.format("M")-1
         const firstWeekday = new Date(year,month,1).getDay();

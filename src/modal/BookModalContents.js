@@ -61,10 +61,10 @@ export default ()=>{
                     <Image source={
                         params.thumbnail !== "" ? {uri:params.thumbnail} : require('../img/emptyThumbnail.png')
                     } style={{width:67,height:84}}/>
-                    <View style={{paddingLeft:4,flex:1,height:84,overflow:"hidden"}}>
-                        <StyleText>{params.title}</StyleText>
-                        <StyleText style={{fontSize:10,color:"#757575"}}>{params.authors}</StyleText>
-                        <StyleText numberOfLines={4} ellipsizeMode={"tail"} style={{fontSize:8,color:'#757575',lineHeight:11}}>{params.contents}</StyleText>
+                    <View style={{paddingLeft:8,flex:1,height:84,overflow:"hidden"}}>
+                        <StyleText style={{fontSize:15}}>{params.title}</StyleText>
+                        <StyleText style={{fontSize:12,color:"#757575",marginTop:2}}>{params.authors}</StyleText>
+                        <StyleText numberOfLines={4} ellipsizeMode={"tail"} style={{fontSize:10,color:'#757575',lineHeight:11,marginTop:4}}>{params.contents}</StyleText>
                     </View>
                 </View>
                 <View style={{marginTop:25,paddingHorizontal:5,flexDirection:'row',alignItems:'center'}}>
@@ -111,12 +111,12 @@ export default ()=>{
                 </ImageBackground>
                 <View style={{marginTop:40,flexDirection:'row',alignItems:"center",justifyContent:"space-between"}}>
                     <TouchableOpacity onPress={handleClose} style={{flex:1,paddingRight:4}}>
-                        <ImageBackground source={require('../img/common_modal/modal_cancel.png')} style={{width:"100%",height:50,justifyContent:'center',alignItems:"center"}}>
+                        <ImageBackground source={require('../img/common_modal/modal_cancel.png')} resizeMode="stretch" style={{width:"100%",height:50,justifyContent:'center',alignItems:"center"}}>
                             <StyleText style={{color:"#ffffff",fontSize:18}} type='bold'>취소</StyleText>
                         </ImageBackground>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handleSave} style={{flex:1,paddingLeft:4}}>
-                        <ImageBackground source={require('../img/common_modal/modal_confirm.png')} style={{width:"100%",height:50,justifyContent:'center',alignItems:"center"}}>
+                        <ImageBackground source={require('../img/common_modal/modal_confirm.png')} resizeMode="stretch" style={{width:"100%",height:50,justifyContent:'center',alignItems:"center"}}>
                             <StyleText style={{color:"#ffffff",fontSize:18}} type='bold'>저장</StyleText>
                         </ImageBackground>
                     </TouchableOpacity>

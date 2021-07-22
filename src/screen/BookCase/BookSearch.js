@@ -49,10 +49,10 @@ export default ({navigation})=>{
                 <View style={{padding:4}}>
                     <View style={{flexDirection:'row',borderBottomWidth:1,borderBottomColor:"#EEEEEE"}}>
                         <Image source={imgUrl} style={{width:67,height:84}}/>
-                        <View style={{paddingLeft:4,flex:1,height:84,overflow:"hidden"}}>
-                            <StyleText>{item.title}</StyleText>
-                            <StyleText style={{fontSize:10,color:"#757575"}}>{item.authors}</StyleText>
-                            <StyleText numberOfLines={4} ellipsizeMode={"tail"} style={{fontSize:8,color:'#757575',lineHeight:11}}>{item.contents}</StyleText>
+                        <View style={{paddingLeft:8,flex:1,height:84,overflow:"hidden"}}>
+                            <StyleText style={{fontSize:15}}>{item.title}</StyleText>
+                            <StyleText style={{fontSize:12,color:"#757575",marginTop:2}}>{item.authors}</StyleText>
+                            <StyleText numberOfLines={4} ellipsizeMode={"tail"} style={{fontSize:10,color:'#757575',lineHeight:11,marginTop:4}}>{item.contents}</StyleText>
                         </View>
                     </View>
                 </View>

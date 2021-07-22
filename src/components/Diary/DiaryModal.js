@@ -54,12 +54,12 @@ export default ({display,closeModal,inputDiary,diaryDate,callback,today,updateNo
             onBackdropPress={closeModal}
             onBackButtonPress={closeModal}
         >
-            <ImageBackground resizeMode='stretch' source={require('../../img/diary/modal_bg.png')} style={{paddingHorizontal:16,paddingVertical:26}}>
+            <ImageBackground resizeMode='stretch' source={require('../../img/diary/modal_bg.png')} style={{paddingHorizontal:26,paddingVertical:26}}>
                 <View style={{justifyContent:'center',alignItems:"center"}}>
-                    <StyleText style={{fontSize:20}} type="bold">{DashedFormatDate(headerDate)}</StyleText>
+                    <StyleText style={{fontSize:17}}>{DashedFormatDate(headerDate)}</StyleText>
                 </View>
                 <View style={{marginTop:12,alignItems:'center',justifyContent:'center'}}>
-                    <Image source={require('../../img/emoji_01.png')} />
+                    <Image source={require('../../img/emoji_01.png')} resizeMode="stretch" style={{width:22,height:22}}/>
                 </View>
                 <View style={{marginTop:22,height:286}}>
                     <StyleInput
@@ -67,7 +67,7 @@ export default ({display,closeModal,inputDiary,diaryDate,callback,today,updateNo
                         onChangeText={(value)=>setContents(value)}
                         multiline={true}
                         placeholder={'일기를 입력해주세요.'}
-                        style={{fontSize:16}}
+                        style={{fontSize:18}}
                     />
                 </View>
                 <View style={{marginTop:40,flexDirection:"row", justifyContent:"flex-end",}}>

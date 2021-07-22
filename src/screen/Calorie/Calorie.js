@@ -197,7 +197,7 @@ export default ({navigation,route})=>{
 }
 const styles = StyleSheet.create({
     foodHeaderText: {
-        fontSize:18,paddingLeft:12
+        fontSize:16,paddingLeft:12
     },
     btnText:{
         fontSize:20,
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
         borderWidth:1
     },
     foodHeader:{
-        height:45,
+        height:50,
         flexDirection:"row",
         alignItems:'center',
         justifyContent:"space-between",

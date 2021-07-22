@@ -60,10 +60,10 @@ export default ()=>{
                     <Image source={
                         params.thumbnail !== "" ? {uri:params.thumbnail} : require('../img/emptyThumbnail.png')
                     } style={{width:67,height:84}}/>
-                    <View style={{paddingLeft:4,flex:1,height:84,overflow:"hidden"}}>
-                        <StyleText>{params.title}</StyleText>
-                        <StyleText style={{fontSize:10,color:"#757575"}}>{params.authors}</StyleText>
-                        <StyleText numberOfLines={4} ellipsizeMode={"tail"} style={{fontSize:8,color:'#757575',lineHeight:11}}>{params.contents}</StyleText>
+                    <View style={{paddingLeft:8,flex:1,height:84,overflow:"hidden"}}>
+                        <StyleText style={{fontSize:15}}>{params.title}</StyleText>
+                        <StyleText style={{fontSize:12,color:"#757575",marginTop:2}}>{params.authors}</StyleText>
+                        <StyleText numberOfLines={4} ellipsizeMode={"tail"} style={{fontSize:10,color:'#757575',lineHeight:11,marginTop:4}}>{params.contents}</StyleText>
                     </View>
                 </View>
                 <View style={{marginTop:25,paddingHorizontal:5,flexDirection:'row',alignItems:'center'}}>

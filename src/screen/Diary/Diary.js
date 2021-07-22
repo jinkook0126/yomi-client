@@ -59,7 +59,7 @@ export default ({navigation})=>{
                             <Image source={require('../../img/emoji_02.png')}/>
                         </View>
                         <View style={{marginTop:5}}>
-                            <StyleText numberOfLines={7} ellipsizeMode={"tail"} style={{fontSize:8}}>{item.CONTENTS}</StyleText>
+                            <StyleText numberOfLines={7} ellipsizeMode={"tail"} style={{fontSize:13}}>{item.CONTENTS}</StyleText>
                         </View>
                     </View>
                     <StyleText style={{marginTop:10,fontSize:17}}>{DashedFormatDate(item.DATE_DT)}</StyleText>
