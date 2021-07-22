@@ -124,6 +124,10 @@ export default ({navigation,route})=>{
                                 </View>
                                 <View style={{alignItems:"flex-start",marginTop:4}}>
                                     <Rating
+                                        type='custom'
+                                        ratingImage={require("../../img/common/rating_white_star.png")}
+                                        ratingColor='#D8B751'
+                                        ratingBackgroundColor='#FFFFFF'
                                         readonly={true}
                                         fractions={2}
                                         ratingCount={5}
@@ -158,6 +162,10 @@ export default ({navigation,route})=>{
                                 </View>
                                 <View style={{alignItems:"flex-start",marginTop:4}}>
                                     <Rating
+                                        type='custom'
+                                        ratingImage={require("../../img/common/rating_white_star.png")}
+                                        ratingColor='#D8B751'
+                                        ratingBackgroundColor='#FFFFFF'
                                         readonly={true}
                                         fractions={2}
                                         ratingCount={5}

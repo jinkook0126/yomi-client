@@ -69,6 +69,10 @@ export default ()=>{
                 <View style={{marginTop:25,paddingHorizontal:5,flexDirection:'row',alignItems:'center'}}>
                     <StyleText style={{fontSize:18,color:"#424242"}}>별점</StyleText>
                     <Rating
+                        type='custom'
+                        ratingImage={require("../img/book/rating_modal_star.png")}
+                        ratingColor='#D8B751'
+                        ratingBackgroundColor='#FFFFFF'
                         fractions={2}
                         ratingCount={5}
                         minValue={0.5}
