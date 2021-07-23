@@ -1,6 +1,7 @@
 import React,{useState,useEffect,useRef} from 'react';
 import { useDispatch } from 'react-redux';
 import { View,FlatList,SafeAreaView, TouchableOpacity, Image,Animated,StyleSheet, ImageBackground } from 'react-native';
+import { WithLocalSvg } from 'react-native-svg';
 import StyleText from '../../components/UI/StyleText';
 import moment from 'moment';
 import send from '../../modules/send';
@@ -24,6 +25,7 @@ export default ({navigation})=>{
     const [selectDate,setSelectDate] = useState(null);
     const [itemHeight,setItemHeight] = useState(66);
     const [toggle,setToggle] = useState(false);
+    const [monthHistory,setMonthHistory] = useState({});
     const [history,setHistory] = useState({
         diary:"X",book:0,workout:0,study:0,food:{goal:0,intake:0}
     });
@@ -76,8 +78,11 @@ export default ({navigation})=>{
     }
     
     const handleDateList = async(_moment)=>{
-        console.log(_moment)
-        // const {success} = await send.get("/history/month",{params:{moment:_moment}});
+        // const {success,lists} = await send.get("/history/month",{params:{moment:_moment}});
+        // if(success) setMonthHistory(lists);
+        send.get("/history/month",{params:{moment:_moment}}).then(({success,lists})=>{
+            if(success) setMonthHistory(lists);
+        })
         const year = _moment.format("YYYY");
         const month = _moment.format("M")-1
         const firstWeekday = new Date(year,month,1).getDay();
@@ -134,7 +139,6 @@ export default ({navigation})=>{
                 moment(dateItem).format("YYYY") === getMoment.format("YYYY")
             );
         }
-        
         if(selectDate === null) { //today
             if(isToday(new Date(item))) {
                 borderStyle = {borderColor:"#8C6C51",borderWidth:1}
@@ -149,14 +153,40 @@ export default ({navigation})=>{
             }
         }
 
-        
         return (
             isCurrentMonth(item) ?
                 <TouchableOpacity onPress={()=>getHistory(item)}>
                     <View style={[{width:46,height:itemHeight},borderStyle]}>
                         <View style={{paddingLeft:10,paddingTop:10}}>
-                            <StyleText style={[{fontSize:12}]}>{new Date(item).getDate()}</StyleText>
+                            <StyleText style={{fontSize:12}}>{new Date(item).getDate()}</StyleText>
                         </View>
+                        <View style={{flex:1,flexWrap:'wrap',flexDirection:'row',marginTop:4,alignItems:'center'}}>
+                                {
+                                    monthHistory[formatDate(item)] ?
+                                        Object.keys(monthHistory[formatDate(item)]).length === 5 ? 
+                                            (
+                                                <View style={{flex:1,alignItems:'center'}}>
+                                                    <WithLocalSvg width={12} height={12} asset={require("../../img/diary/complete_emoji.svg")} />
+                                                </View>
+                                            )
+                                            :
+                                            Object.keys(monthHistory[formatDate(item)]).map((key)=>{
+                                                if(key === 'diary') {
+                                                    return <Image source={require("../../img/diary/dot_diary.png")} style={{width:8,height:8,marginLeft:2}}/>
+                                                } else if(key === 'food') {
+                                                    return <Image source={require("../../img/diary/dot_food.png")} style={{width:8,height:8,marginLeft:2}}/>
+                                                } else if(key === 'books') {
+                                                    return <Image source={require("../../img/diary/dot_book.png")} style={{width:8,height:8,marginLeft:2}}/>
+                                                } else if(key === 'workout') {
+                                                    return <Image source={require("../../img/diary/dot_workout.png")} style={{width:8,height:8,marginLeft:2}}/>
+                                                } else if(key === 'study') {
+                                                    return <Image source={require("../../img/diary/dot_book.png")} style={{width:8,height:8,marginLeft:2}}/>
+                                                }
+                                            })
+                                    :
+                                    null
+                                }
+                            </View>
                     </View>
                 </TouchableOpacity>
             :
