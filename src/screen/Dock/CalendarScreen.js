@@ -78,8 +78,11 @@ export default ({navigation})=>{
     }
     
     const handleDateList = async(_moment)=>{
+        //아래 로 할 경우 달력 날짜에 잔상이 남는다.
         // const {success,lists} = await send.get("/history/month",{params:{moment:_moment}});
         // if(success) setMonthHistory(lists);
+
+        //아래로 할 경우 달력이 뜨고 나서 아이콘들이 나타난다.
         send.get("/history/month",{params:{moment:_moment}}).then(({success,lists})=>{
             if(success) setMonthHistory(lists);
         })
@@ -180,7 +183,7 @@ export default ({navigation})=>{
                                                 } else if(key === 'workout') {
                                                     return <Image source={require("../../img/diary/dot_workout.png")} style={{width:8,height:8,marginLeft:2}}/>
                                                 } else if(key === 'study') {
-                                                    return <Image source={require("../../img/diary/dot_book.png")} style={{width:8,height:8,marginLeft:2}}/>
+                                                   return <Image source={require("../../img/diary/dot_desk.png")} style={{width:8,height:8,marginLeft:2}}/>
                                                 }
                                             })
                                     :
