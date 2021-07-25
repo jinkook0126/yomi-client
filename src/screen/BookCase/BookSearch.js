@@ -68,9 +68,9 @@ export default ({navigation})=>{
                 </TouchableOpacity>
             </View>
             <View style={{flex:1,paddingVertical:20,paddingHorizontal:26}}>
-                <ImageBackground source={require("../../img/calorie/search_border.png")} resizeMode={'stretch'} style={{height:39,backgroundColor:"#FFFFFF",flexDirection:"row",justifyContent:"space-between",alignItems:'center',paddingHorizontal:12}}>
+                <ImageBackground source={require("../../img/calorie/search_border.png")} resizeMode={'stretch'} style={{height:39,backgroundColor:"#FFFFFF",flexDirection:"row",justifyContent:"space-between",alignItems:'center',paddingLeft:12}}>
                     <StyleInput onChangeText={(value)=>setSearchTitle(value)} style={{flex:1,height:30,alignItems:"stretch",paddingVertical:0,fontSize:16}}></StyleInput>
-                    <TouchableOpacity onPress={()=>doSearch(true)} style={{width:25,height:25,justifyContent:"center",alignItems:'center'}}>
+                    <TouchableOpacity onPress={()=>doSearch(true)} style={{width:30,height:30,marginRight:6,justifyContent:'center',alignItems:'center'}}>
                         <Image source={require("../../img/common/ico_search.png")}/>
                     </TouchableOpacity>
                 </ImageBackground>

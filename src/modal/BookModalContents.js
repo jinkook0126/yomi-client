@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useRef} from 'react';
 import { View,Image,ImageBackground,TouchableOpacity,BackHandler } from 'react-native';
 import { Rating } from 'react-native-ratings';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,6 +18,7 @@ export default ()=>{
     const [readPage,setReadPage] = useState(0);
     const [rate,setRate] = useState(2.5);
     const params = useSelector(state=> state.modal.params);
+    const textarea = useRef(null);
     const backAction = () => {
         dispatch(closeModal());
         return true;
@@ -104,15 +105,19 @@ export default ()=>{
                         />
                     </View>
                 </View>
-                <ImageBackground resizeMode={"stretch"} source={require("../img/book/memo_bg.png")} resizeMode="stretch" style={{marginTop:10,height:106,overflow:"hidden"}}>
-                    <StyleInput
-                        multiline={true}
-                        value={memo}
-                        onChangeText={(value)=>setMemo(value)}
-                        style={{fontSize:16,padding:12}}
-                        placeholder={"메모를 작성해 보세요."}
-                    />
-                </ImageBackground>
+                <TouchableWithoutFeedback onPress={()=>textarea.current.focus()}>
+                    <ImageBackground resizeMode={"stretch"} source={require("../img/book/memo_bg.png")} resizeMode="stretch" style={{marginTop:10,height:106,overflow:"hidden"}}>
+                        <StyleInput
+                            aref={textarea}
+                            multiline={true}
+                            value={memo}
+                            onChangeText={(value)=>setMemo(value)}
+                            style={{fontSize:16,padding:12}}
+                            placeholder={"메모를 작성해 보세요."}
+                        />
+                    </ImageBackground>
+                </TouchableWithoutFeedback>
+                
                 <View style={{marginTop:40,flexDirection:'row',alignItems:"center",justifyContent:"space-between"}}>
                     <TouchableOpacity onPress={handleClose} style={{flex:1,paddingRight:4}}>
                         <ImageBackground source={require('../img/common_modal/modal_cancel.png')} resizeMode="stretch" style={{width:"100%",height:50,justifyContent:'center',alignItems:"center"}}>

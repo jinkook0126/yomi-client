@@ -1,6 +1,6 @@
 import Modal from 'react-native-modal';
-import React,{useState,useEffect} from 'react';
-import { View,TouchableOpacity,Image,ImageBackground } from 'react-native'
+import React,{useState,useEffect, useRef} from 'react';
+import { View,TouchableOpacity,Image,ImageBackground,TouchableWithoutFeedback } from 'react-native'
 import StyleText from '../../components/UI/StyleText';
 import StyleInput from '../UI/StyleInput';
 import {DashedFormatDate,isEmpty} from '../../modules/common';
@@ -9,6 +9,7 @@ import { useSnackbarContext } from '@dooboo-ui/snackbar';
 
 export default ({display,closeModal,inputDiary,diaryDate,callback,today,updateNo,})=>{
     const snackbar = useSnackbarContext();
+    const textarea = useRef(null);
     const [contents,setContents] = useState("");
     const [headerDate,setHeaderDate] = useState("");
 
@@ -61,15 +62,18 @@ export default ({display,closeModal,inputDiary,diaryDate,callback,today,updateNo
                 <View style={{marginTop:12,alignItems:'center',justifyContent:'center'}}>
                     <Image source={require('../../img/emoji_01.png')} resizeMode="stretch" style={{width:22,height:22}}/>
                 </View>
-                <View style={{marginTop:22,height:286}}>
-                    <StyleInput
-                        value={contents}
-                        onChangeText={(value)=>setContents(value)}
-                        multiline={true}
-                        placeholder={'일기를 입력해주세요.'}
-                        style={{fontSize:18}}
-                    />
-                </View>
+                <TouchableWithoutFeedback onPress={()=>textarea.current.focus()}>
+                    <View style={{marginTop:22,height:286}}>
+                        <StyleInput
+                            aref={textarea}
+                            value={contents}
+                            onChangeText={(value)=>setContents(value)}
+                            multiline={true}
+                            placeholder={'일기를 입력해주세요.'}
+                            style={{fontSize:18}}
+                        />
+                    </View>
+                </TouchableWithoutFeedback>
                 <View style={{marginTop:40,flexDirection:"row", justifyContent:"flex-end",}}>
                     <TouchableOpacity onPress={closeModal}>
                         <StyleText style={{color:"#8C6C51",fontSize:18}} type='bold'>취소</StyleText>
