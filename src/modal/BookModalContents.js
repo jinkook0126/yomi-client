@@ -1,5 +1,5 @@
 import React,{useState,useEffect,useRef} from 'react';
-import { View,Image,ImageBackground,TouchableOpacity,BackHandler } from 'react-native';
+import { View,Image,ImageBackground,TouchableOpacity,BackHandler,TouchableWithoutFeedback } from 'react-native';
 import { Rating } from 'react-native-ratings';
 import { useDispatch, useSelector } from 'react-redux';
 import {closeModal} from '../reducers/modal';
