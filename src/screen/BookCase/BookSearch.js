@@ -62,12 +62,10 @@ export default ({navigation})=>{
     return (
         <SafeAreaView style={{ flex: 1,backgroundColor:'#ffffff' }}>
             <View style={{height:50,flexDirection:"row",alignItems:'center'}}>
-                <TouchableOpacity onPress={()=>navigation.goBack()}>
-                    <View style={{height:50,width:28,justifyContent:'center',alignItems:"flex-end"}}>
-                        <Image source={require('../../img/common/ico_back.png')}  />
-                    </View>
+                <StyleText style={{paddingLeft:50,fontSize:20}} type='bold'>책 검색</StyleText>
+                <TouchableOpacity style={{position: 'absolute',height:50,width:50,justifyContent:'center',alignItems:"center"}} onPress={()=>navigation.goBack()}>
+                    <Image source={require('../../img/common/ico_back.png')}  />
                 </TouchableOpacity>
-                <StyleText style={{paddingLeft:20,fontSize:20}} type='bold'>책 검색</StyleText>
             </View>
             <View style={{flex:1,paddingVertical:20,paddingHorizontal:26}}>
                 <ImageBackground source={require("../../img/calorie/search_border.png")} resizeMode={'stretch'} style={{height:39,backgroundColor:"#FFFFFF",flexDirection:"row",justifyContent:"space-between",alignItems:'center',paddingHorizontal:12}}>

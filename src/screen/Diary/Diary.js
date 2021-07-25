@@ -1,6 +1,5 @@
 import React,{useState,useEffect} from 'react';
 import { View,SafeAreaView,Image,Dimensions,TouchableOpacity,ImageBackground } from 'react-native'
-import { useDispatch } from 'react-redux';
 import { FlatList } from 'react-native-gesture-handler';
 import send from '../../modules/send';;
 import {formatDate,DashedFormatDate} from '../../modules/common'
@@ -8,7 +7,6 @@ import StyleText from '../../components/UI/StyleText';
 import DiaryModal from '../../components/Diary/DiaryModal';
 
 export default ({navigation})=>{
-    const dispatch = useDispatch();
     const [visible,setVisible] = useState(false);
     const [inputDiary,setInputDiary] = useState("");
     const [diaryList,setDiaryList] = useState([]);
@@ -70,12 +68,10 @@ export default ({navigation})=>{
     return (
         <SafeAreaView style={{ flex: 1,backgroundColor:'#ffffff' }}>
             <View style={{height:50,flexDirection:"row",alignItems:'center'}}>
-                <TouchableOpacity onPress={()=>navigation.goBack()}>
-                    <View style={{height:50,width:28,justifyContent:'center',alignItems:"flex-end"}}>
-                        <Image source={require('../../img/common/ico_back.png')}  />
-                    </View>
+                <StyleText style={{fontSize:20,paddingLeft:50}} type='bold'>일기장</StyleText>
+                <TouchableOpacity style={{position: 'absolute',height:50,width:50,justifyContent:'center',alignItems:"center"}} onPress={()=>navigation.goBack()}>
+                    <Image source={require('../../img/common/ico_back.png')}  />
                 </TouchableOpacity>
-                <StyleText style={{fontSize:20,paddingLeft:20}} type='bold'>일기장</StyleText>
             </View>
             <View style={{marginTop:16,paddingHorizontal:26,paddingBottom:26,flex:1}}>
                 <StyleText style={{fontSize:18}} type='bold'>오늘의 일기</StyleText>

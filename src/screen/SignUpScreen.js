@@ -50,14 +50,12 @@ export default ({navigation})=>{
     return (
         <SafeAreaView style={{backgroundColor:'#FFFFFF',flex:1}}>
             <View style={{height:50,flexDirection:"row",alignItems:'center'}}>
-                <TouchableOpacity onPress={()=>{
+                <StyleText style={{paddingLeft:50,fontSize:16}}>회원가입</StyleText>
+                <TouchableOpacity style={{position: 'absolute',height:50,width:50,justifyContent:'center',alignItems:"center"}} onPress={()=>{
                     navigation.goBack();
                 }}>
-                    <View style={{height:50,width:28,justifyContent:'center',alignItems:"flex-end"}}>
-                        <Image source={require('../img/common/ico_back.png')}  />
-                    </View>
+                    <Image source={require('../img/common/ico_back.png')}  />
                 </TouchableOpacity>
-                <StyleText style={{paddingLeft:20,fontSize:16}}>회원가입</StyleText>
             </View>
             <View style={{paddingHorizontal:20}}>
                 <View style={{marginTop:26}}> 

@@ -90,17 +90,15 @@ export default ({navigation,route})=>{
     return (
         <SafeAreaView style={{ flex: 1,backgroundColor:'#ffffff' }}>
             <View style={{height:50,flexDirection:"row",alignItems:'center'}}>
-                <TouchableOpacity onPress={()=>{
+                <StyleText style={{paddingLeft:50,fontSize:20}} type='bold'>책장</StyleText>
+                <TouchableOpacity style={{position: 'absolute',height:50,width:50,justifyContent:'center',alignItems:"center"}} onPress={()=>{
                     if(route.params && route.params.onGoBack) {
                         route.params.onGoBack();
                     }
                     navigation.goBack();
                 }}>
-                    <View style={{height:50,width:28,justifyContent:'center',alignItems:"flex-end"}}>
-                        <Image source={require('../../img/common/ico_back.png')}  />
-                    </View>
+                    <Image source={require('../../img/common/ico_back.png')}  />
                 </TouchableOpacity>
-                <StyleText style={{paddingLeft:20,fontSize:20}} type='bold'>책장</StyleText>
             </View>
             <ScrollView style={{paddingTop:16,paddingHorizontal:26}}>
                 <StyleText style={{fontSize:18}} type='bold'>현재 읽고 있는 책</StyleText>

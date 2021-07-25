@@ -67,17 +67,15 @@ export default ({navigation,route})=>{
     return (
         <SafeAreaView style={{ flex: 1,backgroundColor:'#ffffff' }}>
             <View style={{height:50,flexDirection:"row",alignItems:'center'}}>
-                <TouchableOpacity onPress={()=>{
+                <StyleText style={{fontSize:20,paddingLeft:50}} type='bold'>냉장고</StyleText>
+                <TouchableOpacity style={{position: 'absolute',height:50,width:50,justifyContent:'center',alignItems:"center"}} onPress={()=>{
                     if(route.params && route.params.onGoBack) {
                         route.params.onGoBack();
                     }
                     navigation.goBack();
                 }}>
-                    <View style={{height:50,width:28,justifyContent:'center',alignItems:"flex-end"}}>
-                        <Image source={require('../../img/common/ico_back.png')}  />
-                    </View>
+                    <Image source={require('../../img/common/ico_back.png')}  />
                 </TouchableOpacity>
-                <StyleText style={{fontSize:20,paddingLeft:20}} type='bold'>냉장고</StyleText>
             </View>
             <View style={{paddingVertical:16,paddingHorizontal:26,flex:1}}>
                 <View style={{flexDirection:"row",justifyContent:"space-between",alignContent:"center",paddingBottom:17}}>

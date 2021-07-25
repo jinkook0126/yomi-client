@@ -178,12 +178,10 @@ export default ({navigation,route})=>{
         <SafeAreaView style={{ flex: 1,backgroundColor:'#ffffff' }}>
             <View style={{height:50,flexDirection:"row",alignItems:'center',justifyContent:"space-between"}}>
                 <View style={{flexDirection:"row",alignItems:'center'}}>
-                    <TouchableOpacity onPress={()=>navigation.goBack()}>
-                        <View style={{height:50,width:28,justifyContent:'center',alignItems:"flex-end"}}>
-                            <Image source={require('../../img/common/ico_back.png')}  />
-                        </View>
+                    <StyleText style={{paddingLeft:50,fontSize:20}} type='bold'>{renderTitle(route.params.type)}</StyleText>
+                    <TouchableOpacity style={{position: 'absolute',height:50,width:50,justifyContent:'center',alignItems:"center"}} onPress={()=>navigation.goBack()}>
+                        <Image source={require('../../img/common/ico_back.png')}  />
                     </TouchableOpacity>
-                    <StyleText style={{paddingLeft:20,fontSize:20}} type='bold'>{renderTitle(route.params.type)}</StyleText>
                 </View>
                 <View style={{flexDirection:"row",alignItems:'center',justifyContent:"flex-end",paddingRight:26}}>
                     <StyleText style={{fontSize:18}}>{selectCnt}</StyleText>

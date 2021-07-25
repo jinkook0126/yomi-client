@@ -173,17 +173,17 @@ export default ({navigation})=>{
                                                 </View>
                                             )
                                             :
-                                            Object.keys(monthHistory[formatDate(item)]).map((key)=>{
+                                            Object.keys(monthHistory[formatDate(item)]).map((key,idx)=>{
                                                 if(key === 'diary') {
-                                                    return <Image source={require("../../img/diary/dot_diary.png")} style={{width:8,height:8,marginLeft:2}}/>
+                                                    return <Image key={idx} source={require("../../img/diary/dot_diary.png")} style={{width:8,height:8,marginLeft:2}}/>
                                                 } else if(key === 'food') {
-                                                    return <Image source={require("../../img/diary/dot_food.png")} style={{width:8,height:8,marginLeft:2}}/>
+                                                    return <Image key={idx} source={require("../../img/diary/dot_food.png")} style={{width:8,height:8,marginLeft:2}}/>
                                                 } else if(key === 'books') {
-                                                    return <Image source={require("../../img/diary/dot_book.png")} style={{width:8,height:8,marginLeft:2}}/>
+                                                    return <Image key={idx} source={require("../../img/diary/dot_book.png")} style={{width:8,height:8,marginLeft:2}}/>
                                                 } else if(key === 'workout') {
-                                                    return <Image source={require("../../img/diary/dot_workout.png")} style={{width:8,height:8,marginLeft:2}}/>
+                                                    return <Image key={idx} source={require("../../img/diary/dot_workout.png")} style={{width:8,height:8,marginLeft:2}}/>
                                                 } else if(key === 'study') {
-                                                   return <Image source={require("../../img/diary/dot_desk.png")} style={{width:8,height:8,marginLeft:2}}/>
+                                                   return <Image key={idx} source={require("../../img/diary/dot_desk.png")} style={{width:8,height:8,marginLeft:2}}/>
                                                 }
                                             })
                                     :

@@ -8,14 +8,12 @@ const Contact = ({navigation})=>{
     return (
         <SafeAreaView style={{backgroundColor:"#FFFFFF",flex:1 }}>
             <View style={{height:50,flexDirection:"row",alignItems:'center'}}>
-                <TouchableOpacity onPress={()=>{
+                <StyleText style={{paddingLeft:50,fontSize:20}} type="bold">문의하기</StyleText>
+                <TouchableOpacity style={{position: 'absolute',height:50,width:50,justifyContent:'center',alignItems:"center"}} onPress={()=>{
                     navigation.goBack();
                 }}>
-                    <View style={{height:50,width:28,justifyContent:'center',alignItems:"flex-end"}}>
-                        <WithLocalSvg width={8} height={16} asset={require('../img/menu/ico_back.svg')} />
-                    </View>
+                    <WithLocalSvg width={8} height={16} asset={require('../img/menu/ico_back.svg')} />
                 </TouchableOpacity>
-                <StyleText style={{paddingLeft:20,fontSize:20}} type="bold">문의하기</StyleText>
             </View>        
             <View style={{height:2,backgroundColor:'#ECECEC',width:'100%'}}/>
             <View style={{paddingTop:4,paddingHorizontal:20}}>
@@ -32,12 +30,12 @@ const Contact = ({navigation})=>{
                         <StyleText style={{fontFamily:"Namu_Regular",color:"#9E9E9E"}}>첨부파일(파일명)</StyleText>
                     </View>
                     <View style={{width:100,height:40,backgroundColor:"#DBDBDB",justifyContent:'center',alignItems:"center"}}>
-                        <StyleText style={{fontFamily:"Namu_Regular",color:"#757575"}}>첨부하기</StyleText>
+                        <StyleText style={{fontSize:17,color:"#757575"}}>첨부하기</StyleText>
                     </View>
                 </View>
                 <TouchableOpacity>
                     <View style={{marginTop:16,display:'flex',justifyContent:"center",alignItems:"center",backgroundColor:"#8C6C51",height:40}}>
-                        <StyleText style={{fontFamily:"Namu_Regular",color:"#FFFFFF"}}>보내기</StyleText>
+                        <StyleText style={{fontSize:18,color:"#FFFFFF"}} type='bold'>보내기</StyleText>
                     </View>
                 </TouchableOpacity>
             </View>
