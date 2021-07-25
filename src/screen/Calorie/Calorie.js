@@ -85,8 +85,8 @@ export default ({navigation,route})=>{
                         {
                             !route.params? 
                             (
-                                <TouchableOpacity onPress={()=>setVisible(true)}>
-                                    <Image source={require("../../img/common/ico_edit.png")} style={{marginLeft:6}}/>
+                                <TouchableOpacity onPress={()=>setVisible(true)} style={{justifyContent:'center',alignItems:'center',width: 25,height:25}}>
+                                    <Image source={require("../../img/common/ico_edit.png")}/>
                                 </TouchableOpacity>
                             ) :
                             null
@@ -126,7 +126,7 @@ export default ({navigation,route})=>{
                     <View style={{marginTop:10}}>
                         <ImageBackground source={require('../../img/calorie/header.png')} resizeMode={'stretch'} style={styles.foodHeader}>
                             <StyleText style={styles.foodHeaderText}>저녁</StyleText>
-                            <TouchableOpacity onPress={()=>navigateInfo("M03",foods["M03"])} >
+                            <TouchableOpacity onPress={()=>navigateInfo("M03",foods["M03"])}  >
                                 <View style={styles.foodNext}>
                                     <Image source={require("../../img/common/ico_forward.png")}/>
                                 </View>
