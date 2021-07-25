@@ -152,8 +152,8 @@ export default ()=>{
                 <StyleText style={{fontSize:17}}>{item.expl}</StyleText>
                 <View style={{flexDirection:"row",alignItems:'center',justifyContent:"flex-end"}}>
                     <StyleText style={{fontSize:17}}>{`${item.hours} 시간 ${item.min} 분`}</StyleText>
-                    <TouchableOpacity onPress={()=>removeItem(index)}>
-                        <Image source={require('../img/common/ico_remove.png')} style={{marginLeft:10}}/>
+                    <TouchableOpacity onPress={()=>removeItem(index)} style={{width:25,height:25,justifyContent:'center',alignItems:'center',marginLeft:6}}>
+                        <Image source={require('../img/common/ico_remove.png')} />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -188,15 +188,15 @@ export default ()=>{
                     <ImageBackground source={require("../img/common/dash.png")} style={{width:'100%',height:4}} resizeMode={'stretch'}/>
                     <View style={{marginTop:16,flexDirection:"row",alignItems:"center"}}>
                         <StyleText style={{fontSize:18}}>운동 추가하기</StyleText>
-                        <TouchableOpacity onPress={()=>{
+                        <TouchableOpacity style={{width:25,height: 25,justifyContent:"center",alignItems:"center",marginLeft:2}} onPress={()=>{
                             setExtraView(!extraView);
                             !extraView ? setBgHeight(430) : setBgHeight(330);
                         }}>
                             {
                                 extraView ? 
-                                    <Image source={require("../img/common/ico_minus.png")} style={{marginLeft:8}}/>
+                                    <Image source={require("../img/common/ico_minus.png")} />
                                     :
-                                    <Image source={require("../img/common/ico_plus.png")} style={{marginLeft:8}}/>
+                                    <Image source={require("../img/common/ico_plus.png")} />
                             }
                         </TouchableOpacity>
                     </View>
