@@ -2,9 +2,10 @@ import React from 'react';
 import { TextInput,StyleSheet } from 'react-native';
 
 
-export default ({children,style,...rest})=>{
+export default ({children,style,aref,...rest})=>{
     return (
         <TextInput
+          ref={aref}
           style={[styles.default,style]}
           {...rest}
         />
