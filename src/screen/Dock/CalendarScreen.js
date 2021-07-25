@@ -205,13 +205,13 @@ export default ({navigation})=>{
             <View>
                 <View style={{marginTop:27,flexDirection:"row",justifyContent:"center",alignItems:"center"}}>
                     <TouchableOpacity onPress={()=>handleMonth(false)}>
-                        <View style={{width:9,height:9}}>
+                        <View style={{width:25,height:25,justifyContent:'center',alignItems:'center'}}>
                             <Image source={require("../../img/calendar/ico_pre_month.png")}/>
                         </View>
                     </TouchableOpacity>
                     <StyleText style={{fontSize:18,color:"#000000",marginHorizontal:16}} type="bold">{monthName}</StyleText>
                     <TouchableOpacity onPress={()=>handleMonth(true)}>
-                        <View style={{width:9,height:9}}>
+                        <View style={{width:25,height:25,justifyContent:'center',alignItems:'center'}}>
                             <Image source={require("../../img/calendar/ico_next_month.png")}/>
                         </View>
                     </TouchableOpacity>
@@ -251,31 +251,45 @@ export default ({navigation})=>{
                         </TouchableOpacity>
                         <View style={{marginTop:30,paddingHorizontal:20}}>
                             <View style={styles.bottomSheetWrap}>
-                                <StyleText style={styles.bottomSheetText}>일기</StyleText>
-                                <TouchableOpacity onPress={openDiary}>
+                                <TouchableOpacity onPress={openDiary} style={{height:15,width:35,justifyContent:'center'}}>
+                                    <StyleText style={styles.bottomSheetText}>일기</StyleText>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={openDiary} style={{height:20,width: 20,justifyContent:'center',alignItems:"flex-end"}}>
                                     <StyleText style={styles.bottomSheetText}>{history.diary ? 'O' : 'X'}</StyleText>
                                 </TouchableOpacity>
                             </View>
                             <View style={[{marginTop:16},styles.bottomSheetWrap]}>
-                                <StyleText style={styles.bottomSheetText}>운동</StyleText>
+                                <TouchableOpacity style={{height:15,width:35,justifyContent:'center'}}
+                                    onPress={()=>dispatch(openModalWithProps('health',{date:formatDate(selectDate),callback:()=>requestHistory(selectDate)}))}>
+                                    <StyleText style={styles.bottomSheetText}>운동</StyleText>
+                                </TouchableOpacity>
                                 <TouchableOpacity onPress={()=>dispatch(openModalWithProps('health',{date:formatDate(selectDate),callback:()=>requestHistory(selectDate)}))}>
                                     <StyleText style={styles.bottomSheetText}>{`${parseInt(history.workout/60)} 시간 ${history.workout%60} 분`}</StyleText>
                                 </TouchableOpacity>
                             </View>
                             <View style={[{marginTop:16},styles.bottomSheetWrap]}>
-                                <StyleText style={styles.bottomSheetText}>공부</StyleText>
+                                <TouchableOpacity style={{height:15,width:35,justifyContent:'center'}}
+                                    onPress={()=>dispatch(openModalWithProps('desk',{date:formatDate(selectDate),callback:()=>requestHistory(selectDate)}))}>
+                                    <StyleText style={styles.bottomSheetText}>공부</StyleText>
+                                </TouchableOpacity>
                                 <TouchableOpacity onPress={()=>dispatch(openModalWithProps('desk',{date:formatDate(selectDate),callback:()=>requestHistory(selectDate)}))}>
                                     <StyleText style={styles.bottomSheetText}>{`${parseInt(history.study/60)} 시간 ${history.study%60} 분`}</StyleText>
                                 </TouchableOpacity>
                             </View>
                             <View style={[{marginTop:16},styles.bottomSheetWrap]}>
-                                <StyleText style={styles.bottomSheetText}>책장</StyleText>
+                                <TouchableOpacity style={{height:15,width:35,justifyContent:'center'}}
+                                    onPress={()=>navigation.navigate("BookMain",{date:formatDate(selectDate),onGoBack:()=>requestHistory(selectDate)})}>
+                                    <StyleText style={styles.bottomSheetText}>책장</StyleText>
+                                </TouchableOpacity>
                                 <TouchableOpacity onPress={()=>navigation.navigate("BookMain",{date:formatDate(selectDate),onGoBack:()=>requestHistory(selectDate)})}>
                                     <StyleText style={styles.bottomSheetText}>{history.book} Page</StyleText>
                                 </TouchableOpacity>
                             </View>
                             <View style={[{marginTop:16},styles.bottomSheetWrap]}>
-                                <StyleText style={styles.bottomSheetText}>냉장고</StyleText>
+                                <TouchableOpacity style={{height:15,width:40,justifyContent:'center'}}
+                                    onPress={()=>navigation.navigate("Calorie",{date:formatDate(selectDate),onGoBack:()=>requestHistory(selectDate)})}>
+                                    <StyleText style={styles.bottomSheetText}>냉장고</StyleText>
+                                </TouchableOpacity>
                                 <TouchableOpacity onPress={()=>navigation.navigate("Calorie",{date:formatDate(selectDate),onGoBack:()=>requestHistory(selectDate)})}>
                                     <StyleText style={styles.bottomSheetText}>
                                         <StyleText style={[styles.bottomSheetText,{color:"#94C9FF"}]}>{history.food.intake}</StyleText>/{history.food.goal} kcal
