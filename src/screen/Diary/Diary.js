@@ -5,6 +5,8 @@ import send from '../../modules/send';;
 import {formatDate,DashedFormatDate} from '../../modules/common'
 import StyleText from '../../components/UI/StyleText';
 import DiaryModal from '../../components/Diary/DiaryModal';
+import Feelset from './Feelset.json'
+import { isEmpty } from '../../modules/common';
 
 export default ({navigation})=>{
     const [visible,setVisible] = useState(false);
@@ -13,6 +15,7 @@ export default ({navigation})=>{
     const [diaryDate,setDiaryDate] = useState("");
     const [today,setToday] = useState({});
     const [updateNo,setUpdateNo] = useState("");
+    const [feel,setFeel] = useState("");
 
     useEffect(()=>{
         getList();
@@ -34,7 +37,8 @@ export default ({navigation})=>{
         diaryList.map((item,index)=>{
             if(item.IDX === _idx) {
                 setInputDiary(item.CONTENTS);
-                setDiaryDate(item.DATE_DT)
+                setDiaryDate(item.DATE_DT);
+                setFeel(item.FEEL);
             }
         });
         setVisible(true);
@@ -43,18 +47,18 @@ export default ({navigation})=>{
         setUpdateNo("")
         setDiaryDate(today.DATE_DT || formatDate())
         setInputDiary(today.CONTENTS);
+        setFeel(today.FEEL)
         setVisible(true);
     }
 
     const renderItem=({item,index})=>{
         const margin = (Dimensions.get('window').width-(90*3)-(26*2)) / 2;
-        
         return (
             <TouchableOpacity onPress={()=>openDiaryModal(item.IDX)}>
                 <View style={{marginTop:16,alignItems:"center",marginLeft:index%3===0?0:margin}}>
                     <View style={{width:90,height:116,borderWidth:1,borderStyle:"dotted",borderColor:'#9E9E9E',borderRadius:6,padding:6}}>
                         <View style={{flexDirection:"row",justifyContent:"flex-end"}}>
-                            <Image source={require('../../img/emoji_02.png')}/>
+                            <StyleText style={{fontSize:10}}>{Feelset[item.FEEL]}</StyleText>
                         </View>
                         <View style={{marginTop:5}}>
                             <StyleText numberOfLines={7} ellipsizeMode={"tail"} style={{fontSize:13}}>{item.CONTENTS}</StyleText>
@@ -78,7 +82,7 @@ export default ({navigation})=>{
                 <TouchableOpacity onPress={openTodayDiaryModal}>
                     <ImageBackground source={require('../../img/diary/memo_bg.png')} resizeMode='stretch' style={{height:161,marginTop:16,paddingHorizontal:16}}>
                         <View style={{marginTop:10,alignItems:"flex-end"}}>
-                            <Image source={require('../../img/emoji_01.png')}  />
+                            <StyleText>{isEmpty(today) ? Feelset["FE01"] : Feelset[today.FEEL] }</StyleText>
                         </View>
                         <View style={{marginTop:10,paddingBottom:16}}>
                             <StyleText numberOfLines={6} ellipsizeMode={"tail"} style={{fontSize:17}}>{today.CONTENTS}</StyleText>
@@ -101,6 +105,7 @@ export default ({navigation})=>{
                 display={visible}
                 inputDiary={inputDiary}
                 diaryDate={diaryDate}
+                feels={feel}
                 callback={getList}
                 updateNo={updateNo}
                 today={today}
