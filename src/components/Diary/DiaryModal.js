@@ -24,7 +24,7 @@ export default ({display,closeModal,inputDiary,diaryDate,feels,callback,today,up
     },[diaryDate]);
 
     useEffect(()=>{
-        setFeel(feels)
+        setFeel(feels? feels : 'FE01')
     },[feels]);
 
     const handleModalSave = async()=>{
@@ -45,6 +45,8 @@ export default ({display,closeModal,inputDiary,diaryDate,feels,callback,today,up
             snackbar.show({text:"저장되었습니다."});
             if(callback) callback();
         }
+        setContents("");
+        setFeel("FE01");
     }
 
     const feelOpacity = (feeling) => feel === feeling ? 1 : 0.3;

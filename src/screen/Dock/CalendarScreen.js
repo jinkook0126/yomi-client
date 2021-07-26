@@ -305,6 +305,7 @@ export default ({navigation})=>{
                 inputDiary={isEmpty(diaryContents) ? "" : diaryContents.CONTENTS}
                 diaryDate={formatDate(selectDate)}
                 updateNo={isEmpty(diaryContents) ? "" : diaryContents.IDX}
+                feels={diaryContents.FEEL}
                 today={diaryContents}
                 closeModal={()=>setVisible(false)}
                 callback={requestHistory}
