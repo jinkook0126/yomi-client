@@ -190,13 +190,13 @@ export default ({navigation,route})=>{
             </View>
             <View style={{flex:1,paddingHorizontal:26,paddingVertical:16,justifyContent:'space-between'}}>
                 <View>
-                    <ImageBackground source={require("../../img/calorie/search_border.png")} resizeMode={'stretch'} style={{height:44,backgroundColor:"#FFFFFF",flexDirection:"row",justifyContent:"space-between",alignItems:'center',paddingLeft:12}}>
+                    <ImageBackground source={require("../../img/calorie/search_border.png")} resizeMode={'stretch'} style={{height:54,backgroundColor:"#FFFFFF",flexDirection:"row",justifyContent:"space-between",alignItems:'center',paddingLeft:12}}>
                         <StyleInput
                             onChangeText={(value)=>{setSearchKey(value)}}
                             style={{flex:1,padding:0,height:30,fontSize:16}}
                         />
                         <TouchableOpacity onPress={()=>searchFood(true)} style={{width:30,height:30,marginRight:6,justifyContent:'center',alignItems:'center'}}>
-                            <Image source={require("../../img/common/ico_search.png")}/>
+                            <Image source={require("../../img/common/ico_search.png")} style={{width: 20,height:19}}/>
                         </TouchableOpacity>
                     </ImageBackground>
                     <ImageBackground resizeMode={'stretch'} source={require("../../img/calorie/contents_border.png")} style={{marginTop:10,borderRadius:2,height:321}}>
