@@ -102,11 +102,8 @@ export default (props)=>{
         }
         calcTotalHousrs();
         let mm = min !== "" ? parseInt(min%60) : 0;
-        let hh = hours !== "" ? parseInt(hours) + parseInt(min/60) : 0;
-        if(mm !== '' && mm >=60) {
-            hh += parseInt(min/60)
-        }
-
+        let hh = hours !== "" ? parseInt(hours) + parseInt(min/60) : parseInt(min/60);
+        
         setLists(lists.concat([
             {
                 expl:expl,
