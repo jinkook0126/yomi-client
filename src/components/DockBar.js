@@ -1,10 +1,10 @@
 import React from 'react';
-import {Image,ImageBackground,Text,TouchableWithoutFeedback,View} from 'react-native';
+import {Image,ImageBackground,TouchableWithoutFeedback,View} from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MyRoomScreen from '../screen/Dock/MyRoomScreen';
 import CollectionSreen from '../screen/Dock/CollectionSreen';
 import CalendarSreen from '../screen/Dock/CalendarScreen';
-import TabNavigator from './TabNavigator'
+import DowntownScreen from '../screen/Dock/DownTownScreen';
 import MenuSreen from '../screen/Dock/MenuSreen';
 
 
@@ -94,7 +94,7 @@ export default ()=>{
                     )
                 }}}
                 />
-                <Dock.Screen name="Collection" component={CollectionSreen} options={{icon:"shop.png",title:"shop",tabBarIcon:({focused})=>{
+                <Dock.Screen name="DowntownScreen" component={DowntownScreen} options={{icon:"shop.png",title:"shop",tabBarIcon:({focused})=>{
                     return (
                         <Image source={require('../img/dockbar/dock_shop.png')}/>
                     )

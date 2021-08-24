@@ -9,9 +9,9 @@ const LOGOUT_SUCCESS = "auth/LOGOUT_SUCCESS";
 // 액션 생섬함수 정의
 export const loginRequest = (mail,pw) =>{
     return (dispatch,getState) => {
-        return send.post("/users/login",{mail:mail,pw:pw}).then(({login,name,token,userNo,thumb})=>{
+        return send.post("/users/login",{mail:mail,pw:pw}).then(({login,name,token,userNo,thumb,coin})=>{
             if(login) {
-                dispatch(loginSuccess(name,userNo,thumb));
+                dispatch(loginSuccess(name,userNo,thumb,coin));
                 EncryptedStorage.setItem(
                     "jwt_token",
                     JSON.stringify({token : token})
@@ -24,9 +24,9 @@ export const loginRequest = (mail,pw) =>{
 
 export const verifyRequest = ()=>{
     return (dispatch,getState)=>{
-        return send.post("/users/verify").then(({login,name,userNo,thumb})=>{
+        return send.post("/users/verify").then(({login,name,userNo,thumb,coin})=>{
            if(login) {
-               dispatch(loginSuccess(name,userNo,thumb));
+               dispatch(loginSuccess(name,userNo,thumb,coin));
            }
         })
     }
@@ -40,7 +40,7 @@ export const logoutRequest = (mail,pw) =>{
     }
 }
 
-export const loginSuccess = (name,userNo,thumb) => ({ type: LOGIN_SUCCESS,name,userNo,thumb });
+export const loginSuccess = (name,userNo,thumb,coin) => ({ type: LOGIN_SUCCESS,name,userNo,thumb,coin });
 export const logoutSuccess = () => ({ type: LOGOUT_SUCCESS });
 
 
@@ -51,6 +51,7 @@ const initState = {
         name:"",
         userNo:"",
         thumb:"",
+        coin:0
     }
 }
 
@@ -65,6 +66,7 @@ export default function reducer(state=initState, action){
                     name:action.name,
                     userNo:action.userNo,
                     thumb:action.thumb,
+                    coin:action.coin
                 }
             }
         case LOGOUT_SUCCESS:
@@ -75,6 +77,7 @@ export default function reducer(state=initState, action){
                     name:"",
                     userNo:"",
                     thumb:"",
+                    coin:0
                 }
             }
         default:

@@ -74,7 +74,7 @@ export default ({navigation,route})=>{
                 }
                 <View style={{position:"absolute",left:"20%",bottom:'16%',width:'32%',height:yomiHeight,display: 'flex',flexDirection:'row',alignItems:"flex-end"}}>
                     <Image source={require("../../img/munji.png")} resizeMode="stretch" style={{width:55,height:42,marginRight:10}}/>
-                    <Image source={require("../../img/yomi.png")} resizeMode="stretch" style={{width:87,height:172}}/>
+                    <Image source={require("../../img/yomi.png")} resizeMode="stretch" style={{width:76,height:82}}/>
                 </View>
             </ImageBackground>    
         </SafeAreaView>
