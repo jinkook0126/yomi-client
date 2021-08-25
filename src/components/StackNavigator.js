@@ -12,6 +12,7 @@ import CalorieSearch from '../screen/Calorie/CalorieSearch';
 import NoticeScreen from '../screen/NoticeScreen';
 import ContactScreen from '../screen/ContactScreen';
 import QuestionScreen from '../screen/QuestionScreen';
+import ElectroShop from '../screen/DonwTown/ElectroShop';
 
 import { useDispatch } from 'react-redux';
 import {verifyRequest} from '../reducers/auth';
@@ -38,6 +39,7 @@ export default ()=> {
             <Stack.Screen name="Notice" component={NoticeScreen}/>
             <Stack.Screen name="Contact" component={ContactScreen}/>
             <Stack.Screen name="Question" component={QuestionScreen}/>
+            <Stack.Screen name="ElectroShop" component={ElectroShop}/>
         </Stack.Navigator> 
     );
   }

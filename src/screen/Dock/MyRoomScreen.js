@@ -2,7 +2,8 @@ import React,{useEffect} from 'react';
 import { useDispatch,useSelector } from 'react-redux';
 import {openModal} from '../../reducers/modal';
 import {initFurnitureRequest} from '../../reducers/furniture'
-import { View,Image,ImageBackground,StyleSheet,TouchableWithoutFeedback,Dimensions, SafeAreaView } from 'react-native';
+import { View,Image,ImageBackground,TouchableWithoutFeedback,Dimensions, SafeAreaView } from 'react-native';
+import StyleText from '../../components/UI/StyleText';
 
 const img_prefix = "https://yomi-image.s3.ap-northeast-2.amazonaws.com";
 const fullWidth = Dimensions.get('window').width;
@@ -19,6 +20,7 @@ const halfPosition = (fullHeight*0.5);
 export default ({navigation,route})=>{
     const dispatch = useDispatch();
     const furniture = useSelector(state => state.furniture.furnitures);
+    const coin = useSelector(state => state.auth.userInfo.coin);
 
     useEffect(()=>{
         dispatch(initFurnitureRequest());
@@ -30,6 +32,10 @@ export default ({navigation,route})=>{
     return (
         <SafeAreaView style={{flex:1}}>
             <ImageBackground source={require("../../img/home_bg.png")} style={{width: '100%', height: '100%'}}>
+                <View style={{flexDirection:"row",alignItems:'center',position: 'absolute',top:"2%",right: '5%'}}>
+                    <Image source={require("../../img/common/coin.png")} style={{width: 41,height:34,marginRight:10}}/>
+                    <StyleText type='bold' style={{fontSize:20}}>{coin}</StyleText>
+                </View>
                 {
                     furniture.FT05 !== '' ?
                     <TouchableWithoutFeedback onPress={()=>{navigation.navigate("BookMain")}}>
