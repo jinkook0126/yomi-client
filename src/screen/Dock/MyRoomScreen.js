@@ -5,7 +5,7 @@ import {initFurnitureRequest} from '../../reducers/furniture'
 import { View,Image,ImageBackground,TouchableWithoutFeedback,Dimensions, SafeAreaView } from 'react-native';
 import StyleText from '../../components/UI/StyleText';
 
-const img_prefix = "https://yomi-image.s3.ap-northeast-2.amazonaws.com";
+const IMG_PREFIX = "https://image.yomis-day.com";
 const fullWidth = Dimensions.get('window').width;
 const fullHeight = Dimensions.get('window').height;
 const windowHeight = (fullWidth*0.3) * 415 / 622;
@@ -39,7 +39,7 @@ export default ({navigation,route})=>{
                 {
                     furniture.FT05 !== '' ?
                     <TouchableWithoutFeedback onPress={()=>{navigation.navigate("BookMain")}}>
-                        <ImageBackground source={{uri:img_prefix+furniture.FT05}} resizeMode="stretch" style={{position:"absolute",left:'25%',top:'8%',width:117,height:86}}>
+                        <ImageBackground source={{uri:IMG_PREFIX+furniture.FT05}} resizeMode="stretch" style={{position:"absolute",left:'25%',top:'8%',width:117,height:86}}>
                         </ImageBackground>
                     </TouchableWithoutFeedback>
                     :
@@ -49,11 +49,11 @@ export default ({navigation,route})=>{
                     furniture.FT02 !== '' && furniture.FT04 !== '' ?
                     <View style={{position:"absolute",position:"absolute",right:'20%',top:halfPosition-120}}>
                         <TouchableWithoutFeedback onPress={()=>{navigation.navigate("Diary")}}>
-                            <ImageBackground source={{uri:img_prefix+furniture.FT04}} resizeMode="stretch" style={{width:81.25,height:37.5,zIndex:10,left:25,top:25}}>
+                            <ImageBackground source={{uri:IMG_PREFIX+furniture.FT04}} resizeMode="stretch" style={{width:81.25,height:37.5,zIndex:10,left:25,top:25}}>
                             </ImageBackground>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={()=>openModalTest("desk")}>
-                            <ImageBackground source={{uri:img_prefix+furniture.FT02}} resizeMode="stretch" style={{width:130,height:102}}>
+                            <ImageBackground source={{uri:IMG_PREFIX+furniture.FT02}} resizeMode="stretch" style={{width:130,height:102}}>
                             </ImageBackground>
                         </TouchableWithoutFeedback>
                     </View>
@@ -63,7 +63,7 @@ export default ({navigation,route})=>{
                 {
                     furniture.FT01 !== '' ?
                     <TouchableWithoutFeedback onPress={()=>{navigation.navigate("Calorie")}}>
-                        <ImageBackground source={{uri:img_prefix+furniture.FT01}} resizeMode="stretch" style={{position:"absolute",left:'6%',top:halfPosition-130,width:92,height:168}}>
+                        <ImageBackground source={{uri:IMG_PREFIX+furniture.FT01}} resizeMode="stretch" style={{position:"absolute",left:'6%',top:halfPosition-130,width:92,height:168}}>
                         </ImageBackground>
                     </TouchableWithoutFeedback>
                     :
@@ -72,7 +72,7 @@ export default ({navigation,route})=>{
                 {
                     furniture.FT03 !== ""?
                     <TouchableWithoutFeedback onPress={()=>openModalTest("health")}>
-                        <ImageBackground source={{uri:img_prefix+furniture.FT03}} resizeMode="stretch" style={{position:"absolute",right:'3%',bottom:"10%",width:120,height:168}}>
+                        <ImageBackground source={{uri:IMG_PREFIX+furniture.FT03}} resizeMode="stretch" style={{position:"absolute",right:'3%',bottom:"10%",width:120,height:168}}>
                         </ImageBackground>
                     </TouchableWithoutFeedback>
                     :

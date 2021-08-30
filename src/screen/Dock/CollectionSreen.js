@@ -6,7 +6,7 @@ import { updateFurniture } from '../../reducers/furniture'
 import StyleText from '../../components/UI/StyleText';
 import { useSnackbarContext } from '@dooboo-ui/snackbar';
 
-const img_prefix = "https://yomi-image.s3.ap-northeast-2.amazonaws.com";
+const IMG_PREFIX = "https://image.yomis-day.com";
 export default ()=>{
     const dispatch = useDispatch();
     const snackbar = useSnackbarContext();
@@ -69,7 +69,7 @@ export default ()=>{
         return (
             <View style={{alignItems:"center"}}>
                 <TouchableOpacity onPress={()=>handlePreview(item.FT_URL)}>
-                    <Image source={{ uri: img_prefix+item.FT_URL }} style={{width:57,height:47,resizeMode:'stretch',justifyContent:"space-around"}}/>
+                    <Image source={{ uri: IMG_PREFIX+item.FT_URL }} style={{width:57,height:47,resizeMode:'stretch',justifyContent:"space-around"}}/>
                 </TouchableOpacity>
                 <StyleText style={{fontSize:12,color:"#000000",marginTop:14}}>{item.FT_PRICE} coin</StyleText>
                 {
@@ -125,7 +125,7 @@ export default ()=>{
                     <StyleText style={{fontSize:14,color:"#000000"}}>미리보기</StyleText>
                     {
                         previewUri !== "" ?
-                        <Image source = {{ uri: img_prefix+previewUri}}  style={{width:112,height:80,resizeMode:'stretch',marginTop:25}}/>
+                        <Image source = {{ uri: IMG_PREFIX+previewUri}}  style={{width:112,height:80,resizeMode:'stretch',marginTop:25}}/>
                         :
                         <View style={{height:80,marginTop:25}}></View>
                     }

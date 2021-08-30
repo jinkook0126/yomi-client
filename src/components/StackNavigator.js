@@ -13,6 +13,7 @@ import NoticeScreen from '../screen/NoticeScreen';
 import ContactScreen from '../screen/ContactScreen';
 import QuestionScreen from '../screen/QuestionScreen';
 import ElectroShop from '../screen/DonwTown/ElectroShop';
+import FurnitureShop from '../screen/DonwTown/FurnitureShop';
 
 import { useDispatch } from 'react-redux';
 import {verifyRequest} from '../reducers/auth';
@@ -40,6 +41,7 @@ export default ()=> {
             <Stack.Screen name="Contact" component={ContactScreen}/>
             <Stack.Screen name="Question" component={QuestionScreen}/>
             <Stack.Screen name="ElectroShop" component={ElectroShop}/>
+            <Stack.Screen name="FurnitureShop" component={FurnitureShop}/>
         </Stack.Navigator> 
     );
   }
