@@ -5,6 +5,7 @@ import BookModalContents from './BookModalContents';
 import BookRgModalContents from './BookRgModalContents';
 import DeskodalContents from './DeskModalContents';
 import HealthModalContents from './HealthModalContents';
+import ItemModalContents from './ItemModalContents'
 
 export default ()=>{
     const stat = useSelector(state => state.modal.stat)
@@ -21,6 +22,8 @@ export default ()=>{
                 return <DeskodalContents />;
             case 'health' :
                 return <HealthModalContents />;
+            case 'downtown/dialog' :
+                return <ItemModalContents />;
             default:
                 return null;
         }
@@ -28,11 +31,11 @@ export default ()=>{
     const getStyle = ()=>{
         return {
             flex:1,
-            height:stat ? height = "100%" : zIndex.current = 0,
+            height:stat ? "100%" : 0,
             backgroundColor:'rgba(0,0,0,0.8)',
             justifyContent:"center",
             alignItems:"center",
-            zIndex:100,
+            zIndex:stat ? 100 : 0,
             position:"absolute",
             top:0,
             left:0,

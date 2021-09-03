@@ -16,5 +16,8 @@ module.exports = {
     },
     validNumber:(value) => {
         return /^[0-9]*$/.test(value);
+    },
+    formatNumber:(val) => {
+        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",");
     }
 }

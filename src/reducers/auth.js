@@ -4,6 +4,7 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 // 액션 타입 정의
 const LOGIN_SUCCESS = "auth/LOGIN_SUCCESS";
 const LOGOUT_SUCCESS = "auth/LOGOUT_SUCCESS";
+const UPDATE_COIN = "auth/UPDATE_COIN";
 
 
 // 액션 생섬함수 정의
@@ -42,6 +43,7 @@ export const logoutRequest = (mail,pw) =>{
 
 export const loginSuccess = (name,userNo,thumb,coin) => ({ type: LOGIN_SUCCESS,name,userNo,thumb,coin });
 export const logoutSuccess = () => ({ type: LOGOUT_SUCCESS });
+export const updateCoin = (coin) => ({ type: UPDATE_COIN,coin });
 
 
 // **** 초기상태 정의
@@ -78,6 +80,13 @@ export default function reducer(state=initState, action){
                     userNo:"",
                     thumb:"",
                     coin:0
+                }
+            }
+        case UPDATE_COIN:
+            return {
+                ...state,
+                userInfo:{
+                    coin:action.coin
                 }
             }
         default:
