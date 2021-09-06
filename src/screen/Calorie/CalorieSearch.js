@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import { View,SafeAreaView,Image,TouchableOpacity, ImageBackground, FlatList } from 'react-native'
-import { useDispatch,useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Modal from 'react-native-modal';
 import send from '../../modules/send';
 import StyleText from '../../components/UI/StyleText';

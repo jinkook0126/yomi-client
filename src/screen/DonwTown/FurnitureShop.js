@@ -35,7 +35,6 @@ export default ({ navigation }) => {
             dispatch(openModalWithProps('downtown/dialog', {
                 msg: "가구를 구매하시겠습니까?",
                 callback: async () => {
-                    console.log(FT_ID)
                     const { success, coin: dbCoin } = await send.post("/collection/buy", { id: FT_ID });
                     if (success) {
                         snackbar.show({ text: "구매하였습니다." });
