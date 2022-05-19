@@ -109,39 +109,40 @@ export default ({ navigation }) => {
                     <StyleText type='bold' style={{ fontSize: 20 }}>{formatNumber(coin)}</StyleText>
                 </View>
             </View>
-            <View style={{ flexDirection: 'row', justifyContent: "center", alignItems: 'flex-end' }}>
-                <TouchableOpacity onPress={() => setType('FT02')} style={{ paddingHorizontal: 10, paddingVertical: 8 }}>
-                    <StyleText type='bold' style={{ fontSize: 23 }}>책상</StyleText>
-                </TouchableOpacity>
-                <StyleText type='bold' style={{ fontSize: 23, marginHorizontal: 38, paddingHorizontal: 10, paddingVertical: 8 }}>|</StyleText>
-                <TouchableOpacity onPress={() => setType('FT05')} style={{ paddingHorizontal: 10, paddingVertical: 8 }}>
-                    <StyleText type='bold' style={{ fontSize: 23 }}>책장</StyleText>
-                </TouchableOpacity>
-            </View>
-            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', paddingBottom: 30 }}>
-                <TouchableOpacity onPress={() => {
-                    alert('back')
-                }}>
-                    <Image source={require('../../img/downtown/store-left-arrow.png')} style={{ width: 21, height: 36, marginHorizontal: 16 }} />
-                </TouchableOpacity>
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                    <ImageBackground source={require("../../img/downtown/store-shelf.png")} style={{ width: 278, height: 510, paddingHorizontal: 15 }}>
-                        <FlatList
-                            data={lists}
-                            renderItem={renderItem}
-                            numColumns={2}
-                            horizontal={false}
-                            keyExtractor={(item, index) => item.IDX}
-                        />
-                    </ImageBackground>
+            <ImageBackground source={require("../../img/downtown/furniture-bg.png")} style={{flex:1,}} resizeMode="contain" >
+                <View style={{position: 'absolute',backgroundColor:'#000000',left:0,top:0,width:'100%',height:'100%',opacity: 0.4}}/>
+                <View style={{ flexDirection: 'row', justifyContent: "center", alignItems: 'flex-end' }}>
+                    <TouchableOpacity onPress={() => setType('FT02')} style={{ paddingHorizontal: 10, paddingVertical: 8 }}>
+                        <StyleText type='bold' style={{ fontSize: 23 }}>책상</StyleText>
+                    </TouchableOpacity>
+                    <StyleText type='bold' style={{ fontSize: 23, marginHorizontal: 38, paddingHorizontal: 10, paddingVertical: 8 }}>|</StyleText>
+                    <TouchableOpacity onPress={() => setType('FT05')} style={{ paddingHorizontal: 10, paddingVertical: 8 }}>
+                        <StyleText type='bold' style={{ fontSize: 23 }}>책장</StyleText>
+                    </TouchableOpacity>
                 </View>
-                <TouchableOpacity onPress={() => {
-                    alert('go')
-                }}>
-                    <Image source={require('../../img/downtown/store-right-arrow.png')} style={{ width: 21, height: 36, marginHorizontal: 16 }} />
-                </TouchableOpacity>
+                <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', paddingBottom: 30 }}>
+                    <TouchableOpacity onPress={() => {
+                        alert('back')
+                    }}>
+                        <Image source={require('../../img/downtown/store-left-arrow.png')} style={{ width: 21, height: 36, marginHorizontal: 16 }} />
+                    </TouchableOpacity>
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                            <FlatList
+                                data={lists}
+                                renderItem={renderItem}
+                                numColumns={2}
+                                horizontal={false}
+                                keyExtractor={(item, index) => item.IDX}
+                            />
+                    </View>
+                    <TouchableOpacity onPress={() => {
+                        alert('go')
+                    }}>
+                        <Image source={require('../../img/downtown/store-right-arrow.png')} style={{ width: 21, height: 36, marginHorizontal: 16 }} />
+                    </TouchableOpacity>
 
-            </View>
+                </View>
+            </ImageBackground>
         </SafeAreaView>
     )
 }

@@ -44,14 +44,14 @@ export default ({navigation}) => {
                     <StyleText type='bold' style={{fontSize:20}}>{coin}</StyleText>
                 </View>
             </View>
-            <View style={{flex:1,backgroundColor:"tomato",flexDirection:'row',alignItems:'center'}}>
+            <View style={{flex:1,flexDirection:'row',alignItems:'center'}}>
                 <TouchableOpacity onPress={()=>{
                     alert('back')
                 }}>
                     <Image source={require('../../img/downtown/store-left-arrow.png')} style={{width: 21,height:36,marginHorizontal:16}} />
                 </TouchableOpacity>
                 <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-                    <ImageBackground source={require("../../img/downtown/store-shelf.png")} style={{width:278,height:510}}>
+                    {/* <ImageBackground source={require("../../img/downtown/store-shelf.png")} style={{width:278,height:510}}> */}
                         <FlatList
                             data={lists}
                             renderItem={renderItem}
@@ -59,7 +59,7 @@ export default ({navigation}) => {
                             horizontal={false}
                             keyExtractor={(item, index) => item.IDX}
                         />
-                    </ImageBackground>
+                    {/* </ImageBackground> */}
                 </View>
                 <TouchableOpacity onPress={()=>{
                     alert('go')
